@@ -191,21 +191,19 @@ Producto mencionado:
 # Obtener respuesta del bot
 # ================================
 
-def get_response(user_input):
+def get_response(user_input: str, session_id: str) -> str:
     user_input_lower = user_input.lower().strip()
 
-    # 1. Verificar primero si coincide con alguna categoría del config.json
+    # 1. Verificar coincidencias en config.json
     for category, data in config.items():
         if category == "prompt":
             continue
         keywords = data.get("keywords", [])
         if any(keyword in user_input_lower for keyword in keywords):
-            response = data.get("message", "Sin información disponible.")
-            return response
+            return data.get("message", "Sin información disponible.")
 
-    # 2. Solo si NO hay coincidencia en config.json, usar IA para detectar producto
+    # 2. Detectar producto con IA
     detected_product = detect_product_with_ai(user_input)
-
     if detected_product:
         print(f"Producto detectado por IA: {detected_product}")
         products = get_product_info(detected_product)
@@ -233,33 +231,45 @@ def get_response(user_input):
                 f"  - Stock: {product.get('stock', 0)} unidades ({stock_status})\n\n"
             )
 
-        # Prompt personalizado para hacerlo más específico
         full_prompt = f"""
         {context}
-
         El usuario pregunta: "{user_input}"
-
         Respuesta clara y amigable:
         """
-        response = with_message_history.invoke(
-        {"input": full_prompt},
-        config={"configurable": {"session_id": "abc123"}}
-        ).content
-        return response
+        try:
+            result = with_message_history.invoke(
+                {"input": full_prompt},
+                config={"configurable": {"session_id": session_id}}
+            )
+            # ✅ Aseguramos que sea string, sin depender de .content
+            bot_response = result.content if hasattr(result, "content") else str(result)
+            return bot_response.strip()
+        except Exception as e:
+            print(f"❌ Error al generar respuesta (productos): {e}")
+            return "No pude procesar esa consulta. Intenta más tarde."
 
     elif isinstance(products, str):
-
         return products
 
     # 4. Respuesta predeterminada
-    with open("prompts//prompt_output.txt", "r", encoding="utf-8") as fileOut:
-        promptOutput = fileOut.read()
-        print("se cargo el archivo .txt")
-    
+    try:
+        with open("prompts/prompt_output.txt", "r", encoding="utf-8") as fileOut:
+            promptOutput = fileOut.read()
+            print("Se cargó el archivo prompt_output.txt")
+    except Exception as e:
+        print(f"❌ No se pudo leer prompt_output.txt: {e}")
+        promptOutput = "No tengo información disponible."
+
     default_context = config.get("prompt", {}).get("message", promptOutput)
     prompt = f"{default_context}\nPregunta del usuario: {user_input}\nRespuesta:"
-    response = with_message_history.invoke(
-    {"input": prompt},
-    config={"configurable": {"session_id": "abc123"}}
-    ).content
-    return response
+
+    try:
+        result = with_message_history.invoke(
+            {"input": prompt},
+            config={"configurable": {"session_id": session_id}}
+        )
+        bot_response = result.content if hasattr(result, "content") else str(result)
+        return bot_response.strip()
+    except Exception as e:
+        print(f"❌ Error al generar respuesta predeterminada: {e}")
+        return "Estoy teniendo problemas para responder."

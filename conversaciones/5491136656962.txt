@@ -1,0 +1,22 @@
+2025-09-03 20:25:04 - De whatsapp:+5491136656962: Leche
+2025-09-03 20:25:04 - Bot: Estoy teniendo problemas para responder.
+2025-09-03 20:26:06 - De whatsapp:+5491136656962: Leche
+2025-09-03 20:26:06 - Bot: Estoy teniendo problemas para responder.
+2025-09-03 20:26:57 - De whatsapp:+5491136656962: Leche
+2025-09-03 20:26:57 - Bot: Estoy teniendo problemas para responder.
+2025-09-03 20:28:44 - De whatsapp:+5491136656962: Leche
+2025-09-03 20:28:48 - Bot: ¡Hola! Tenemos varias opciones de leche disponibles. ¿Qué tipo de leche estás buscando? Podemos ofrecerte:
+
+*   **Leche Biológica Entera 1L** de La Serenísima, a $160.00.
+*   **Leche de Almendras Fortificada con Calcio** de La Serenísima, a $130.00.
+*   **Leche Entera 1L** de La Serenísima, a $150.00.
+
+¿Te interesa alguna en particular o necesitas más información sobre ellas?
+2025-09-03 20:31:02 - De whatsapp:+5491136656962: Leche
+2025-09-03 20:31:04 - Bot: ¡Claro! Tenemos varias opciones de leche disponibles:
+
+*   **Leche Biológica Entera 1L** de La Serenísima: $160.00 (Disponible)
+*   **Leche de Almendras Fortificada con Calcio** de La Serenísima: $130.00 (Disponible)
+*   **Leche Entera 1L** de La Serenísima: $150.00 (Disponible)
+
+¿En qué tipo de leche estás interesado(a)?

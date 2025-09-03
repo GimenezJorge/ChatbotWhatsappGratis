@@ -16,3 +16,4 @@ def root():
         "message": "👋 Bienvenido a la API de WhatsApp",
         "docs": "Visita /docs para ver la documentación "
     }
+

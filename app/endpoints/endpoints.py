@@ -43,59 +43,60 @@ def send_whatsapp(request_data: SendMessageRequest, token: str = Depends(verify_
 @router.post("/webhook")
 async def webhook(request: Request):
     try:
-        # Intentar obtener como form-data
-        form_data = await request.form()
-        from_number = form_data.get("From")
-        body = form_data.get("Body")
+        # Leer cuerpo como bytes
+        body_bytes = await request.body()
+        print("🔍 Raw body (bytes):", body_bytes)
 
-        # Depuración: imprimir todo lo que llega
-        print("Form data recibida:", form_data)
+        if not body_bytes:
+            print("❌ Cuerpo vacío")
+            return {"status": "error", "message": "Cuerpo vacío"}
 
-        # Guardar el mensaje en memoria si existen datos
-        if not from_number or  not body:
-            return{"error":"Datos incompletos","Status":"Failed"}
+        # Parsear manualmente
+        from urllib.parse import parse_qs
+        body_str = body_bytes.decode("utf-8")
+        form_data = parse_qs(body_str)
+        from_number = form_data.get("From", [None])[0]
+        body = form_data.get("Body", [None])[0]
 
-        mensaje = {"from": from_number, "body": body}
-        mensajes_recibidos.append(mensaje)
+        print(f"📄 From: {from_number}")
+        print(f"📄 Body: {body}")
 
-        # Mostrar por consola
-        print(f"📩 Mensaje recibido de {from_number}: {body}")
+        if not from_number or not body:
+            print("⚠️ Datos faltantes")
+            return {"error": "Datos incompletos", "status": "Failed"}
 
-        # Guardar en archivo de texto
-        # Normaliza el número para usarlo como nombre de archivo
+        # Guardar en archivo
         session_id = from_number.replace("whatsapp:", "").replace("+", "").replace(":", "_")
         ruta_archivo = os.path.join(CARPETA_CONVERSACIONES, f"{session_id}.txt")
 
         with open(ruta_archivo, "a", encoding="utf-8") as f:
             f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - De {from_number}: {body}\n")
 
-        #  OBTENER RESPUESTA DEL BOT (con IA, base de datos, historial, etc.)
-        try:
-            bot_response = get_response(body)
-        except Exception as e:
-            print(f"❌ Error generando respuesta con IA: {e}")
-            bot_response = "Lo siento, estoy teniendo problemas para responder. Intenta más tarde."
+        print(f"✅ Archivo guardado: {ruta_archivo}")
 
-        # Guardar respuesta del bot en el archivo
+        # Generar respuesta
+        try:
+            bot_response = get_response(body,session_id)
+        except Exception as e:
+            print(f"❌ Error en IA: {e}")
+            bot_response = "Estoy teniendo problemas para responder."
+
+        # Guardar respuesta
         with open(ruta_archivo, "a", encoding="utf-8") as f:
             f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Bot: {bot_response}\n")
 
-        #  ENVIAR RESPUESTA POR WHATSAPP
-        try:
-            client.messages.create(
-                from_=twilio_whatsapp_number,
-                body=bot_response,
-                to=from_number
-            )
-            print(f"✅ Respuesta enviada a {from_number}")
-        except TwilioRestException as e:
-            print(f"⚠ No se pudo enviar la respuesta automática: {e.msg}")
+        # Enviar con Twilio
+        client.messages.create(
+            from_=twilio_whatsapp_number,
+            body=bot_response,
+            to=from_number
+        )
+        print(f"✅ Respuesta enviada a {from_number}")
 
-        return {"status": "ok", "reply_sent": True}
-
+        return {"status": "ok"}
 
     except Exception as e:
-        print(f"❌ Error procesando webhook: {str(e)}")
+        print(f"❌ Error: {str(e)}")
         return {"error": str(e)}
 
 # Endpoint para ver mensajes en memoria

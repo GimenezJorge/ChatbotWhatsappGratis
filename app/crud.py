@@ -244,7 +244,7 @@ def get_response(user_input):
         response = with_message_history.invoke(
         {"input": full_prompt},
         config={"configurable": {"session_id": "abc123"}}
-        )
+        ).content
         return response
 
     elif isinstance(products, str):
@@ -261,5 +261,5 @@ def get_response(user_input):
     response = with_message_history.invoke(
     {"input": prompt},
     config={"configurable": {"session_id": "abc123"}}
-    )
+    ).content
     return response

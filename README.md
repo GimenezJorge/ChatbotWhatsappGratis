@@ -1,4 +1,5 @@
-## Como subir cambios 
+## Como subir cambios
+
 ```bash
 > git status (para ver si)
 > git add . (agrega todos los archivos al push)
@@ -6,7 +7,9 @@
 > git commit -m "mensaje del comit"
 > git push origin master (manda los cambios a la rama master, en caso que lo subas a tu rama cambia master por el nombre de tu rama)
 ```
+
 ## Como traer cambios
+
 ```bash
 > git stash (Guarda tus cambios localmente)
 > git pull origin master (Para bajar los cambios a tu proyecto local (cambiar el nombre de master para que se aplique a tu rama))
@@ -46,6 +49,7 @@ Opción 2:
 ```bash
 > uvicorn app.main:app --reload --port 8000
 ```
+
 # Levantar Ngrok
 
 - Descargar Ngrok, Registrarse e iniciar la aplicacion y en la consola poner:
@@ -85,6 +89,6 @@ Opción 2:
 > Body=
 > TWILIO_ACCOUNT_SID=
 > TWILIO_AUTH_TOKEN=
-> TWILIO_WHATSAPP_NUMBER=
+> TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 > ACCESS_TOKEN=
 ```

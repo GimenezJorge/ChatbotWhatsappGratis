@@ -1,9 +1,24 @@
-Detecta el producto mencionado en la siguiente frase del usuario.
+Detecta TODOS los productos mencionados en la siguiente frase del usuario.
 
 Reglas:
-- Solo responde con el nombre EXACTO mencionado por el usuario.
-- No reemplaces palabras por sinónimos o variantes (ej: no cambies 'galletitas' por 'galletas').
-- Si no hay un producto claro, responde exactamente: "ninguno"
-- La respuesta debe ser una sola palabra o frase corta.
-- No uses comillas ni signos de puntuación extra.
-- Si el producto queda en plural, responde con el mismo pero en singular
+- Devuelve TODOS los productos mencionados, separados por comas.
+- Respeta el nombre exacto del usuario (ej: 'galletitas', no 'galletas').
+- No reemplaces, generalices ni uses sinónimos.
+- Si no hay productos, responde exactamente: "ninguno"
+- No uses comillas ni signos extra.
+- Mantén el número (plural o singular) como lo dijo el usuario.
+- No inventes productos.
+
+Ejemplos:
+- Frase: "¿Tienen leche y galletitas?"
+  Productos mencionados: leche, galletitas
+
+- Frase: "Necesito pan"
+  Productos mencionados: pan
+
+- Frase: "Hola, cómo están"
+  Productos mencionados: ninguno
+
+- Frase: "Quiero gaseosa y jugo"
+  Productos mencionados: gaseosa, jugo
+

@@ -75,12 +75,56 @@ with_message_history = RunnableWithMessageHistory(
     history_messages_key="history"
 )
 
+def log_historial_archivo(session_id:str)-> list:
+    ruta_archivo = os.path.join("conversaciones",f"{session_id}.txt")
+    if not os.path.exists(ruta_archivo):
+        return []
+    try:
+        with open(ruta_archivo,'r',encoding='utf-8')as file:
+            lineas = file.readlines()
+        
+        historial = []
+        for linea in lineas:
+            linea = linea.strip()
+            if " - De " in linea:
+                # Formato: "2025-08-27 19:51:29 - De whatsapp:+54911...: Mensaje"
+                try:
+                    timestamp_str = linea[:19]  # "2025-08-27 19:51:29"
+                    resto = linea[20:]  
+
+                    if "De " in resto and ": " in resto:
+                        contenido = resto.split(": ", 1)[1]  # mensaje después del número
+                        historial.append({
+                            "timestamp": timestamp_str,
+                            "role": "user",
+                            "content": contenido
+                        })
+                except:
+                    continue
+
+            elif " - Bot: " in linea:
+                # Formato: "2025-08-27 19:51:30 - Bot: Tienen 15 unidades"
+                try:
+                    timestamp_str = linea[:19]
+                    contenido = linea.split(" - Bot: ", 1)[1]
+                    historial.append({
+                        "timestamp": timestamp_str,
+                        "role": "bot",
+                        "content": contenido
+                    })
+                except:
+                    continue
+        
+        return historial
+    except Exception as e:
+        print(f"❌ Error leyendo historial del archivo: {e}")
+        return []
 
 # ================================
 # Buscar productos
 # ================================
 
-def get_product_info(product_name):
+def get_product_info(product_name: str):
     connection = connect_to_db()
     if not connection:
         return print("no se conecto a la bd")
@@ -165,27 +209,42 @@ def detect_product_with_ai(user_input):
 Frase del usuario: "{user_input}"
 Producto mencionado: 
 """
-    # print("DEBUG MATI")
-    # print(prompt)
-    # print("/DEBUG")
-    detected_product = model.invoke(prompt).strip().lower()
-    
-    # Eliminar etiquetas <think>...</think>
-    detected_product = re.sub(r"<think>.*?</think>", "", detected_product, flags=re.DOTALL | re.IGNORECASE).strip()
+    try:
+        # Invocar al modelo
+        raw_response = model.invoke(prompt).strip()
 
+        # Limpiar la respuesta
+        # Eliminar etiquetas <think>...<think>
+        cleaned = re.sub(r"<think>.*?</think>", "", raw_response, flags=re.DOTALL | re.IGNORECASE)
+        
+        # Extraer la parte después de "Productos mencionados:"
+        if "Productos mencionados:" in cleaned:
+            products_text = cleaned.split("Productos mencionados:")[1].strip()
+        else:
+            products_text = cleaned  # por si el modelo responde directamente
 
-    # Limpieza si el modelo devuelve cosas como "producto mencionado: galletas"
-    if "producto mencionado" in detected_product:
-        detected_product = detected_product.split(":")[-1].strip().rstrip(".").strip()
+        # Dividir por comas, saltos de línea o "y"
 
-    # Si termina con punto, lo eliminamos
-    detected_product = detected_product.rstrip(".")
+        # Divide por coma, " y ", o saltos de línea
+        product_list = re.split(r',|\s+y\s+|\n', products_text, flags=re.IGNORECASE)
+        
+        # Limpiar cada producto
+        product_list = [
+            p.strip().rstrip(".").strip()
+            for p in product_list
+            if p.strip() and p.lower() not in ["ninguno", "ninguna", "no"]
+        ]
 
-    # Si el resultado es vacío, "ninguno" o muy corto, devolvemos None
-    if not detected_product or detected_product == "ninguno" or len(detected_product) < 2:
+        # Validar que no esté vacío
+        if not product_list:
+            return None
+
+        print(f"✅ Productos detectados: {product_list}")
+        return product_list  # Devuelve lista
+
+    except Exception as e:
+        print(f"❌ Error en detect_product_with_ai: {e}")
         return None
-
-    return detected_product
 
 # ================================
 # Obtener respuesta del bot
@@ -194,6 +253,7 @@ Producto mencionado:
 def get_response(user_input: str, session_id: str) -> str:
     user_input_lower = user_input.lower().strip()
 
+    
     # 1. Verificar coincidencias en config.json
     for category, data in config.items():
         if category == "prompt":
@@ -206,7 +266,12 @@ def get_response(user_input: str, session_id: str) -> str:
     detected_product = detect_product_with_ai(user_input)
     if detected_product:
         print(f"Producto detectado por IA: {detected_product}")
-        products = get_product_info(detected_product)
+        all_products = []
+        for product_name in detected_product:
+            products = get_product_info(product_name)
+            if isinstance(products,list):
+                all_products.extend(products)
+        products = all_products if all_products else "No se encontraron productos relacionados."
     else:
         print("Ningún producto detectado por IA.")
         products = None
@@ -253,19 +318,22 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # 4. Respuesta predeterminada
     try:
+        # Leer el contexto base del sistema desde archivo
         with open("prompts/prompt_output.txt", "r", encoding="utf-8") as fileOut:
-            promptOutput = fileOut.read()
-            print("Se cargó el archivo prompt_output.txt")
+            promptOutput = fileOut.read().strip()
     except Exception as e:
         print(f"❌ No se pudo leer prompt_output.txt: {e}")
-        promptOutput = "No tengo información disponible."
+        promptOutput = "Eres un asistente útil. Responde de forma amable y clara."
 
-    default_context = config.get("prompt", {}).get("message", promptOutput)
-    prompt = f"{default_context}\nPregunta del usuario: {user_input}\nRespuesta:"
+    # Usa el contexto de config.json si existe
+    system_context = config.get("prompt", {}).get("message", promptOutput)
+
+    # Construye el input limpio → solo lo que dice el usuario
+    final_input = f"{system_context}\n\nPregunta del usuario: {user_input}"
 
     try:
         result = with_message_history.invoke(
-            {"input": prompt},
+            {"input": final_input},
             config={"configurable": {"session_id": session_id}}
         )
         bot_response = result.content if hasattr(result, "content") else str(result)

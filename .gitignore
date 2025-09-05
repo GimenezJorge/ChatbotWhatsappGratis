@@ -8,26 +8,23 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.pyc
 
 # Variables de entorno (sensibles)
 .env
 *.env
+.env.local
+.env.bak
+
 # Logs
 *.log
 logs/
-.env.local
 
 # Cache y entornos
-__pycache__
+__pycache__/
 *.pyc
 venv/
 env/
-.env.bak
 
-# Sistema
-.DS_Store
-Thumbs.db
 # Sistema
 .DS_Store
 Thumbs.db

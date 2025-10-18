@@ -10,17 +10,9 @@
     "keywords": ["tarjeta", "crédito", "credito", "débito", "debito"],
     "message": "Sí, aceptamos todas las tarjetas principales."
   },
-  "promociones": {
-    "keywords": ["promoción", "promocion", "oferta", "descuento"],
-    "message": "Sí, publicamos las promociones todos los lunes."
-  },
   "factura": {
     "keywords": ["factura", "factura A", "CUIT"],
     "message": "Solicítela en caja antes de pagar, con su CUIT."
-  },
-  "horario": {
-    "keywords": ["horario", "atención", "atencion", "abierto"],
-    "message": "Lunes a Sábado de 8:00 a 21:00, Domingo de 9:00 a 13:00."
   },
   "productos": {
     "keywords": ["producto", "productos", "artículo", "articulos"],

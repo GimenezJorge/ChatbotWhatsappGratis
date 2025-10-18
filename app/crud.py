@@ -8,13 +8,13 @@ from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from app.database import connect_to_db
-
+from app.info_super import leer_info_supermercado
 # ================================
 # Verificar Token
 # ================================
 access_token_env = os.getenv("ACCESS_TOKEN")
 def verify_token(token: str):
-    if token != access_token_env:
+    if token != access_token_env:        
         raise HTTPException(status_code=401, detail="Token inválido")
     return True
 
@@ -48,8 +48,8 @@ if not config:
 # ================================
 
 # Configuración inicial del modelo Ollama
-model = OllamaLLM(model="gemma3:latest")
-
+#model = OllamaLLM(model="gemma3:latest")
+model = OllamaLLM(model="orieg/gemma3-tools:4b")
 # Prompt con historial
 prompt = ChatPromptTemplate.from_messages([
     ("system", "Eres un asistente útil."),
@@ -73,8 +73,8 @@ with_message_history = RunnableWithMessageHistory(
     get_session_history,
     input_messages_key="input",
     history_messages_key="history"
+    
 )
-
 def log_historial_archivo(session_id:str)-> list:
     ruta_archivo = os.path.join("conversaciones",f"{session_id}.txt")
     if not os.path.exists(ruta_archivo):
@@ -114,7 +114,6 @@ def log_historial_archivo(session_id:str)-> list:
                     })
                 except:
                     continue
-        
         return historial
     except Exception as e:
         print(f"❌ Error leyendo historial del archivo: {e}")
@@ -177,7 +176,6 @@ def get_product_info(product_name: str):
     # Usar la consulta externa
     cursor.execute(QUERY_START, (f"{first_word}%",f"{first_word}%",f"{first_word}%"))
     start_results = cursor.fetchall()
-
     if start_results:
         cursor.close()
         connection.close()
@@ -186,7 +184,6 @@ def get_product_info(product_name: str):
     # Si no hay coincidencias al inicio, buscar que contenga el término
     cursor.execute(QUERY_CONTAINS, (f"%{product_name_lower}%", f"{product_name_lower}%"))
     contain_results = cursor.fetchall()
-
     cursor.close()
     connection.close()
 
@@ -202,7 +199,7 @@ def get_product_info(product_name: str):
 def detect_product_with_ai(user_input):
     with open("prompts//prompt_input.txt", "r", encoding="utf-8") as file:
         prompt = file.read()
-        print("Se cargó correctamente el archivo.txt")
+        print("Se cargó correctamente el prompt_input.txt")
     
     prompt += f"""
 
@@ -212,11 +209,9 @@ Producto mencionado:
     try:
         # Invocar al modelo
         raw_response = model.invoke(prompt).strip()
-
         # Limpiar la respuesta
         # Eliminar etiquetas <think>...<think>
         cleaned = re.sub(r"<think>.*?</think>", "", raw_response, flags=re.DOTALL | re.IGNORECASE)
-        
         # Extraer la parte después de "Productos mencionados:"
         if "Productos mencionados:" in cleaned:
             products_text = cleaned.split("Productos mencionados:")[1].strip()
@@ -227,12 +222,13 @@ Producto mencionado:
 
         # Divide por coma, " y ", o saltos de línea
         product_list = re.split(r',|\s+y\s+|\n', products_text, flags=re.IGNORECASE)
-        
         # Limpiar cada producto
         product_list = [
             p.strip().rstrip(".").strip()
+            
             for p in product_list
             if p.strip() and p.lower() not in ["ninguno", "ninguna", "no"]
+            
         ]
 
         # Validar que no esté vacío
@@ -252,7 +248,6 @@ Producto mencionado:
 
 def get_response(user_input: str, session_id: str) -> str:
     user_input_lower = user_input.lower().strip()
-
     
     # 1. Verificar coincidencias en config.json
     for category, data in config.items():
@@ -324,13 +319,21 @@ def get_response(user_input: str, session_id: str) -> str:
     except Exception as e:
         print(f"❌ No se pudo leer prompt_output.txt: {e}")
         promptOutput = "Eres un asistente útil. Responde de forma amable y clara."
-
     # Usa el contexto de config.json si existe
-    system_context = config.get("prompt", {}).get("message", promptOutput)
-
-    # Construye el input limpio → solo lo que dice el usuario
-    final_input = f"{system_context}\n\nPregunta del usuario: {user_input}"
-
+    system_context =promptOutput
+    
+    #lee el archivo con los datos del supermercado:
+    info_supermercado_texto = leer_info_supermercado()    
+    
+    # Construye el input limpio → solo lo que dice el usuario    
+    # final_input = f"{system_context}\n\nPregunta del usuario: {user_input}"
+    final_input = f"{system_context}\n\nInformacion del supermercado:\n{info_supermercado_texto}\n\nPregunta del usuario: {user_input}"
+    
+    
+    print(f"\n\n\nvariable final input:\n{final_input}")
+    
+    
+    
     try:
         result = with_message_history.invoke(
             {"input": final_input},

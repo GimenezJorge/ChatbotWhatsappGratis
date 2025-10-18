@@ -1,0 +1,24 @@
+2025-10-13 09:29:36 - De 81690378649681@lid: Que pasó al final?
+2025-10-13 09:30:43 - Bot: ¡Hola! Bienvenido al Supermercado Global. Con gusto le ayudo a encontrar lo que necesita.
+
+En cuanto a lo que pasó al final, ¿podría ser que se refiera a alguna promoción especial o producto en particular que haya visto recientemente?
+
+Para poder ofrecerle la información correcta, le propongo lo siguiente:
+
+*   **Leche Entera Desnatada - 1 Litro:** $3,50
+*   **Aceite de Soja - 900 ml:** $1,80
+*   **Harina de Trigo - 1 Kg:** $2,20
+*   **Azúcar Refinada - 1 Kg:** $1,50
+*   **Café Molido - 500g:** $6,00
+
+¿Le interesa alguna de estas opciones, o quizás busca algo específico?
+2025-10-13 09:31:09 - De 81690378649681@lid: Leche desnatada no existe en argentina
+2025-10-13 09:32:54 - Bot: ¡Hola! Entiendo tu comentario sobre la leche desnatada. Lamentablemente, en este momento no tenemos leche desnatada en nuestro inventario. Sin embargo, te puedo ofrecer una amplia variedad de opciones de leche en diferentes presentaciones y porcentajes de grasa, como la leche entera, la leche chocolatada y la leche UAT sin lactosa.
+
+Para poder ayudarte mejor, ¿te gustaría ver las opciones que tenemos disponibles?
+
+*   **Leche Entera Desnatada - 1 Litro:** $3,50
+*   **Leche Entera La Serenísima 1L:** $180.00
+*   **Leche UAT Sin Lactosa 1L:** $190.00
+2025-10-13 10:43:38 - De 81690378649681@lid: Saludos
+2025-10-13 10:44:07 - Bot: ¡Hola! ¡Buenas tardes! Bienvenido al Supermercado Global. ¿En qué puedo ayudarle hoy? ¿Está buscando algún producto en particular o necesita información sobre nuestros artículos?

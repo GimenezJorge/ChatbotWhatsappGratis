@@ -1,0 +1,14 @@
+2025-10-13 04:25:54 - De 5491112345678: Hola, tienen leche?
+2025-10-13 04:26:35 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche te interesa? Tenemos leche entera, descremada, con chocolate, sin lactosa y hasta orgánica de diferentes marcas como Ilolay y La Serenísima. ¿Hay alguna característica específica que estés buscando (por ejemplo, sabor, marca o tipo)?
+2025-10-13 04:42:49 - De 5491112345678: Hola, tienen leche?
+2025-10-13 04:43:23 - Bot: ¡Hola! Sí, tenemos varios tipos de leche disponibles. ¿Qué tipo de leche estás buscando? Tenemos opciones de Ilolay, La Serenísima y otras, incluyendo leche chocolatada, descremada, entera y sin lactosa. ¿Tienes alguna preferencia en cuanto a marca o tipo de leche?
+2025-10-13 05:16:11 - De 5491112345678: Hola, tienen leche?
+2025-10-13 05:16:40 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche te interesa? Tenemos leche entera, descremada, de chocolate, sin lactosa y también opciones de diferentes marcas como Ilolay y La Serenísima. ¡Dime qué buscas y te ayudaré a encontrar la mejor opción!
+2025-10-13 05:19:15 - De 5491112345678: Hola, tienen leche?
+2025-10-13 05:19:57 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche te interesa? Por ejemplo, ¿quieres leche entera, descremada, sabor chocolate o alguna otra? ¡Dime qué buscas y te puedo mostrar las opciones disponibles!
+2025-10-13 05:24:38 - De 5491112345678: Hola, tienen leche?
+2025-10-13 05:25:30 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche te interesa? Tenemos leche entera, descremada, en polvo, con sabor a chocolate, orgánica y hasta sin lactosa. ¿Tienes alguna preferencia en cuanto a la marca o tipo de leche?
+2025-10-13 05:53:33 - De 5491112345678: Hola, tienen leche?
+2025-10-13 05:54:30 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche te interesa? Podemos ofrecerte leche chocolatada, descremada, entera, en polvo, sin lactosa, y de diferentes marcas como Ilolay y La Serenísima. ¿Tienes alguna preferencia en cuanto a marca o tipo de leche?
+2025-10-13 06:00:44 - De 5491112345678: Hola, tienen leche?
+2025-10-13 06:01:41 - Bot: ¡Hola! Sí, tenemos varias opciones de leche disponibles. ¿Qué tipo de leche estás buscando? Tenemos leche entera, descremada, chocolatada, sin lactosa y también de marcas como Ilolay y La Serenísima. ¿Hay algún tipo o marca en particular que te interese?

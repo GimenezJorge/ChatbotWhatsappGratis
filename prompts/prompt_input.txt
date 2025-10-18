@@ -1,7 +1,9 @@
 Detecta TODOS los productos mencionados en la siguiente frase del usuario.
 
 Reglas:
-- Devuelve TODOS los productos mencionados, separados por comas.
+
+- Al mostrarle al CLIENTE productos encontrados en la base de datos, siempre hacelo en formato de lista con viñetas, indicando nombre exacto y precio de venta (aunque solo sea un producto).
+
 - Respeta el nombre exacto del usuario (ej: 'galletitas', no 'galletas').
 - No reemplaces, generalices ni uses sinónimos.
 - Si no hay productos, responde exactamente: "ninguno"

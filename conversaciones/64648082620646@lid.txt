@@ -1,0 +1,73 @@
+2025-10-15 20:04:02 - De 64648082620646@lid: Hola
+2025-10-15 20:04:37 - Bot: ¡Hola! Bienvenido al Supermercado Global. Mi nombre es Karin, y estoy aquí para ayudarte. ¿En qué puedo ayudarte hoy?
+2025-10-15 20:06:55 - De 64648082620646@lid: Tenés galletitas, gaseosa y pan?
+2025-10-15 20:09:30 - Bot: ¡Claro que sí! Tenemos una gran variedad de galletitas, gaseosa y pan. Aquí te muestro lo que tenemos disponible:
+
+*   **Bizcochitos de Salvado 200g**
+    - Descripción: Bizcochitos integrales
+    - Marca: Terrabusi
+    - Categoría: Galletitas
+    - Precio: $195.00
+    - Stock: 85 unidades (Disponible)
+
+*   **Bizcochitos Dulces 200g**
+    - Descripción: Bizcochitos saborizados
+    - Marca: Terrabusi
+    - Categoría: Galletitas
+    - Precio: $195.00
+    - Stock: 85 unidades (Disponible)
+
+*   **Bizcochitos Terrabusi 200g**
+    - Descripción: Bizcochitos de grasa
+    - Marca: Terrabusi
+    - Categoría: Galletitas
+    - Precio: $195.00
+    - Stock: 85 unidades (Disponible)
+
+*   **Gaseosa Manaos Cola 2L**
+    - Descripción: Refresco cola económico
+    - Marca: Positivo BGH
+    - Categoría: Bebidas sin alcohol
+    - Precio: $290.00
+    - Stock: 180 unidades (Disponible)
+
+*   **Gaseosa Sprite 2.25L**
+    - Descripción: Gaseosa Sprite
+    - Marca: Disco
+    - Categoría: Bebidas sin alcohol
+    - Precio: $620.00
+    - Stock: 140 unidades (Disponible)
+
+*   **Pan Rallado Molto 500g**
+    - Descripción: Pan rallado clásico
+    - Marca: Molto
+    - Categoría: Lácteos
+    - Precio: $120.00
+    - Stock: 120 unidades (Disponible)
+
+¿Hay algo en particular que estés buscando o alguna otra pregunta que pueda ayudarte?
+2025-10-15 20:17:13 - De 64648082620646@lid: Quería 2 bizcochitos dulces, 2 gaseosas Sprite y 1 pan rallado
+2025-10-15 20:19:54 - Bot: AI: ¡Excelente elección! Con gusto le preparo su pedido. Aquí tiene:
+
+*   **Bizcochitos Dulces 200g**
+    - Descripción: Bizcochitos saborizados
+    - Marca: Terrabusi
+    - Categoría: Galletitas
+    - Precio: $195.00
+    - Stock: 85 unidades (Disponible) – Le traeré 2 unidades.
+*   **Gaseosa Sprite 2.25L**
+    - Descripción: Gaseosa Sprite
+    - Marca: Disco
+    - Categoría: Bebidas sin alcohol
+    - Precio: $620.00
+    - Stock: 140 unidades (Disponible) – Le traeré 2 unidades.
+*   **Pan Rallado Molto 500g**
+    - Descripción: Pan rallado clásico
+    - Marca: Molto
+    - Categoría: Lácteos
+    - Precio: $120.00
+    - Stock: 120 unidades (Disponible) – Le traeré 1 unidad.
+
+El total de su compra será de $995.00. ¿Desea agregar algo más a su pedido?
+2025-10-15 20:24:02 - De 64648082620646@lid: No, pero quiero quitar las gaseosas
+2025-10-15 20:24:08 - Bot: No se encontraron productos relacionados.

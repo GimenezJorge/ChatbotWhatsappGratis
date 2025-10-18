@@ -14,17 +14,15 @@ MYSQL_PORT = os.getenv("MYSQL_PORT")
 MYSQL_DATABASE = os.getenv("MYSQL_DATABASE")
 
 SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
-
 # Validación individual de variables de entorno
 if not all([MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE]):
     raise ValueError("Faltan credenciales en el archivo .env Asegúrate de definir: MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE")
-
+    
 # Crear una instancia de motor para la base de datos
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # Crear una clase de sesión para interactuar con la base de datos
 SessionLocal = sessionmaker(autocommit=False,autoflush=False,bind=engine)
-
 def connect_to_db():
     try:
         connection = mysql.connector.connect(

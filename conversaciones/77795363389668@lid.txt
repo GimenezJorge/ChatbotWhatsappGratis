@@ -837,3 +837,4 @@ El total de tu carrito es de $31.50. ¿Te gustaría que agregue algo más o quiz
 2025-10-17 12:39:29 - De 77795363389668@lid: Hola
 2025-10-17 12:40:55 - Bot: ¡Hola! ¡Bienvenido/a a Supermercado Global! ¿En qué puedo ayudarte hoy? 😊  
 Si ya sabes qué necesitas, ¡adelante con tu pedido! Si no, te puedo mostrar algunas opciones populares.
+2025-10-18 01:16:37 - De 77795363389668@lid: Hola

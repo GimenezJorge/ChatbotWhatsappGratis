@@ -34,3 +34,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+#sesion del whatsapp web
+.wwebjs_cache/

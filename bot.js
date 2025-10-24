@@ -12,17 +12,17 @@ const client = new Client({
 		dataPath: 'C:\\SESION-WSP',
 		clientId: 'main',
 	}),
-	// sesion de whatsapp web invisible: 
-	// puppeteer: {
-	// 	headless: true,
-	// 	args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless=new'],
-	// 	executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-	// },
+	//sesion de whatsapp web invisible: 
 	puppeteer: {
-		headless: false,
-		args: ['--no-sandbox', '--disable-setuid-sandbox'],
+		headless: true,
+		args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless=new'],
 		executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
 	},
+	// puppeteer: {
+	// 	headless: false,
+	// 	args: ['--no-sandbox', '--disable-setuid-sandbox'],
+	// 	executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+	// },
 
 });
 
@@ -61,12 +61,13 @@ client.on('ready', async () => {
 	}
 
 	try {
-		const numero = '5491162195267';
-		let chatId = null;
+		// MANDAR UN MENSAJE A OTRO TELEFONO
+		// const numero = '54911XXXXXXXX';
+		// let chatId = null;
 
-		const numberId = await client.getNumberId(numero).catch(() => null);
-		chatId = numberId ? numberId._serialized : `${numero}@c.us`;
-		console.log('📤 Chat ID seleccionado:', chatId);
+		// const numberId = await client.getNumberId(numero).catch(() => null);
+		// chatId = numberId ? numberId._serialized : `${numero}@c.us`;
+		// console.log('📤 Chat ID seleccionado:', chatId);
 
 		// await client.sendMessage(chatId, 'hola amigo, este es un mensaje de prueba 😎');
 		// console.log('📤 Mensaje enviado a', chatId);

@@ -1,0 +1,4 @@
+2025-10-20 17:56:28 - De 77795363389668@lid: Hola
+2025-10-20 17:57:42 - Bot: ¡Hola! Bienvenido al Supermercado San Judas. Soy Quique, tu asistente de hoy. ¿En qué puedo ayudarte? ¿Quizás estés buscando algún producto en particular o necesitas alguna información sobre nuestros artículos?
+2025-10-20 17:58:07 - De 77795363389668@lid: Parece que va a llover
+2025-10-20 17:59:20 - Bot: AI: ¡Hola! Sí, parece que va a llover. ¡Que tengas un buen día a pesar del clima! ¿En qué puedo ayudarte hoy? ¿Quizás estés buscando algún producto en particular o necesitas alguna información sobre nuestros artículos?

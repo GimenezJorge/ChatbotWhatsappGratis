@@ -464,7 +464,7 @@ def get_response(user_input: str, session_id: str) -> str:
                     price = p.get('precio_venta', 'Precio no disponible')
                     context += f"- {name} — ${price}\n"
 
-                context += "\n¿Querés agregar alguno de esos productos a tu pedido?"
+                context += "\nMe indicas cual de estos productos queres agregar a tu pedido?"
                 return context
 
 

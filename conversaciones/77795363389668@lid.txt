@@ -1571,3 +1571,115 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 ¿Querés agregar algo más o cerrar el pedido?
 2025-10-25 16:57:15 - De 77795363389668@lid: te quiero mucho
 2025-10-25 16:58:14 - Bot: ¡Qué bonito decirlo! Me alegro mucho de ayudarte con tu pedido. ¿Hay algo más en lo que pueda echarte una mano hoy?
+2025-10-25 17:47:57 - De 77795363389668@lid: tenes aceite?
+2025-10-25 17:48:27 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 17:49:39 - De 77795363389668@lid: agregame tres del natura
+2025-10-25 17:50:36 - Bot: Se agregó 3 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total: $960.00
+2025-10-25 19:19:48 - De 77795363389668@lid: tengo productos en mi pedido?
+2025-10-25 19:20:17 - Bot: Parece que todavía no tenés productos en tu pedido.
+2025-10-25 19:20:36 - De 77795363389668@lid: me agregas un aceite? cuales tenes?
+2025-10-25 19:21:02 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:21:30 - De 77795363389668@lid: me agregas un natura?
+2025-10-25 19:22:21 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Natura 1L — $320.00
+- Yogur Griego Natural 150g — $160.00
+- Yogur Natural 1kg — $225.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:22:40 - De 77795363389668@lid: agregame un aceite natura
+2025-10-25 19:23:33 - Bot: Agregué 1 unidad(es) de Aceite de Girasol Natura 1L al pedido.    (Total: $320.00)
+2025-10-25 19:24:09 - De 77795363389668@lid: ahora si tengo productos en el pedido, me mostras mi carrito?
+2025-10-25 19:24:33 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+
+🧾 Total acumulado: $320.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 19:26:41 - De 77795363389668@lid: agrega un aceite de girasol natura 1l mas a mi pedido
+2025-10-25 19:27:36 - Bot: Se actualizaron las unidades de 'Aceite de Girasol Natura 1L' (ahora x2). Total: $640.00
+2025-10-25 19:30:02 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 19:30:27 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x2 = $640.00
+
+🧾 Total acumulado: $640.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 19:31:08 - De 77795363389668@lid: ahora agregame una coca
+2025-10-25 19:31:58 - Bot: Tenemos estos productos disponibles:
+
+- Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:32:19 - De 77795363389668@lid: si
+2025-10-25 19:32:58 - Bot: ¡Claro que sí! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o necesitas que te diga algo sobre nuestros productos?
+2025-10-25 19:33:15 - De 77795363389668@lid: quiero agregar una coca a mi pedido
+2025-10-25 19:34:08 - Bot: Tenemos estos productos disponibles:
+
+- Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:40:02 - De 77795363389668@lid: quiero agregar cuatro cocas
+2025-10-25 19:40:58 - Bot: Tenemos estos productos disponibles:
+
+- Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:41:39 - De 77795363389668@lid: agrega 4 coca-colas a mi pedido
+2025-10-25 19:42:32 - Bot: Tenemos estos productos disponibles:
+
+- Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:43:37 - De 77795363389668@lid: quiero agregar 4 Coca-Cola 2.25 a mi pedido
+2025-10-25 19:44:31 - Bot: Agregué 4 unidad(es) de Coca-Cola 2.25L al pedido.    (Total: $3240.00)
+2025-10-25 19:46:16 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 19:46:45 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x2 = $640.00
+* Coca-Cola 2.25L — $650.00 x4 = $2600.00
+
+🧾 Total acumulado: $3240.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 19:47:20 - De 77795363389668@lid: agrega una coca mas
+2025-10-25 19:48:22 - Bot: Tenemos estos productos disponibles:
+
+- Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 19:55:36 - De 77795363389668@lid: agrega una Coca-Cola al pedido
+2025-10-25 19:56:32 - Bot: Se actualizaron las unidades de 'Coca-Cola 2.25L' (ahora x5). Total: $3890.00
+2025-10-25 19:56:48 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 19:57:13 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x2 = $640.00
+* Coca-Cola 2.25L — $650.00 x5 = $3250.00
+
+🧾 Total acumulado: $3890.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 19:57:23 - De 77795363389668@lid: tenes cerveza?
+2025-10-25 19:58:11 - Bot: ¡Qué pena! El sistema no ha encontrado ninguna cerveza en este momento. Parece que no tenemos esa marca o variedad disponible. 
+
+¿Quizás te gustaría buscar alguna otra bebida refrescante, como zumos, refrescos o quizás alguna cerveza de otro tipo? O si me lo explicas un poquito mejor, como qué tipo de cerveza estabas buscando, puedo intentar ayudarte a encontrar algo parecido. 😊
+2025-10-25 20:05:06 - De 77795363389668@lid: agregame un aceite natura mas al pedido
+2025-10-25 20:06:02 - Bot: Se actualizaron las unidades de 'Aceite de Girasol Natura 1L' (ahora x3). Total: $4210.00
+2025-10-25 20:06:20 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 20:06:45 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x3 = $960.00
+* Coca-Cola 2.25L — $650.00 x5 = $3250.00
+
+🧾 Total acumulado: $4210.00
+¿Querés agregar algo más o cerrar el pedido?

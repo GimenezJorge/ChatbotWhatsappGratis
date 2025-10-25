@@ -859,3 +859,27 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 
 🧾 Total acumulado: $580.00
 ¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 03:10:22 - De 77795363389668@lid: hola tenes aceite?
+2025-10-25 03:10:49 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:12:42 - De 77795363389668@lid: tenes pan?
+2025-10-25 03:12:45 - Bot: Tenemos estos productos disponibles:
+
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:13:14 - De 77795363389668@lid: que productos vimos hasta ahora?
+2025-10-25 03:13:18 - Bot: Parece que todavía no tenés productos en tu pedido.
+2025-10-25 03:13:42 - De 77795363389668@lid: tenes aceite?
+2025-10-25 03:13:46 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?

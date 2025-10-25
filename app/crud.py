@@ -363,16 +363,28 @@ def get_response(user_input: str, session_id: str) -> str:
             return bot_response.strip()
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE
+
     if productos_detectados:
         print(f"Productos detectados: {productos_detectados}")
         all_products = []
+
+        # Recuperar los datos de sesión (productos ya consultados)
+        session_data = get_datos_traidos_desde_bd(session_id)
+
         for product_name in productos_detectados:
             products = get_product_info(product_name)
+
+            # Guardar los productos traídos en memoria
             if isinstance(products, list):
+                session_data["productos_mostrados"][product_name.lower()] = products
                 all_products.extend(products)
+
         products = all_products if all_products else "No se encontraron productos relacionados."
     else:
         products = None
+
+
+
 
     # SI ENCUENTRA PRODUCTOS EN LA BASE
     if products and isinstance(products, list):

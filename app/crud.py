@@ -354,19 +354,30 @@ def get_response(user_input: str, session_id: str) -> str:
                 print(f"🤖 Resultado verificación IA (texto limpio): {respuesta_verificacion}")
 
                 if respuesta_verificacion.lower() != "ninguno":
-                    # Buscar coincidencia dentro de los productos mostrados
-                    for productos in session_data["productos_mostrados"].values():
-                        for p in productos:
-                            if respuesta_verificacion.lower() in p["producto"].lower():
-                                nombre = p["producto"]
-                                precio = p["precio_venta"]
-                                mensaje_confirmacion = agregar_a_pedido(session_id, nombre, 1, precio)
-                                print(f"✅ Producto agregado desde lista textual: {nombre}")
-                                return mensaje_confirmacion
+                    # 🧠 Validar que haya alguna palabra en común entre lo que dijo el cliente y el producto detectado
+                    palabras_cliente = set(user_input.lower().split())
+                    palabras_producto = set(respuesta_verificacion.lower().split())
+                    coincidencias = palabras_cliente.intersection(palabras_producto)
+
+                    if not coincidencias:
+                        print(f"⚠️ Coincidencia descartada: '{respuesta_verificacion}' no coincide con '{user_input}'")
+                    else:
+                        # Buscar coincidencia dentro de los productos mostrados
+                        for productos in session_data["productos_mostrados"].values():
+                            for p in productos:
+                                if respuesta_verificacion.lower() in p["producto"].lower():
+                                    nombre = p["producto"]
+                                    precio = p["precio_venta"]
+                                    mensaje_confirmacion = agregar_a_pedido(session_id, nombre, 1, precio)
+                                    print(f"✅ Producto agregado desde lista textual: {nombre}")
+                                    return mensaje_confirmacion
+
 
             except Exception as e:
                 print(f"⚠️ Error en verificación IA: {e}")
 
+            # 🧭 Si la IA no encontró coincidencia válida, o fue descartada, buscar en la base
+            print("🧭 No se encontró coincidencia en productos mostrados. Buscando en la base de datos...")
 
         # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
         for product_name in productos_detectados:

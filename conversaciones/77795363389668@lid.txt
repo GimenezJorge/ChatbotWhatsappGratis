@@ -1292,3 +1292,64 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 2025-10-25 07:14:45 - Bot: ¡Perfecto! ¿Le gustaría que le indicara el precio de ese producto?
 2025-10-25 07:14:55 - De 77795363389668@lid: agregaste el marolio?
 2025-10-25 07:15:25 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Marolio' al pedido. Total parcial: $130.00
+2025-10-25 07:25:04 - De 77795363389668@lid: tienen aceite?
+2025-10-25 07:25:30 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 07:27:16 - De 77795363389668@lid: agregame un pan
+2025-10-25 07:27:27 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Marolio' al pedido. Total parcial: $130.00
+2025-10-25 07:36:00 - De 77795363389668@lid: tienen aceite?
+2025-10-25 07:36:28 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 07:36:35 - De 77795363389668@lid: agregame un natura
+2025-10-25 07:36:47 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total parcial: $320.00
+2025-10-25 07:36:52 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 07:37:14 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+
+🧾 Total acumulado: $320.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 07:37:24 - De 77795363389668@lid: agregame un pan
+2025-10-25 07:37:35 - Bot: Tenemos estos productos disponibles:
+
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 07:37:48 - De 77795363389668@lid: si, el molto
+2025-10-25 07:38:24 - Bot: Entiendo. ¿Le gustaría saber más sobre nuestros productos? ¿Quizás le interesa alguna categoría en particular, como frutas y verduras, lácteos o carnes?
+2025-10-25 07:38:41 - De 77795363389668@lid: quiero agregar un pan rallado molto a mi pedido
+2025-10-25 07:39:11 - Bot: Se agregó 1 unidad(es) de 'Pan Rallado Molto 500g' al pedido. Total parcial: $440.00
+2025-10-25 07:39:18 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 07:39:40 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Pan Rallado Molto 500g — $120.00 x1 = $120.00
+
+🧾 Total acumulado: $440.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 07:41:01 - De 77795363389668@lid: tienen aceite?
+2025-10-25 07:41:05 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 07:41:29 - De 77795363389668@lid: agregame un pan
+2025-10-25 07:41:41 - Bot: Tenemos estos productos disponibles:
+
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 07:41:54 - De 77795363389668@lid: el molto
+2025-10-25 07:42:30 - Bot: Buenas tardes. ¿Le gustaría saber algo en particular sobre el "molto"? ¿Quizás sobre su origen, o si actualmente tenemos alguna promoción relacionada con él?

@@ -428,9 +428,9 @@ def get_response(user_input: str, session_id: str) -> str:
 
         # Si no se encuentra el producto ni en la lista ni en la base, se pide confirmación
         mensaje_ia = (
-            f"El sistema detectó que el cliente podría querer agregar '{product_name}' a su pedido, "
-            f"pero no está completamente seguro. "
-            f"Formulá una pregunta amable y natural para confirmar si desea agregarlo."
+            f"El cliente mencionó '{user_input}'. No estás completamente seguro si se refiere a "
+            f"alguno de los productos mostrados anteriormente. "
+            f"Formulá una pregunta natural y breve para confirmar si desea agregarlo al pedido."
         )
         result = with_message_history.invoke(
             {"input": mensaje_ia},

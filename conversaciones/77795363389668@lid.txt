@@ -735,3 +735,20 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 
 🧾 Total acumulado: $320.00
 ¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 02:02:40 - De 77795363389668@lid: que aceites tenes?
+2025-10-25 02:04:02 - Bot: ¡Hola! Tenemos disponibles Aceite de Girasol Marolio a $130.00, Aceite de Girasol Natura 1L a $320.00 y Aceite Lira Girasol 1L a $310.00. ¿Hay algo en particular que te interese o necesitas saber sobre alguno de estos aceites?
+2025-10-25 02:07:44 - De 77795363389668@lid: hola
+2025-10-25 02:08:49 - Bot: ¡Hola! Bienvenido al supermercado. ¿En qué puedo ayudarle hoy? ¿Tiene alguna pregunta sobre nuestros productos o desea realizar algún pedido?
+2025-10-25 02:09:14 - De 77795363389668@lid: tenes aceite?
+2025-10-25 02:10:26 - Bot: ¡Sí, claro que tenemos aceite! Tenemos aceite de girasol de Marolio, Natura y Lira. ¿Le interesa alguno en particular, o quizás necesita alguna otra cantidad? ¿Tiene alguna pregunta sobre las marcas o tipos de aceite que tenemos disponibles?
+2025-10-25 02:46:32 - De 77795363389668@lid: hola
+2025-10-25 02:47:10 - Bot: ¡Hola! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o simplemente estás mirando?
+2025-10-25 02:47:19 - De 77795363389668@lid: como estas?
+2025-10-25 02:47:57 - Bot: ¡Muy bien, gracias por preguntar! El día está precioso, ¿y tú, cómo estás? ¿Quizás te apetece echar un vistazo a nuestras ofertas de hoy?
+2025-10-25 02:48:09 - De 77795363389668@lid: tenes aceite?
+2025-10-25 02:48:33 - Bot: Tenemos estos productos disponibles:
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés que te ayude con alguno de estos productos?

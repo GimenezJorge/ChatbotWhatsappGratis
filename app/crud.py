@@ -114,6 +114,29 @@ def log_historial_archivo(session_id: str) -> list:
         return []
 
 
+
+
+# ==================================================================================
+# DATOS TRAÍDOS DESDE BD (guarda los productos ya consultados y mostrados al cliente)
+# ==================================================================================
+
+datos_traidos_desde_bd = {}
+
+def get_datos_traidos_desde_bd(session_id: str):
+    if session_id not in datos_traidos_desde_bd:
+        datos_traidos_desde_bd[session_id] = {
+            "productos_mostrados": {},               # los productos que ya se consultaron
+            "ultimo_producto_agregado": None,        # el último producto confirmado
+            "producto_pendiente_confirmacion": None  # si está esperando confirmación
+        }
+    return datos_traidos_desde_bd[session_id]
+
+
+
+
+
+
+
 # =============================================================================
 # BÚSQUEDA DE PRODUCTOS EN LA BASE DE DATOS
 # =============================================================================
@@ -353,13 +376,13 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # SI ENCUENTRA PRODUCTOS EN LA BASE
     if products and isinstance(products, list):
-        context = "Tenemos estos productos disponibles:\n"
+        context = "Tenemos estos productos disponibles:\n\n"
         for product in products:
             name = product.get('producto', 'Producto sin nombre')
             price = product.get('precio_venta', 'Precio no disponible')
             context += f"- {name} — ${price}\n"
 
-        return context + "\n¿Querés que te ayude con alguno de estos productos?"
+        return context + "\n¿Querés agregar alguno de esos productos a tu pedido?"
 
     elif isinstance(products, str):
         try:

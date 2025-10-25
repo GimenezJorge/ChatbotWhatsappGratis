@@ -752,3 +752,110 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 - Aceite Lira Girasol 1L — $310.00
 
 ¿Querés que te ayude con alguno de estos productos?
+2025-10-25 02:54:12 - De 77795363389668@lid: hola que leches tenes
+2025-10-25 02:54:38 - Bot: Tenemos estos productos disponibles:
+- Leche Chocolatada Ilolay 1L — $300.00
+- Leche Chocolatada La Serenísima 1L — $190.00
+- Leche Descremada La Serenísima 1L — $175.00
+- Leche en Polvo Descremada 400g — $540.00
+- Leche en Polvo Entera 400g — $550.00
+- Leche en polvo La Serenísima 400g — $420.00
+- Leche Entera La Serenísima 1L — $180.00
+- Leche Ilolay UAT 1L — $270.00
+- Leche Infantil La Serenísima 1L — $220.00
+- Leche Orgánica 1L — $210.00
+- Leche Parcialmente Descremada La Serenísima 1L — $178.00
+- Leche UAT Sin Lactosa 1L — $190.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 02:57:01 - De 77795363389668@lid: tenes aceite?
+2025-10-25 02:57:05 - Bot: Tenemos estos productos disponibles:
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 02:58:08 - De 77795363389668@lid: tenes cocas
+2025-10-25 02:58:12 - Bot: Se agregó 1 unidad(es) de 'Coca-Cola 2.25L' al pedido. Total parcial: $650.00
+2025-10-25 02:58:34 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 02:58:38 - Bot: Actualmente tu pedido tiene:
+
+* Coca-Cola 2.25L — $650.00 x1 = $650.00
+
+🧾 Total acumulado: $650.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 02:59:12 - De 77795363389668@lid: tenes cocas
+2025-10-25 02:59:17 - Bot: Se agregó 1 unidad(es) de 'Coca-Cola 2.25L' al pedido. Total parcial: $650.00
+2025-10-25 02:59:36 - De 77795363389668@lid: tenes aceites
+2025-10-25 02:59:39 - Bot: Tenemos estos productos disponibles:
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 02:59:53 - De 77795363389668@lid: tenes leche
+2025-10-25 02:59:56 - Bot: Tenemos estos productos disponibles:
+- Leche Chocolatada Ilolay 1L — $300.00
+- Leche Chocolatada La Serenísima 1L — $190.00
+- Leche Descremada La Serenísima 1L — $175.00
+- Leche en Polvo Descremada 400g — $540.00
+- Leche en Polvo Entera 400g — $550.00
+- Leche en polvo La Serenísima 400g — $420.00
+- Leche Entera La Serenísima 1L — $180.00
+- Leche Ilolay UAT 1L — $270.00
+- Leche Infantil La Serenísima 1L — $220.00
+- Leche Orgánica 1L — $210.00
+- Leche Parcialmente Descremada La Serenísima 1L — $178.00
+- Leche UAT Sin Lactosa 1L — $190.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 03:00:11 - De 77795363389668@lid: tenes pan?
+2025-10-25 03:00:15 - Bot: Tenemos estos productos disponibles:
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 03:01:07 - De 77795363389668@lid: tenes yerba?
+2025-10-25 03:01:10 - Bot: Tenemos estos productos disponibles:
+- Yerba Mate Amanda 500g — $370.00
+- Yerba Mate Amanda Suave 500g — $370.00
+- Yerba Mate CBSé Energy 500g — $380.00
+- Yerba Mate CBSé Pomelo 500g — $380.00
+- Yerba Mate Cruz de Malta 1kg — $700.00
+- Yerba Mate Marolio — $120.00
+- Yerba Mate Nobleza Gaucha 1kg — $680.00
+- Yerba Mate Playadito — $130.00
+- Yerba Mate Playadito 1kg — $700.00
+- Yerba Mate Playadito Suave 500g — $370.00
+- Yerba Mate Taragüi 1kg — $800.00
+- Yerba Mate Taragüi Suave 1kg — $800.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 03:02:12 - De 77795363389668@lid: yerba?
+2025-10-25 03:02:16 - Bot: Tenemos estos productos disponibles:
+
+- Yerba Mate Amanda 500g — $370.00
+- Yerba Mate Amanda Suave 500g — $370.00
+- Yerba Mate CBSé Energy 500g — $380.00
+- Yerba Mate CBSé Pomelo 500g — $380.00
+- Yerba Mate Cruz de Malta 1kg — $700.00
+- Yerba Mate Marolio — $120.00
+- Yerba Mate Nobleza Gaucha 1kg — $680.00
+- Yerba Mate Playadito — $130.00
+- Yerba Mate Playadito 1kg — $700.00
+- Yerba Mate Playadito Suave 500g — $370.00
+- Yerba Mate Taragüi 1kg — $800.00
+- Yerba Mate Taragüi Suave 1kg — $800.00
+
+¿Querés que te ayude con alguno de estos productos?
+2025-10-25 03:03:19 - De 77795363389668@lid: tenes dulce de leche_
+2025-10-25 03:03:23 - Bot: Se agregó 1 unidad(es) de 'Dulce de Leche Clásico 400g' al pedido. Total parcial: $290.00
+2025-10-25 03:03:42 - De 77795363389668@lid: tenes dulce de leche?
+2025-10-25 03:03:46 - Bot: Se agregó 1 unidad(es) de 'Dulce de Leche Clásico 400g' al pedido. Total parcial: $580.00
+2025-10-25 03:03:55 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 03:03:59 - Bot: Actualmente tu pedido tiene:
+
+* Dulce de Leche Clásico 400g — $290.00 x1 = $290.00
+* Dulce de Leche Clásico 400g — $290.00 x1 = $290.00
+
+🧾 Total acumulado: $580.00
+¿Querés agregar algo más o cerrar el pedido?

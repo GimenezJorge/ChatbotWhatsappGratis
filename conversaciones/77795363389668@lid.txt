@@ -883,3 +883,262 @@ En nuestro supermercado tenemos una gran variedad de productos para preparar pla
 - Aceite Lira Girasol 1L — $310.00
 
 ¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:30:49 - De 77795363389668@lid: mostrame los aceites
+2025-10-25 03:31:14 - Bot: Parece que todavía no tenés productos en tu pedido.
+2025-10-25 03:31:29 - De 77795363389668@lid: tenes aceite?
+2025-10-25 03:31:32 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:31:57 - De 77795363389668@lid: qgregame el natura
+2025-10-25 03:32:01 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total parcial: $320.00
+2025-10-25 03:32:23 - De 77795363389668@lid: que aceites tenias?
+2025-10-25 03:32:26 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:33:11 - De 77795363389668@lid: ahora agregame el lira
+2025-10-25 03:33:15 - Bot: Se agregó 1 unidad(es) de 'Aceite Lira Girasol 1L' al pedido. Total parcial: $630.00
+2025-10-25 03:35:08 - De 77795363389668@lid: que tengo en mi pedido?
+2025-10-25 03:35:12 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+
+🧾 Total acumulado: $630.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 03:35:28 - De 77795363389668@lid: ahora agregame una coca
+2025-10-25 03:35:32 - Bot: Se agregó 1 unidad(es) de 'Coca-Cola 2.25L' al pedido. Total parcial: $1280.00
+2025-10-25 03:36:23 - De 77795363389668@lid: a ver el pedido
+2025-10-25 03:36:27 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+* Coca-Cola 2.25L — $650.00 x1 = $650.00
+
+🧾 Total acumulado: $1280.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 03:37:09 - De 77795363389668@lid: mostrame de nuevo todos los aceites
+2025-10-25 03:37:13 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+* Coca-Cola 2.25L — $650.00 x1 = $650.00
+
+🧾 Total acumulado: $1280.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 03:37:25 - De 77795363389668@lid: me refiero a los aceites que tienen en el supermercado
+2025-10-25 03:37:29 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:40:32 - De 77795363389668@lid: tenes aceites?
+2025-10-25 03:40:36 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 03:41:12 - De 77795363389668@lid: si, quiero agregar el marolio
+2025-10-25 03:41:16 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $1520.00
+2025-10-25 03:45:00 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 03:45:04 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+* Coca-Cola 2.25L — $650.00 x1 = $650.00
+* Arvejas Marolio 400g — $240.00 x1 = $240.00
+
+🧾 Total acumulado: $1520.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 04:02:42 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:03:06 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:03:42 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:03:52 - Bot: Estoy teniendo problemas para responder.
+2025-10-25 04:06:32 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:06:56 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:07:19 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:07:29 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 04:10:46 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:11:09 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:11:13 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:11:24 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 04:17:44 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:18:08 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:18:15 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:18:23 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 04:20:32 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:20:55 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:20:57 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:21:09 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 04:28:24 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:28:48 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:29:23 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:29:34 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 04:37:55 - De 77795363389668@lid: tenes aceite?
+2025-10-25 04:38:27 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 04:38:49 - De 77795363389668@lid: agregame el marolio
+2025-10-25 04:39:03 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 05:25:46 - De 77795363389668@lid: tenes aceite?
+2025-10-25 05:26:11 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 05:26:58 - De 77795363389668@lid: agregame el marolio
+2025-10-25 05:27:11 - Bot: Se agregó 1 unidad(es) de 'Arvejas Marolio 400g' al pedido. Total parcial: $240.00
+2025-10-25 05:39:14 - De 77795363389668@lid: tenes aceite?
+2025-10-25 05:39:39 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 05:39:45 - De 77795363389668@lid: agregame el marolio
+2025-10-25 05:39:55 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Marolio' al pedido. Total parcial: $130.00
+2025-10-25 05:40:50 - De 77795363389668@lid: mostrame el pedido
+2025-10-25 05:41:16 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Marolio — $130.00 x1 = $130.00
+
+🧾 Total acumulado: $130.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 05:41:35 - De 77795363389668@lid: ahora agregame un natura
+2025-10-25 05:41:46 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total parcial: $450.00
+2025-10-25 05:41:53 - De 77795363389668@lid: ahora un lira
+2025-10-25 05:42:23 - Bot: Se agregó 1 unidad(es) de 'Aceite Lira Girasol 1L' al pedido. Total parcial: $760.00
+2025-10-25 05:42:33 - De 77795363389668@lid: mostrame mi pedido
+2025-10-25 05:42:57 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Marolio — $130.00 x1 = $130.00
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+
+🧾 Total acumulado: $760.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 05:43:17 - De 77795363389668@lid: ahora agregame una leche
+2025-10-25 05:43:29 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total parcial: $1080.00
+2025-10-25 05:48:17 - De 77795363389668@lid: tienen pan?
+2025-10-25 05:48:41 - Bot: Tenemos estos productos disponibles:
+
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 05:49:02 - De 77795363389668@lid: tienen leche?
+2025-10-25 05:49:05 - Bot: Tenemos estos productos disponibles:
+
+- Leche Chocolatada Ilolay 1L — $300.00
+- Leche Chocolatada La Serenísima 1L — $190.00
+- Leche Descremada La Serenísima 1L — $175.00
+- Leche en Polvo Descremada 400g — $540.00
+- Leche en Polvo Entera 400g — $550.00
+- Leche en polvo La Serenísima 400g — $420.00
+- Leche Entera La Serenísima 1L — $180.00
+- Leche Ilolay UAT 1L — $270.00
+- Leche Infantil La Serenísima 1L — $220.00
+- Leche Orgánica 1L — $210.00
+- Leche Parcialmente Descremada La Serenísima 1L — $178.00
+- Leche UAT Sin Lactosa 1L — $190.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 05:49:44 - De 77795363389668@lid: quiero agregar una leche chocolatada ilolay 1l a mi pedido
+2025-10-25 05:49:59 - Bot: Se agregó 1 unidad(es) de 'Leche Chocolatada Ilolay 1L' al pedido. Total parcial: $1380.00
+2025-10-25 05:50:07 - De 77795363389668@lid: mostrame mi pedido
+2025-10-25 05:50:29 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Marolio — $130.00 x1 = $130.00
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Leche Chocolatada Ilolay 1L — $300.00 x1 = $300.00
+
+🧾 Total acumulado: $1380.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-25 05:52:53 - De 77795363389668@lid: tenes aceite
+2025-10-25 05:52:57 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 05:53:37 - De 77795363389668@lid: me agregas un natu?
+2025-10-25 05:53:48 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Natura 1L' al pedido. Total parcial: $320.00
+2025-10-25 05:58:40 - De 77795363389668@lid: ahora un maroliu
+2025-10-25 05:59:12 - Bot: Se agregó 1 unidad(es) de 'Aceite de Girasol Marolio' al pedido. Total parcial: $450.00
+2025-10-25 05:59:44 - De 77795363389668@lid: y un acei lir
+2025-10-25 06:00:08 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-25 06:05:22 - De 77795363389668@lid: quise decir un lir
+2025-10-25 06:06:04 - Bot: Entiendo. Disculpa la confusión. ¿Le puedo ayudar con algo en particular relacionado con productos que estén disponibles en el supermercado? ¿Quizás busca algo específico?
+2025-10-25 06:06:24 - De 77795363389668@lid: quiero agregar un aceite lira a mi pedido
+2025-10-25 06:06:53 - Bot: Se agregó 1 unidad(es) de 'Aceite Lira Girasol 1L' al pedido. Total parcial: $760.00
+2025-10-25 06:07:04 - De 77795363389668@lid: mostrame mi pedido
+2025-10-25 06:07:27 - Bot: Actualmente tu pedido tiene:
+
+* Aceite de Girasol Natura 1L — $320.00 x1 = $320.00
+* Aceite de Girasol Marolio — $130.00 x1 = $130.00
+* Aceite Lira Girasol 1L — $310.00 x1 = $310.00
+
+🧾 Total acumulado: $760.00
+¿Querés agregar algo más o cerrar el pedido?

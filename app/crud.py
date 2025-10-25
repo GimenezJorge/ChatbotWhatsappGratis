@@ -266,9 +266,23 @@ def get_response(user_input: str, session_id: str) -> str:
     confianza = detected.get("confianza") or 0
     productos_detectados = detected.get("productos", [])
 
+
+
+
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
     if intencion == "AGREGAR_PRODUCTO" and productos_detectados:
         print(f"🛒 Intención de agregar producto detectada: {productos_detectados}")
+
+
+        # 🧠 Recuperar los productos ya mostrados en esta sesión
+        session_data = get_datos_traidos_desde_bd(session_id)
+        productos_previos = session_data["productos_mostrados"]
+
+        # Creamos una lista con los nombres de productos que ya vio el cliente
+        productos_previos_lista = list(productos_previos.keys())
+
+
+
 
         if confianza < 70:
             try:
@@ -288,6 +302,59 @@ def get_response(user_input: str, session_id: str) -> str:
                 print(f"Error al pedir confirmación con baja confianza: {e}")
                 return "¿Querías que te agregue ese producto al pedido?"
 
+        # 🧠 Recuperar los productos ya mostrados en esta sesión
+        session_data = get_datos_traidos_desde_bd(session_id)
+        productos_previos = session_data["productos_mostrados"]
+        productos_previos_lista = list(productos_previos.keys())
+
+ 
+        # 🧠 Verificar con IA si el producto mencionado ya estaba en la lista textual mostrada
+        session_data = get_datos_traidos_desde_bd(session_id)
+        productos_textuales = session_data.get("productos_textuales", "")
+
+        if productos_textuales:
+            prompt_verificacion = f"""
+            Tenés esta lista de productos que se le mostraron antes al cliente:
+            {productos_textuales}
+
+            El cliente acaba de decir: "{user_input}"
+
+            Tu tarea es decidir si el cliente se refiere a alguno de esos productos.
+
+            ⚠️ IMPORTANTE:
+            - Respondé SOLO con el nombre completo del producto EXACTO tal como aparece en la lista.
+            - NO agregues texto, explicaciones ni análisis.
+            - NO menciones intención, confianza ni nada similar.
+            - Si no se refiere a ninguno, respondé exactamente con la palabra: NINGUNO.
+
+            Ejemplos válidos:
+            Cliente dice "quiero el marolio" → responde "Aceite de Girasol Marolio"
+            Cliente dice "poneme uno de natura" → responde "Aceite de Girasol Natura 1L"
+            Cliente dice "no sé todavía" → responde "NINGUNO"
+            """
+
+
+            try:
+                respuesta_verificacion = modelo_input.invoke(prompt_verificacion).strip()
+                print(f"🤖 Resultado verificación IA (texto limpio): {respuesta_verificacion}")
+
+                if respuesta_verificacion.lower() != "ninguno":
+                    # Buscar coincidencia dentro de los productos mostrados
+                    for productos in session_data["productos_mostrados"].values():
+                        for p in productos:
+                            if respuesta_verificacion.lower() in p["producto"].lower():
+                                nombre = p["producto"]
+                                precio = p["precio_venta"]
+                                mensaje_confirmacion = agregar_a_pedido(session_id, nombre, 1, precio)
+                                print(f"✅ Producto agregado desde lista textual: {nombre}")
+                                return mensaje_confirmacion
+
+            except Exception as e:
+                print(f"⚠️ Error en verificación IA: {e}")
+
+
+
+        # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
         for product_name in productos_detectados:
             products = get_product_info(product_name)
             if isinstance(products, list) and len(products) > 0:
@@ -301,6 +368,7 @@ def get_response(user_input: str, session_id: str) -> str:
                 print(f"✅ Producto agregado al pedido: {mensaje_confirmacion}")
                 return mensaje_confirmacion
 
+        # Si no se encuentra el producto ni en la lista ni en la base, se pide confirmación
         mensaje_ia = (
             f"El sistema detectó que el cliente podría querer agregar '{product_name}' a su pedido, "
             f"pero no está completamente seguro. "
@@ -312,6 +380,8 @@ def get_response(user_input: str, session_id: str) -> str:
         )
         bot_response = result.content if hasattr(result, "content") else str(result)
         return bot_response.strip()
+
+
 
     # SI SE DETECTA LA INTENCIÓN: MOSTRAR_PEDIDO
     if intencion == "MOSTRAR_PEDIDO":
@@ -378,6 +448,16 @@ def get_response(user_input: str, session_id: str) -> str:
             if isinstance(products, list):
                 session_data["productos_mostrados"][product_name.lower()] = products
                 all_products.extend(products)
+        # 🗒️ Crear una versión textual simple de todos los productos mostrados
+        if all_products:
+            productos_textuales = "Estos son los productos que se le mostraron hasta ahora al cliente:\n"
+            productos_textuales += "\n".join(f"- {p['producto']}" for p in all_products)
+
+            session_data["productos_textuales"] = productos_textuales
+
+            print("\nProductos textuales guardados:")
+            print(productos_textuales)
+
 
         products = all_products if all_products else "No se encontraron productos relacionados."
     else:

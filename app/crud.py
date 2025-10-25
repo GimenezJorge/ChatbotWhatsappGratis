@@ -276,13 +276,37 @@ def detect_product_with_ai(user_input):
 def get_response(user_input: str, session_id: str) -> str:
     user_input_lower = user_input.lower().strip()
 
-    detected = detect_product_with_ai(user_input)
-    intencion = detected.get("intencion")
-    confianza = detected.get("confianza") or 0
-    productos_detectados = detected.get("productos", [])
 
+    # ==========================
+    # DETECCIÓN DE CONTEXTO RECIENTE
+    # ==========================
+    session_data = get_datos_traidos_desde_bd(session_id)
+    historial = log_historial_archivo(session_id)
+    ultimo_mensaje_bot = ""
 
+    # Buscar el último mensaje enviado por el bot
+    for h in reversed(historial):
+        if h["role"] == "bot":
+            ultimo_mensaje_bot = h["content"].lower()
+            break
 
+    # Si el último mensaje del bot ofrecía agregar productos,
+    # y el usuario responde algo corto o referencial,
+    # asumimos que mantiene la intención anterior (AGREGAR_PRODUCTO)
+    palabras_referenciales = ["ese", "esa", "eso", "el", "la", "dale", "agregalo", "sumalo", "ok"]
+    if any(p in user_input_lower for p in palabras_referenciales) and "¿querés agregar" in ultimo_mensaje_bot:
+        print("🔁 Se asume continuidad: el cliente sigue con intención de AGREGAR_PRODUCTO")
+        detected = {"intencion": "AGREGAR_PRODUCTO", "confianza": 95, "productos": [user_input_lower]}
+        intencion = detected.get("intencion")
+        confianza = detected.get("confianza")
+        productos_detectados = detected.get("productos")
+    else:
+        detected = detect_product_with_ai(user_input)
+        intencion = detected.get("intencion")
+        confianza = detected.get("confianza") or 0
+        productos_detectados = detected.get("productos", [])
+
+    print(f"🧠 Intención final detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}")
 
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
     if intencion == "AGREGAR_PRODUCTO" and productos_detectados:
@@ -300,22 +324,20 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
         if confianza < 90:
-            try:
-                mensaje_confirmacion = (
-                    f"El cliente dijo: '{user_input}'. "
-                    f"Detectaste intención de AGREGAR_PRODUCTO con confianza {confianza}%. "
-                    "Pedí confirmación de manera natural y amable, "
-                    "preguntándole si desea agregar ese producto al pedido."
-                )
-                result = with_message_history.invoke(
-                    {"input": mensaje_confirmacion},
-                    config={"configurable": {"session_id": session_id}}
-                )
-                bot_response = result.content if hasattr(result, "content") else str(result)
-                return bot_response.strip()
-            except Exception as e:
-                print(f"Error al pedir confirmación con baja confianza: {e}")
-                return "¿Querías que te agregue ese producto al pedido?"
+            session_data = get_datos_traidos_desde_bd(session_id)
+            producto_pendiente = productos_detectados[0] if productos_detectados else None
+            session_data["producto_pendiente_confirmacion"] = producto_pendiente
+
+            print(f"🕐 Producto pendiente de confirmación: {producto_pendiente}")
+
+            mensaje_confirmacion = (
+                f"¿Querés que te agregue '{producto_pendiente}' al pedido?"
+                if producto_pendiente
+                else "¿Querés que te agregue ese producto al pedido?"
+            )
+
+            return mensaje_confirmacion
+
 
         # 🧠 Recuperar los productos ya mostrados en esta sesión
         session_data = get_datos_traidos_desde_bd(session_id)

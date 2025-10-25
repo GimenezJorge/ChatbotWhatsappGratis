@@ -29,6 +29,8 @@ REGLAS GENERALES:
 6. Respetá el plural o singular que use el cliente (“galletitas”, no “galleta”).
 7. No inventes productos ni intenciones.
 8. Si el mensaje es ambiguo o dudoso, igual devolvé una intención estimada con confianza baja (<70).
+9. Si el CLIENTE usa frases breves o referenciales (por ejemplo: “ese”, “esa”, “el primero”, “el molto”, “ese pan”, “agregalo”, “dale”), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
+No interpretes estas frases como nuevas consultas ni como información general, salvo que el contexto indique lo contrario.
 
 ---
 EJEMPLOS:

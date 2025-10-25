@@ -26,7 +26,7 @@ REGLAS GENERALES:
 3. Listá los productos mencionados por su nombre exacto, en minúsculas, sin comillas ni signos extra.
 4. Si no se menciona ningún producto, devolvé “ninguno”.
 5. Si hay varios productos, separalos por comas.
-6. Respetá el plural o singular que use el cliente (“galletitas”, no “galleta”).
+6. solo devolve productos en singular 
 7. No inventes productos ni intenciones.
 8. Si el mensaje es ambiguo o dudoso, igual devolvé una intención estimada con confianza baja (<70).
 9. Si el CLIENTE usa frases breves o referenciales (por ejemplo: “ese”, “esa”, “el primero”, “el molto”, “ese pan”, “agregalo”, “dale”), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).

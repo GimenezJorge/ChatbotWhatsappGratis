@@ -6,6 +6,8 @@
 
 import os
 import re
+from text_to_num import text2num
+from word2number import w2n
 from fastapi import HTTPException
 
 from langchain_ollama import OllamaLLM, ChatOllama
@@ -148,8 +150,42 @@ def regenerar_productos_textuales(session_id: str):
     print("\n📦 Productos textuales actualizados:")
     print(productos_textuales)
 
+# =============================================================================
+# FUNCION AUXILIAR PARA RECONOCER LAS CANTIDADES INGRESADAS POR EL USUARIO
+# =============================================================================
 
+def convertir_a_numero_es(user_input: str) -> int:
+    texto = user_input.lower().strip()
 
+    mapa_numeros = {
+        "uno": 1, "una": 1, "un": 1,
+        "dos": 2, "par": 2, "un par": 2,
+        "tres": 3, "cuatro": 4, "cinco": 5, "seis": 6,
+        "siete": 7, "ocho": 8, "nueve": 9, "diez": 10,
+        "media docena": 6, "una docena": 12, "docena": 12
+    }
+
+    # Buscar expresiones comunes
+    for palabra, numero in mapa_numeros.items():
+        if palabra in texto:
+            return numero
+
+    # Buscar número en cifras
+    match = re.search(r"\b\d+\b", texto)
+    if match:
+        return int(match.group())
+
+    # Intentar convertir usando text2num (modo español)
+    try:
+        return text2num(texto, "es")
+    except Exception:
+        pass
+
+    # 4️⃣ Fallback: intentar word2number (inglés)
+    try:
+        return w2n.word_to_num(texto)
+    except Exception:
+        return 1
 
 
 # =============================================================================
@@ -390,7 +426,14 @@ def get_response(user_input: str, session_id: str) -> str:
                                 if respuesta_verificacion.lower() in p["producto"].lower():
                                     nombre = p["producto"]
                                     precio = p["precio_venta"]
-                                    mensaje_confirmacion = agregar_a_pedido(session_id, nombre, 1, precio)
+                                    
+                                    # Detectar cantidad (número o palabra, en español o inglés)
+                                    cantidad = convertir_a_numero_es(user_input_lower)
+                                    print(f"🧮 Cantidad detectada: {cantidad}")
+
+
+                                    mensaje_confirmacion = agregar_a_pedido(session_id, nombre, cantidad, precio)
+
                                     print(f"✅ Producto agregado desde lista textual: {nombre}")
                                     return mensaje_confirmacion
 

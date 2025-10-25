@@ -10,3 +10,5 @@ sqlalchemy>=2.0.0
 pydantic>=2.5.0
 whatsapp-web>=0.0.1
 qrcode-terminal>=0.8
+word2number>=1.1
+text2num>=3.0.0

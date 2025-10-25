@@ -132,6 +132,21 @@ def get_datos_traidos_desde_bd(session_id: str):
     return datos_traidos_desde_bd[session_id]
 
 
+# =============================================================================
+# FUNCIÓN AUXILIAR PARA REGENERAR LA LISTA TEXTUAL DE PRODUCTOS MOSTRADOS
+# (para que la IA pueda comparar el producto detectado con los productos ya mostrados)
+# =============================================================================
+
+def regenerar_productos_textuales(session_id: str):
+    session_data = get_datos_traidos_desde_bd(session_id)
+    productos_textuales = "Estos son los productos que se le mostraron hasta ahora al cliente:\n"
+    for lista in session_data["productos_mostrados"].values():
+        for p in lista:
+            productos_textuales += f"- {p['producto']}\n"
+    session_data["productos_textuales"] = productos_textuales
+
+    print("\n📦 Productos textuales actualizados:")
+    print(productos_textuales)
 
 
 
@@ -284,7 +299,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-        if confianza < 70:
+        if confianza < 90:
             try:
                 mensaje_confirmacion = (
                     f"El cliente dijo: '{user_input}'. "
@@ -353,20 +368,30 @@ def get_response(user_input: str, session_id: str) -> str:
                 print(f"⚠️ Error en verificación IA: {e}")
 
 
-
         # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
         for product_name in productos_detectados:
             products = get_product_info(product_name)
+
             if isinstance(products, list) and len(products) > 0:
-                product_match = next(
-                    (p for p in products if product_name.lower() in p['producto'].lower()),
-                    products[0]
-                )
-                nombre = product_match.get('producto', product_name)
-                precio = product_match.get('precio_venta', 0.0)
-                mensaje_confirmacion = agregar_a_pedido(session_id, nombre, 1, precio)
-                print(f"✅ Producto agregado al pedido: {mensaje_confirmacion}")
-                return mensaje_confirmacion
+                # Guardar también en los productos mostrados de la sesión
+                session_data = get_datos_traidos_desde_bd(session_id)
+                session_data["productos_mostrados"][product_name.lower()] = products
+
+                # Regenerar la versión textual para la IA
+                regenerar_productos_textuales(session_id)
+
+
+                # Mostrar al cliente los productos encontrados con el formato habitual
+                context = "Tenemos estos productos disponibles:\n\n"
+                for p in products:
+                    name = p.get('producto', 'Producto sin nombre')
+                    price = p.get('precio_venta', 'Precio no disponible')
+                    context += f"- {name} — ${price}\n"
+
+                context += "\n¿Querés agregar alguno de esos productos a tu pedido?"
+                return context
+
+
 
         # Si no se encuentra el producto ni en la lista ni en la base, se pide confirmación
         mensaje_ia = (
@@ -387,7 +412,7 @@ def get_response(user_input: str, session_id: str) -> str:
     if intencion == "MOSTRAR_PEDIDO":
         print("🧾 Intención de mostrar pedido detectada.")
 
-        if confianza < 70:
+        if confianza < 90:
             try:
                 mensaje_confirmacion = (
                     f"El cliente dijo: '{user_input}'. "
@@ -448,15 +473,10 @@ def get_response(user_input: str, session_id: str) -> str:
             if isinstance(products, list):
                 session_data["productos_mostrados"][product_name.lower()] = products
                 all_products.extend(products)
-        # 🗒️ Crear una versión textual simple de todos los productos mostrados
+
+        # Actualizar la lista textual para la IA
         if all_products:
-            productos_textuales = "Estos son los productos que se le mostraron hasta ahora al cliente:\n"
-            productos_textuales += "\n".join(f"- {p['producto']}" for p in all_products)
-
-            session_data["productos_textuales"] = productos_textuales
-
-            print("\nProductos textuales guardados:")
-            print(productos_textuales)
+            regenerar_productos_textuales(session_id)
 
 
         products = all_products if all_products else "No se encontraron productos relacionados."

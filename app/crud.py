@@ -367,7 +367,7 @@ def get_response(user_input: str, session_id: str) -> str:
             print(f"🕐 Producto pendiente de confirmación: {producto_pendiente}")
 
             mensaje_confirmacion = (
-                f"¿Querés que te agregue '{producto_pendiente}' al pedido?"
+                f"¿Querés que te agregue {producto_pendiente} al pedido?"
                 if producto_pendiente
                 else "¿Querés que te agregue ese producto al pedido?"
             )
@@ -462,9 +462,9 @@ def get_response(user_input: str, session_id: str) -> str:
                 for p in products:
                     name = p.get('producto', 'Producto sin nombre')
                     price = p.get('precio_venta', 'Precio no disponible')
-                    context += f"- {name} — ${price}\n"
+                    context += f"• {name} ... ${price}\n"
 
-                context += "\nMe indicas cual de estos productos queres agregar a tu pedido?"
+                context += "\nMe indicas cual de estos productos querés agregar a tu pedido? 😊"
                 return context
 
 

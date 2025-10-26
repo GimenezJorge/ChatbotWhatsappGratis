@@ -28,7 +28,7 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
             "subtotal": subtotal
         })
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"Agregué {cantidad} unidad(es) de {producto} al pedido.               Total: ${total_actual:.2f}"
+        mensaje = f"Agregué {cantidad} {producto} al pedido. (Total: ${total_actual:.2f})"
 
     print(f"[DEBUG] Pedido actualizado para {session_id}: {pedido}")
     return mensaje
@@ -43,13 +43,13 @@ def mostrar_pedido(session_id: str) -> str:
     total = sum(i["subtotal"] for i in items)
 
     listado = "\n".join([
-        f"* {i['producto']} — ${i['precio_unitario']:.2f} x{i['cantidad']} = ${i['subtotal']:.2f}"
+        f"{i['producto']} ${i['precio_unitario']:.2f}({i['cantidad']}) : ${i['subtotal']:.2f}"
         for i in items
     ])
 
     return (
         f"Actualmente tu pedido tiene:\n\n"
         f"{listado}\n\n"
-        f"🧾 Total acumulado: ${total:.2f}\n"
+        f"🧾 Total: ${total:.2f}\n"
         f"¿Querés agregar algo más o cerrar el pedido?"
     )

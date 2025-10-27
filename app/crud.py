@@ -344,6 +344,67 @@ def get_response(user_input: str, session_id: str) -> str:
 
     print(f"🧠 Intención final detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}")
 
+    # 🧩 Si no se encontró ningún producto en la base, verificar si es una comida compuesta
+    if not productos_detectados or all(
+        not (isinstance(get_product_info(p), list) and get_product_info(p))
+        for p in productos_detectados
+    ):
+        prompt_ingredientes = f"""
+Analiza si '{user_input}' es un plato o comida compuesta (como ensalada, torta, sándwich, pizza, etc.).
+Si lo es, respondé SOLO con los nombres de los ingredientes principales separados por comas.
+Si no, respondé exactamente: "ninguno"
+
+Ejemplos:
+- Entrada: "ensalada" → lechuga, tomate, pepino, zanahoria, aceitunas
+- Entrada: "torta de chocolate" → harina, azúcar, huevos, cacao en polvo, manteca
+- Entrada: "hamburguesa" → pan, carne molida, lechuga, tomate, queso
+- Entrada: "leche" → ninguno
+
+Entrada: "{user_input}"
+Salida:
+"""
+        try:
+            raw_response = modelo_input.invoke(prompt_ingredientes).strip()
+            print(f"🔍 Respuesta cruda IA (ingredientes): {raw_response}")
+
+            if "ninguno" not in raw_response.lower():
+                ingredientes = [i.strip() for i in raw_response.split(",") if i.strip()]
+                if ingredientes:
+                    print(f"🍳 Ingredientes detectados: {ingredientes}")
+
+                    productos_encontrados = []
+                    for ingrediente in ingredientes:
+                        resultado = get_product_info(ingrediente)
+                        if isinstance(resultado, list) and resultado:
+                            productos_encontrados.extend(resultado)
+
+                    if productos_encontrados:
+                        lista_ingredientes = ""
+                        for p in productos_encontrados:
+                            name = p.get("producto", "Producto sin nombre")
+                            brand = p.get("marca", "Marca desconocida")
+                            price = p.get("precio_venta", "Precio no disponible")
+                            lista_ingredientes += f"• {name} (Marca: {brand}) — ${price}\n"
+
+                        respuesta_fija = (
+                            f"Actualmente no contamos con '{user_input}' como producto, "
+                            f"pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:\n\n"
+                            f"{lista_ingredientes}\n"
+                            f"¿Querés que te agregue alguno de estos ingredientes al pedido?"
+                        )
+
+                        return respuesta_fija
+                    else:
+                        return f"No tenemos disponibles los ingredientes típicos para '{user_input}'."
+        except Exception as e:
+            print(f"❌ Error analizando posible comida compuesta: {e}")
+
+
+
+
+
+
+
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
     if intencion == "AGREGAR_PRODUCTO" and productos_detectados:
         print(f"🛒 Intención de agregar producto detectada: {productos_detectados}")

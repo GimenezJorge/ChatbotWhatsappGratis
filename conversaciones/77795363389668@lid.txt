@@ -332,3 +332,309 @@ Aceite de Girasol Natura 1L $320.00(2) : $640.00
 
 🧾 Total: $770.00
 ¿Querés agregar algo más o cerrar el pedido?
+2025-10-27 13:47:35 - De 77795363389668@lid: tenes hamburguesa?
+2025-10-27 13:48:27 - Bot: ¡Uy, qué pena! No hemos encontrado hamburguesas en este momento.  ¿Quizás te refieres a alguna otra cosa del menú, o tal vez querés buscar un tipo de carne diferente? ¡Avísame y te ayudo a encontrar lo que buscas! 😊
+2025-10-27 13:50:35 - De 77795363389668@lid: ¿Tenés cerveza?
+2025-10-27 13:51:27 - Bot: ¡Vaya, parece que no tenemos cerveza en este momento!  ¿Quizás te gustaría buscar alguna refrescante bebida o alguna cerveza de otro estilo?  ¡Dime qué te apetece y te ayudo a encontrarlo! 😊
+2025-10-27 13:52:01 - De 77795363389668@lid: Quiero hacer una pizza
+2025-10-27 13:52:59 - Bot: ¡Qué bueno que quieres hacer una pizza! ¿Te gustaría que la agregues a tu pedido? 😊
+2025-10-27 14:02:21 - De 77795363389668@lid: tenes pizza?
+2025-10-27 14:03:25 - Bot: ¡Uy, qué pena! Parece que no tenemos pizza en este momento. Lo siento mucho. 
+
+¿Te gustaría que te echara un vistazo a otras opciones de comida preparada que sí tenemos? O, si no, ¿quizás puedas aclararme qué tipo de pizza estabas buscando para ver si podemos ayudarte a encontrar algo parecido. ¡Dime! 😊
+2025-10-27 14:18:33 - De 77795363389668@lid: quiero hacer una pizza
+2025-10-27 14:21:00 - Bot: ¡Uy, no tenemos “quiero hacer una pizza” como tal! Pero, ¡qué bueno que querés armarte una pizza! Te puedo ofrecer todos los ingredientes para que la prepares: tenemos agua Manaos, ketchup Knorr, salame Paladini, salsas Bolognesa y Criolla Molto, salsa Cuatro Quesos, aceitunas negras y verdes, alubias, arvejas, chauchas, choclo, garbanzos, lentejas, mix de vegetales, pickles, remolachas, tomates Perita y zanahorias. ¿Qué te parece si elegís los ingredientes que más te gustan para armar tu pizza? ¿Hay algo en particular que te apetece?
+2025-10-27 15:16:18 - De 77795363389668@lid: quiero hacer una pizza
+2025-10-27 15:20:23 - Bot: ¡Hola! Entiendo que querías pedir una pizza, pero lamentablemente no tenemos esa opción como producto en nuestro supermercado. Sin embargo, tenemos una gran variedad de ingredientes que te ayudarán a prepararla tú mismo. Te puedo mostrar los siguientes:
+
+• Agua Manaos 2L (Marca: Positivo BGH) — $150.00
+• Ketchup Knorr 500g (Marca: Knorr) — $290.00
+• Salame Paladini (Marca: Paladini) — $200.00
+• Salsa Bolognesa Molto 340g (Marca: Molto) — $145.00
+• Salsa Criolla Molto 200ml (Marca: Molto) — $95.00
+• Salsa Cuatro Quesos Molto 340g (Marca: Molto) — $160.00
+• Salsa Fileto Molto 340g (Marca: Molto) — $135.00
+• Salsa Lista Molto Tradicional 340g (Marca: Molto) — $110.00
+• Salsa Napolitana Molto 340g (Marca: Molto) — $130.00
+• Salsa Picante Molto 150ml (Marca: Molto) — $140.00
+• Aceite de Girasol Marolio (Marca: Georgalos) — $130.00
+• Aceite de Girasol Natura 1L (Marca: Georgalos) — $320.00
+• Aceite Lira Girasol 1L (Marca: Paladini) — $310.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+2025-10-27 15:39:53 - De 77795363389668@lid: quiero hacer una pizza
+2025-10-27 15:40:50 - Bot: Actualmente no contamos con 'quiero hacer una pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Agua Manaos 2L (Marca: Positivo BGH) — $150.00
+• Ketchup Knorr 500g (Marca: Knorr) — $290.00
+• Salame Paladini (Marca: Paladini) — $200.00
+• Salsa Bolognesa Molto 340g (Marca: Molto) — $145.00
+• Salsa Criolla Molto 200ml (Marca: Molto) — $95.00
+• Salsa Cuatro Quesos Molto 340g (Marca: Molto) — $160.00
+• Salsa Fileto Molto 340g (Marca: Molto) — $135.00
+• Salsa Lista Molto Tradicional 340g (Marca: Molto) — $110.00
+• Salsa Napolitana Molto 340g (Marca: Molto) — $130.00
+• Salsa Picante Molto 150ml (Marca: Molto) — $140.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Aceite de Girasol Marolio (Marca: Georgalos) — $130.00
+• Aceite de Girasol Natura 1L (Marca: Georgalos) — $320.00
+• Aceite Lira Girasol 1L (Marca: Paladini) — $310.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 15:45:18 - De 77795363389668@lid: quiero hacer una chocotorta
+2025-10-27 15:45:44 - Bot: Tenemos estos productos disponibles:
+
+• Chocotorta Pack ... $400.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-27 15:46:29 - De 77795363389668@lid: quiero comprar una tarta
+2025-10-27 15:47:25 - Bot: Actualmente no contamos con 'quiero comprar una tarta' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Azúcar Ledesma 1kg (Marca: Ledesma) — $200.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 15:54:00 - De 77795363389668@lid: quiero comprar una tarta
+2025-10-27 15:55:07 - Bot: ¡Claro que sí! ¿Te gustaría que revisáramos las tartas que tenemos disponibles para tu pedido? 😊
+2025-10-27 16:01:00 - De 77795363389668@lid: quiero comprar una tarta
+2025-10-27 16:02:03 - Bot: No tenemos disponibles los ingredientes típicos para 'quiero comprar una tarta'.
+2025-10-27 16:03:01 - De 77795363389668@lid: tienen pizza?
+2025-10-27 16:04:04 - Bot: No tenemos disponibles los ingredientes típicos para 'tienen pizza?'.
+2025-10-27 16:04:21 - De 77795363389668@lid: quiero comprar una pizza
+2025-10-27 16:05:19 - Bot: Actualmente no contamos con ese producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:😊
+
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 16:10:58 - De 77795363389668@lid: tienen pizza?
+2025-10-27 16:11:51 - Bot: No tenemos disponibles los ingredientes típicos para 'tienen pizza?'.
+2025-10-27 16:18:45 - De 77795363389668@lid: tienen pizza?
+2025-10-27 16:19:38 - Bot: No tenemos disponibles los ingredientes típicos para 'tienen pizza?'.
+2025-10-27 16:20:51 - De 77795363389668@lid: qiuero comprar una pizza
+2025-10-27 16:21:43 - Bot: Actualmente no contamos con ese producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo: 
+
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 16:27:18 - De 77795363389668@lid: tienen pizza?
+2025-10-27 16:28:11 - Bot: No tenemos disponibles los ingredientes típicos para 'tienen pizza?'.
+2025-10-27 16:30:08 - De 77795363389668@lid: quiero comprar pizza
+2025-10-27 16:31:02 - Bot: Actualmente no contamos con 'quiero comprar pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 16:33:33 - De 77795363389668@lid: tienen pizza?
+2025-10-27 16:34:44 - Bot: ¡Qué pena! El supermercado actualmente no tiene pizza, pero te puedo ayudar a encontrar algo delicioso para cenar. ¿Quizás estabas buscando alguna otra cosa en particular o quieres que te muestre algunas opciones de entrantes o platos preparados? 😊
+2025-10-27 16:35:48 - De 77795363389668@lid: quiero hacer una pizza, que puedo comprar?
+2025-10-27 16:36:54 - Bot: Actualmente no contamos con 'quiero hacer una pizza, que puedo comprar?' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceite de Girasol Marolio (Marca: Georgalos) — $130.00
+• Aceite de Girasol Natura 1L (Marca: Georgalos) — $320.00
+• Aceite Lira Girasol 1L (Marca: Paladini) — $310.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 16:37:39 - De 77795363389668@lid: quiero comprar una pizza
+2025-10-27 16:38:47 - Bot: Actualmente no contamos con 'quiero comprar una pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Ketchup Knorr 500g (Marca: Knorr) — $290.00
+• Salsa Bolognesa Molto 340g (Marca: Molto) — $145.00
+• Salsa Criolla Molto 200ml (Marca: Molto) — $95.00
+• Salsa Cuatro Quesos Molto 340g (Marca: Molto) — $160.00
+• Salsa Fileto Molto 340g (Marca: Molto) — $135.00
+• Salsa Lista Molto Tradicional 340g (Marca: Molto) — $110.00
+• Salsa Napolitana Molto 340g (Marca: Molto) — $130.00
+• Salsa Picante Molto 150ml (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 16:39:07 - De 77795363389668@lid: agregame un ketchup Knorr a mi pedido
+2025-10-27 16:39:37 - Bot: Tenemos estos productos disponibles:
+
+• Ketchup Knorr 500g ... $290.00
+• Ketchup Molto 500g ... $160.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-27 16:39:54 - De 77795363389668@lid: el ketchup Knorr
+2025-10-27 16:40:57 - Bot: Agregué 1 Ketchup Knorr 500g al pedido. (Total: $290.00)
+2025-10-27 16:41:09 - De 77795363389668@lid: mostrame mi pedido
+2025-10-27 16:42:12 - Bot: Actualmente tu pedido tiene:
+
+Ketchup Knorr 500g $290.00(1) : $290.00
+
+🧾 Total: $290.00
+¿Querés agregar algo más o cerrar el pedido?

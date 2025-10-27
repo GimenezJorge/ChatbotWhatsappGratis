@@ -312,3 +312,23 @@ Me indicas cual de estos productos querés agregar a tu pedido? 😊
 • Aceite Lira Girasol 1L ... $310.00
 
 Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-27 13:14:09 - De 77795363389668@lid: tenes aceite?
+2025-10-27 13:15:02 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 13:15:36 - De 77795363389668@lid: agregame un aceite marolio
+2025-10-27 13:17:18 - Bot: Agregué 1 Aceite de Girasol Marolio al pedido. (Total: $130.00)
+2025-10-27 13:17:46 - De 77795363389668@lid: sumame dos aceite natura
+2025-10-27 13:19:28 - Bot: Agregué 2 Aceite de Girasol Natura 1L al pedido. (Total: $770.00)
+2025-10-27 13:20:28 - De 77795363389668@lid: mostrame el pedido
+2025-10-27 13:21:15 - Bot: Actualmente tu pedido tiene:
+
+Aceite de Girasol Marolio $130.00(1) : $130.00
+Aceite de Girasol Natura 1L $320.00(2) : $640.00
+
+🧾 Total: $770.00
+¿Querés agregar algo más o cerrar el pedido?

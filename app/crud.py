@@ -19,7 +19,6 @@ from app.pedidos import agregar_a_pedido
 from app.database import connect_to_db
 from app.info_super import leer_info_supermercado
 
-
 # =============================================================================
 # VERIFICACIÓN DEL TOKEN DE ACCESO
 # =============================================================================
@@ -30,14 +29,12 @@ def verify_token(token: str):
         raise HTTPException(status_code=401, detail="Token inválido")
     return True
 
-
 # =============================================================================
 # MODELOS DE IA
 # =============================================================================
 
 modelo_input = OllamaLLM(model="gemma3_input:latest")
 modelo_output = ChatOllama(model="gemma3_output:latest")
-
 
 # =============================================================================
 # CONFIGURACIÓN DEL PROMPT Y DEL HISTORIAL
@@ -49,7 +46,6 @@ prompt = ChatPromptTemplate.from_messages([
 ])
 
 chain = prompt | modelo_output
-
 
 # =============================================================================
 # HISTORIAL EN MEMORIA
@@ -68,7 +64,6 @@ with_message_history = RunnableWithMessageHistory(
     input_messages_key="input",
     history_messages_key="history"
 )
-
 
 # =============================================================================
 # LECTURA DE HISTORIAL DESDE ARCHIVO
@@ -115,9 +110,6 @@ def log_historial_archivo(session_id: str) -> list:
         print(f"Error leyendo historial del archivo: {e}")
         return []
 
-
-
-
 # ==================================================================================
 # DATOS TRAÍDOS DESDE BD (guarda los productos ya consultados y mostrados al cliente)
 # ==================================================================================
@@ -127,12 +119,13 @@ datos_traidos_desde_bd = {}
 def get_datos_traidos_desde_bd(session_id: str):
     if session_id not in datos_traidos_desde_bd:
         datos_traidos_desde_bd[session_id] = {
-            "productos_mostrados": {},               # los productos que ya se consultaron
-            "ultimo_producto_agregado": None,        # el último producto confirmado
-            "producto_pendiente_confirmacion": None  # si está esperando confirmación
+            "productos_mostrados": {},
+            "ultimo_producto_agregado": None,
+            "producto_pendiente_confirmacion": None,
+            "nombre_cliente": None,
+            "direccion_cliente": None
         }
     return datos_traidos_desde_bd[session_id]
-
 
 # =============================================================================
 # FUNCIÓN AUXILIAR PARA REGENERAR LA LISTA TEXTUAL DE PRODUCTOS MOSTRADOS
@@ -186,7 +179,6 @@ def convertir_a_numero_es(user_input: str) -> int:
         return w2n.word_to_num(texto)
     except Exception:
         return 1
-
 
 # =============================================================================
 # BÚSQUEDA DE PRODUCTOS EN LA BASE DE DATOS
@@ -253,7 +245,6 @@ def get_product_info(product_name: str):
 
     return f"No se encontró ningún producto relacionado con '{product_name}'."
 
-
 # =============================================================================
 # DETECCIÓN DE INTENCIÓN Y PRODUCTOS CON IA
 # =============================================================================
@@ -304,14 +295,12 @@ def detect_product_with_ai(user_input):
             "productos": []
         }
 
-
 # =============================================================================
 # GENERACIÓN DE LA RESPUESTA DEL BOT
 # =============================================================================
 
 def get_response(user_input: str, session_id: str) -> str:
     user_input_lower = user_input.lower().strip()
-
 
     # ==========================
     # DETECCIÓN DE CONTEXTO RECIENTE
@@ -326,8 +315,7 @@ def get_response(user_input: str, session_id: str) -> str:
             ultimo_mensaje_bot = h["content"].lower()
             break
 
-    # Si el último mensaje del bot ofrecía agregar productos,
-    # y el usuario responde algo corto o referencial,
+    # Si el último mensaje del bot ofrecía agregar productos, y el usuario responde algo corto o referencial,
     # asumimos que mantiene la intención anterior (AGREGAR_PRODUCTO)
     palabras_referenciales = ["ese", "esa", "eso", "el", "la", "dale", "agregalo", "sumalo", "ok"]
     if any(p in user_input_lower for p in palabras_referenciales) and "¿querés agregar" in ultimo_mensaje_bot:
@@ -344,7 +332,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
     print(f"🧠 Intención final detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}")
 
-    # 🧩 Si no se encontró ningún producto en la base, verificar si es una comida compuesta
+    # Si no se encontró ningún producto en la base, verificar si es una comida compuesta
     if not productos_detectados or all(
         not (isinstance(get_product_info(p), list) and get_product_info(p))
         for p in productos_detectados
@@ -397,35 +385,26 @@ Salida:
                     else:
                         return f"No tenemos disponibles los ingredientes típicos para '{user_input}'."
         except Exception as e:
-            print(f"❌ Error analizando posible comida compuesta: {e}")
-
-
-
-
-
-
+            print(f"Error analizando posible comida compuesta: {e}")
 
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
     if intencion == "AGREGAR_PRODUCTO" and productos_detectados:
         print(f"🛒 Intención de agregar producto detectada: {productos_detectados}")
 
 
-        # 🧠 Recuperar los productos ya mostrados en esta sesión
+        # Recuperar los productos ya mostrados en esta sesión
         session_data = get_datos_traidos_desde_bd(session_id)
         productos_previos = session_data["productos_mostrados"]
 
         # Creamos una lista con los nombres de productos que ya vio el cliente
         productos_previos_lista = list(productos_previos.keys())
 
-
-
-
         if confianza < 90:
             session_data = get_datos_traidos_desde_bd(session_id)
             producto_pendiente = productos_detectados[0] if productos_detectados else None
             session_data["producto_pendiente_confirmacion"] = producto_pendiente
 
-            print(f"🕐 Producto pendiente de confirmación: {producto_pendiente}")
+            print(f"Producto pendiente de confirmación: {producto_pendiente}")
 
             mensaje_confirmacion = (
                 f"¿Querés que te agregue {producto_pendiente} al pedido?"
@@ -436,13 +415,13 @@ Salida:
             return mensaje_confirmacion
 
 
-        # 🧠 Recuperar los productos ya mostrados en esta sesión
+        # Recuperar los productos ya mostrados en esta sesión
         session_data = get_datos_traidos_desde_bd(session_id)
         productos_previos = session_data["productos_mostrados"]
         productos_previos_lista = list(productos_previos.keys())
 
  
-        # 🧠 Verificar con IA si el producto mencionado ya estaba en la lista textual mostrada
+        # Verificar con IA si el producto mencionado ya estaba en la lista textual mostrada
         session_data = get_datos_traidos_desde_bd(session_id)
         productos_textuales = session_data.get("productos_textuales", "")
 
@@ -455,7 +434,7 @@ Salida:
 
             Tu tarea es decidir si el cliente se refiere a alguno de esos productos.
 
-            ⚠️ IMPORTANTE:
+            IMPORTANTE:
             - Respondé SOLO con el nombre completo del producto EXACTO tal como aparece en la lista.
             - NO agregues texto, explicaciones ni análisis.
             - NO menciones intención, confianza ni nada similar.
@@ -467,19 +446,18 @@ Salida:
             Cliente dice "no sé todavía" → responde "NINGUNO"
             """
 
-
             try:
                 respuesta_verificacion = modelo_input.invoke(prompt_verificacion).strip()
                 print(f"🤖 Resultado verificación IA (texto limpio): {respuesta_verificacion}")
 
                 if respuesta_verificacion.lower() != "ninguno":
-                    # 🧠 Validar que haya alguna palabra en común entre lo que dijo el cliente y el producto detectado
+                    # Validar que haya alguna palabra en común entre lo que dijo el cliente y el producto detectado
                     palabras_cliente = set(user_input.lower().split())
                     palabras_producto = set(respuesta_verificacion.lower().split())
                     coincidencias = palabras_cliente.intersection(palabras_producto)
 
                     if not coincidencias:
-                        print(f"⚠️ Coincidencia descartada: '{respuesta_verificacion}' no coincide con '{user_input}'")
+                        print(f"Coincidencia descartada: '{respuesta_verificacion}' no coincide con '{user_input}'")
                     else:
                         # Buscar coincidencia dentro de los productos mostrados
                         for productos in session_data["productos_mostrados"].values():
@@ -500,12 +478,12 @@ Salida:
 
 
             except Exception as e:
-                print(f"⚠️ Error en verificación IA: {e}")
+                print(f"Error en verificación IA: {e}")
 
-            # 🧭 Si la IA no encontró coincidencia válida, o fue descartada, buscar en la base
-            print("🧭 No se encontró coincidencia en productos mostrados. Buscando en la base de datos...")
+            # Si la IA no encontró coincidencia válida, o fue descartada, buscar en la base
+            print("No se encontró coincidencia en productos mostrados. Buscando en la base de datos...")
 
-        # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
+        # Si no estaba en los productos mostrados, buscar en la base de datos
         for product_name in productos_detectados:
             products = get_product_info(product_name)
 
@@ -517,7 +495,6 @@ Salida:
                 # Regenerar la versión textual para la IA
                 regenerar_productos_textuales(session_id)
 
-
                 # Mostrar al cliente los productos encontrados con el formato habitual
                 context = "Tenemos estos productos disponibles:\n\n"
                 for p in products:
@@ -527,8 +504,6 @@ Salida:
 
                 context += "\nMe indicas cual de estos productos querés agregar a tu pedido? 😊"
                 return context
-
-
 
         # Si no se encuentra el producto ni en la lista ni en la base, se pide confirmación
         mensaje_ia = (
@@ -543,7 +518,36 @@ Salida:
         bot_response = result.content if hasattr(result, "content") else str(result)
         return bot_response.strip()
 
+    if intencion == "FINALIZAR_PEDIDO":
+        from app.pedidos import mostrar_pedido
+        resumen = mostrar_pedido(session_id)
 
+        # Guardar el estado para esperar los datos del cliente
+        session_data = get_datos_traidos_desde_bd(session_id)
+        session_data["esperando_datos_cliente"] = True
+
+        return (
+            "Perfecto 👍 Ya registré tu pedido. "
+            "Por favor decime tu *nombre completo* y *dirección de entrega* para enviarlo al encargado."
+        )
+
+    # Si ya está esperando los datos del cliente
+    session_data = get_datos_traidos_desde_bd(session_id)
+    if session_data.get("esperando_datos_cliente"):
+        from app.pedidos import mostrar_pedido
+        resumen = mostrar_pedido(session_id)
+
+        # Armar mensaje completo para enviar al encargado
+        mensaje = (
+            "🧾 *NUEVO PEDIDO RECIBIDO*\n\n"
+            f"{resumen}\n\n"
+            f"📍 Datos del cliente: {user_input}\n"
+        )
+
+        enviar_pedido_por_whatsapp(mensaje)
+        session_data["esperando_datos_cliente"] = False
+
+        return "Gracias 🙌 Tu pedido fue confirmado correctamente y ya está en camino"
 
     # SI SE DETECTA LA INTENCIÓN: MOSTRAR_PEDIDO
     if intencion == "MOSTRAR_PEDIDO":
@@ -595,7 +599,6 @@ Salida:
             return bot_response.strip()
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE
-
     if productos_detectados:
         print(f"Productos detectados: {productos_detectados}")
         all_products = []
@@ -615,13 +618,9 @@ Salida:
         if all_products:
             regenerar_productos_textuales(session_id)
 
-
         products = all_products if all_products else "No se encontraron productos relacionados."
     else:
         products = None
-
-
-
 
     # SI ENCUENTRA PRODUCTOS EN LA BASE
     if products and isinstance(products, list):
@@ -684,3 +683,17 @@ Salida:
         )
         bot_response = result.content if hasattr(result, "content") else str(result)
         return bot_response.strip()
+
+#==============================================================
+# ENVIO DEL PEDIDO UNA VEZ FINALIZADO
+#==============================================================
+def enviar_pedido_por_whatsapp(mensaje):
+    import requests
+    try:
+        destino = "5491125123781" 
+        url = "http://localhost:3000/enviar-mensaje"
+        payload = {"numero": destino, "mensaje": mensaje}
+        requests.post(url, json=payload)
+        print("📤 Pedido enviado correctamente al número del encargado.")
+    except Exception as e:
+        print(f"Error enviando pedido a WhatsApp: {e}")

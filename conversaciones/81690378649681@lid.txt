@@ -1,0 +1,66 @@
+2025-10-28 23:46:44 - De 81690378649681@lid: Hola
+2025-10-28 23:48:07 - Bot: ¡Hola! ¡Qué bueno que llegaste! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o simplemente estás dándole una vuelta?
+2025-10-28 23:49:24 - De 81690378649681@lid: Quiero hacer pizza
+2025-10-28 23:50:30 - Bot: Actualmente no contamos con 'Quiero hacer pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Agua Manaos 2L (Marca: Positivo BGH) — $150.00
+• Ketchup Knorr 500g (Marca: Knorr) — $290.00
+• Salame Paladini (Marca: Paladini) — $200.00
+• Salsa Bolognesa Molto 340g (Marca: Molto) — $145.00
+• Salsa Criolla Molto 200ml (Marca: Molto) — $95.00
+• Salsa Cuatro Quesos Molto 340g (Marca: Molto) — $160.00
+• Salsa Fileto Molto 340g (Marca: Molto) — $135.00
+• Salsa Lista Molto Tradicional 340g (Marca: Molto) — $110.00
+• Salsa Napolitana Molto 340g (Marca: Molto) — $130.00
+• Salsa Picante Molto 150ml (Marca: Molto) — $140.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Aceite de Girasol Marolio (Marca: Georgalos) — $130.00
+• Aceite de Girasol Natura 1L (Marca: Georgalos) — $320.00
+• Aceite Lira Girasol 1L (Marca: Paladini) — $310.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-29 00:13:22 - De 81690378649681@lid: Me dijeron que tienen precios baratos, es verdad? Si no es verdad, me voy al coto
+2025-10-29 00:14:50 - Bot: ¡Claro que sí! Siempre nos esforzamos por ofrecer precios competitivos. A veces puede parecer que alguien ha oído algo, ¡pero te aseguro que aquí encontrarás opciones muy interesantes! ¿Quizás te gustaría echar un vistazo a alguna sección en concreto? ¿O te puedo contar un poco sobre nuestras ofertas actuales? ¡No te vayas por nada! 😉
+2025-10-29 00:17:06 - De 81690378649681@lid: Me voy a comprar a coto
+2025-10-29 00:17:36 - Bot: Tenemos estos productos disponibles:
+
+• Chocotorta Pack ... $400.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-29 00:21:27 - De 81690378649681@lid: Yo no te pedí eso
+2025-10-29 00:22:50 - Bot: ¡Tienes toda la razón! ¡Perdón! A veces me emociono un poco. ¿En qué puedo ayudarte entonces? ¿Quizás buscas algo específico o necesitas que te muestre algunas de nuestras novedades? ¡Cuéntame! 😊
+2025-10-29 00:24:55 - De 81690378649681@lid: Dame un listado de las bebidas que tengas
+2025-10-29 00:26:33 - Bot: ¡Claro que sí! Tenemos una gran variedad de bebidas. Podemos ver...
+
+*   Refrescos (Coca-Cola, Sprite, Fanta)
+*   Zumos (Naranja, Manzana, Piña)
+*   Tés (Verde, Negro, de Hierbas)
+*   Agua Mineral (Con y sin gas)
+*   Y también tenemos cervezas y vinos, si te interesa.
+
+¿Alguna de estas categorías te llama la atención, o quizás buscas algo en particular dentro de ellas? ¡Dime y te doy más detalles! 😉

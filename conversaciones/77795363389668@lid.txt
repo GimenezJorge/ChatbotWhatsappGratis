@@ -638,3 +638,245 @@ Ketchup Knorr 500g $290.00(1) : $290.00
 
 🧾 Total: $290.00
 ¿Querés agregar algo más o cerrar el pedido?
+2025-10-27 16:58:26 - De 77795363389668@lid: tienen aceite?
+2025-10-27 16:58:52 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 16:59:05 - De 77795363389668@lid: agregame un aceite marolio
+2025-10-27 16:59:57 - Bot: Agregué 1 Aceite de Girasol Marolio al pedido. (Total: $130.00)
+2025-10-27 17:00:03 - De 77795363389668@lid: mostrame mi pedido
+2025-10-27 17:00:54 - Bot: Actualmente tu pedido tiene:
+
+Aceite de Girasol Marolio $130.00(1) : $130.00
+
+🧾 Total: $130.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-27 17:01:06 - De 77795363389668@lid: quiero finalizar el pedido
+2025-10-27 17:02:14 - Bot: ¡Claro que sí! Me parece genial que quieras finalizar tu pedido. Para poder hacerlo de la manera más rápida y sencilla, ¿podés decirme qué te gustaría incluir en él? 😊
+2025-10-27 17:07:35 - De 77795363389668@lid: tenes aceite?
+2025-10-27 17:08:03 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 17:08:36 - De 77795363389668@lid: agrega 1 aceite de girasol marolio a mi pedido
+2025-10-27 17:09:42 - Bot: Agregué 1 Aceite de Girasol Marolio al pedido. (Total: $130.00)
+2025-10-27 17:09:56 - De 77795363389668@lid: quiero finalizar el pedido
+2025-10-27 17:11:00 - Bot: Perfecto 👍 Ya registré tu pedido. Por favor decime tu *nombre completo* y *dirección de entrega* para enviarlo al encargado.
+2025-10-27 17:11:23 - De 77795363389668@lid: jorge, para san Fernando 2200
+2025-10-27 17:12:25 - Bot: Gracias 🙌 Tu pedido fue enviado correctamente al encargado. En breve se comunicarán con vos para coordinar la entrega.
+2025-10-27 19:11:06 - De 77795363389668@lid: hola
+2025-10-27 19:12:23 - Bot: ¡Hola! ¡Qué bueno que te pones por aquí! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o simplemente estás mirando? 😊
+2025-10-27 19:12:47 - De 77795363389668@lid: tenes aceite?
+2025-10-27 19:13:13 - Bot: Tenemos estos productos disponibles:
+
+- Aceite de Girasol Marolio — $130.00
+- Aceite de Girasol Natura 1L — $320.00
+- Aceite Lira Girasol 1L — $310.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 19:16:05 - De 77795363389668@lid: agregame un aceite de girasol marolio
+2025-10-27 19:17:01 - Bot: Agregué 1 Aceite de Girasol Marolio al pedido. (Total: $130.00)
+2025-10-27 19:17:41 - De 77795363389668@lid: mostrame mi pedido
+2025-10-27 19:18:36 - Bot: Actualmente tu pedido tiene:
+
+Aceite de Girasol Marolio $130.00(1) : $130.00
+
+🧾 Total: $130.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-27 19:19:08 - De 77795363389668@lid: quiero comprar una pizza
+2025-10-27 19:20:04 - Bot: Actualmente no contamos con 'quiero comprar una pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-27 19:29:21 - De 77795363389668@lid: tenes leche?
+2025-10-27 19:29:49 - Bot: Tenemos estos productos disponibles:
+
+- Leche Chocolatada Ilolay 1L — $300.00
+- Leche Chocolatada La Serenísima 1L — $190.00
+- Leche Descremada La Serenísima 1L — $175.00
+- Leche en Polvo Descremada 400g — $540.00
+- Leche en Polvo Entera 400g — $550.00
+- Leche en polvo La Serenísima 400g — $420.00
+- Leche Entera La Serenísima 1L — $180.00
+- Leche Ilolay UAT 1L — $270.00
+- Leche Infantil La Serenísima 1L — $220.00
+- Leche Orgánica 1L — $210.00
+- Leche Parcialmente Descremada La Serenísima 1L — $178.00
+- Leche UAT Sin Lactosa 1L — $190.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 19:30:29 - De 77795363389668@lid: sumame tres leche infantil
+2025-10-27 19:31:31 - Bot: Tenemos estos productos disponibles:
+
+• Leche Chocolatada Ilolay 1L ... $300.00
+• Leche Chocolatada La Serenísima 1L ... $190.00
+• Leche Descremada La Serenísima 1L ... $175.00
+• Leche en Polvo Descremada 400g ... $540.00
+• Leche en Polvo Entera 400g ... $550.00
+• Leche en polvo La Serenísima 400g ... $420.00
+• Leche Entera La Serenísima 1L ... $180.00
+• Leche Ilolay UAT 1L ... $270.00
+• Leche Infantil La Serenísima 1L ... $220.00
+• Leche Orgánica 1L ... $210.00
+• Leche Parcialmente Descremada La Serenísima 1L ... $178.00
+• Leche UAT Sin Lactosa 1L ... $190.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-27 19:32:32 - De 77795363389668@lid: agregame 3 leches infantil la serenisima
+2025-10-27 19:33:33 - Bot: Agregué 3 Leche Infantil La Serenísima 1L al pedido. (Total: $790.00)
+2025-10-27 19:33:44 - De 77795363389668@lid: mostrame el pedido
+2025-10-27 19:34:39 - Bot: Actualmente tu pedido tiene:
+
+Aceite de Girasol Marolio $130.00(1) : $130.00
+Leche Infantil La Serenísima 1L $220.00(3) : $660.00
+
+🧾 Total: $790.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-10-27 19:35:11 - De 77795363389668@lid: quiero finalizar el pedido
+2025-10-27 19:36:08 - Bot: Perfecto 👍 Ya registré tu pedido. Por favor decime tu *nombre completo* y *dirección de entrega* para enviarlo al encargado.
+2025-10-27 19:36:24 - De 77795363389668@lid: jorge, san Fernando 2275
+2025-10-27 19:37:25 - Bot: Gracias 🙌 Tu pedido fue enviado correctamente al encargado. En breve se comunicarán con vos para coordinar la entrega.
+2025-10-27 19:39:46 - De 77795363389668@lid: tenes leche y pan?
+2025-10-27 19:40:11 - Bot: Tenemos estos productos disponibles:
+
+- Leche Chocolatada Ilolay 1L — $300.00
+- Leche Chocolatada La Serenísima 1L — $190.00
+- Leche Descremada La Serenísima 1L — $175.00
+- Leche en Polvo Descremada 400g — $540.00
+- Leche en Polvo Entera 400g — $550.00
+- Leche en polvo La Serenísima 400g — $420.00
+- Leche Entera La Serenísima 1L — $180.00
+- Leche Ilolay UAT 1L — $270.00
+- Leche Infantil La Serenísima 1L — $220.00
+- Leche Orgánica 1L — $210.00
+- Leche Parcialmente Descremada La Serenísima 1L — $178.00
+- Leche UAT Sin Lactosa 1L — $190.00
+- Pan Rallado Molto 500g — $120.00
+
+¿Querés agregar alguno de esos productos a tu pedido?
+2025-10-27 19:40:38 - De 77795363389668@lid: quiero saber cual es la capital de francia
+2025-10-27 19:41:50 - Bot: ¡Qué buena pregunta! La capital de Francia es París. Es una ciudad preciosa, ¿verdad? ¡Tengo muchas ganas de que la conozcas! 😊 ¿Te interesa saber algo más sobre ella, como alguna de sus atracciones turísticas?
+2025-10-28 00:28:36 - De 77795363389668@lid: Quiero comprar un pastel de papa
+2025-10-28 00:29:55 - Bot: No tenemos disponibles los ingredientes típicos para 'Quiero comprar un pastel de papa'.
+2025-10-28 00:32:28 - De 77795363389668@lid: Quiero comprar una torta
+2025-10-28 00:33:05 - Bot: Tenemos estos productos disponibles:
+
+• Chocotorta Pack ... $400.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-28 00:36:33 - De 77795363389668@lid: Ninguno, lo que yo quiero es comprar algo rico, tenés pizza?
+2025-10-28 00:38:02 - Bot: No tenemos disponibles los ingredientes típicos para 'Ninguno, lo que yo quiero es comprar algo rico, tenés pizza?'.
+2025-10-28 00:45:24 - De 77795363389668@lid: Quiero hacer una tarta de manzana
+2025-10-28 03:03:03 - Bot: No tenemos disponibles los ingredientes típicos para 'Quiero hacer una tarta de manzana'.
+2025-10-28 15:43:58 - De 77795363389668@lid: hola
+2025-10-28 15:45:28 - Bot: ¡Hola! ¡Qué bueno que te acercaste! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o quizás necesitas información sobre algún producto? 😊
+2025-10-28 15:50:32 - De 77795363389668@lid: vienen mis suegros el fin de semana a casa
+2025-10-28 15:52:18 - Bot: ¡Qué bien que vienen tus suegros! Seguro que les encantará pasar un buen rato. ¿Necesitas algo especial para que estén cómodos? Quizás ingredientes para preparar alguna comida o algo para que disfruten? 😉
+2025-10-28 16:27:36 - De 77795363389668@lid: quiero impresionarlos haciendo una buena pizza
+2025-10-28 16:28:56 - Bot: Actualmente no contamos con 'quiero impresionarlos haciendo una buena pizza' como producto, pero te puedo ofrecer los siguientes ingredientes para que la prepares vos mismo:
+
+• Harina de Maíz Molto 1kg (Marca: Molto) — $150.00
+• Harina Morixe 000 1kg (Marca: Paladini) — $180.00
+• Harina Pureza 0000 1kg (Marca: Paladini) — $180.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Aceitunas Negras Molto 300g (Marca: Molto) — $158.00
+• Aceitunas Verdes Molto 300g (Marca: Molto) — $155.00
+• Alubias Molto 400g (Marca: Molto) — $132.00
+• Arvejas Molto 300g (Marca: Molto) — $122.00
+• Chauchas Molto 300g (Marca: Molto) — $130.00
+• Choclo en Grano Molto 300g (Marca: Molto) — $125.00
+• Garbanzos Molto 400g (Marca: Molto) — $135.00
+• Lentejas Molto 400g (Marca: Molto) — $130.00
+• Mix de Vegetales Molto 300g (Marca: Molto) — $140.00
+• Pickles Molto 300g (Marca: Molto) — $150.00
+• Porotos Negros Molto 400g (Marca: Molto) — $132.00
+• Queso Azul 150g (Marca: La Serenísima) — $380.00
+• Queso Barra La Serenísima 300g (Marca: La Serenísima) — $340.00
+• Queso Cremón La Serenísima 300g (Marca: La Serenísima) — $460.00
+• Queso Cremoso La Serenísima 500g (Marca: La Serenísima) — $600.00
+• Queso Finlandia 290g (Marca: La Serenísima) — $310.00
+• Queso Muzzarella La Serenísima 500g (Marca: La Serenísima) — $630.00
+• Queso Port Salut La Serenísima 500g (Marca: La Serenísima) — $620.00
+• Queso Rallado La Serenísima 100g (Marca: La Serenísima) — $200.00
+• Queso Sancor sardo 300g (Marca: Sancor) — $450.00
+• Queso Untable Clásico 290g (Marca: La Serenísima) — $280.00
+• Queso Untable Light 290g (Marca: La Serenísima) — $285.00
+• Remolachas Molto 300g (Marca: Molto) — $128.00
+• Tomates Perita Molto 400g (Marca: Molto) — $140.00
+• Zanahorias Molto 300g (Marca: Molto) — $125.00
+
+¿Querés que te agregue alguno de estos ingredientes al pedido?
+2025-10-28 16:30:18 - De 77795363389668@lid: y todo eso para que me serviría?
+2025-10-28 16:31:53 - Bot: ¡Buena pregunta! Pues para preparar comidas para tus suegros, ¿qué tal unos ingredientes frescos para preparar algo rico? Podemos buscar cosas para ensaladas, o quizás algún producto para una buena paella si les gusta. ¿Qué tal? 😊
+2025-10-28 16:32:48 - De 77795363389668@lid: y con cuales de esos ingredientes me recomendas para hecerles la pizza? uno de cada uno\
+2025-10-28 16:34:22 - Bot: ¡Qué buena idea la pizza! Para eso, podríamos buscar algunos ingredientes de calidad. Para la masa, podríamos echar un vistazo a la harina de trigo, ¡esencial! Y para la salsa, una buena tomate triturado de buena calidad. ¡Y por supuesto, mozzarella fresca para que quede deliciosa! ¿Te parece bien si buscamos esos ingredientes? 😊
+2025-10-28 23:48:07 - De 77795363389668@lid: Hola
+2025-10-28 23:49:24 - Bot: ¡Hola! Qué bueno que te acercaste. ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o simplemente estás mirando?
+2025-10-28 23:52:13 - De 77795363389668@lid: Quiero comprar un aceite natura
+2025-10-28 23:52:45 - Bot: Tenemos estos productos disponibles:
+
+• Aceite de Girasol Marolio ... $130.00
+• Aceite de Girasol Natura 1L ... $320.00
+• Aceite Lira Girasol 1L ... $310.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-28 23:53:34 - De 77795363389668@lid: Mejor no, quiero comprar otra cosa, café arlistan tienen?
+2025-10-28 23:54:06 - Bot: ¿Querés que te agregue café arlistan al pedido?
+2025-10-28 23:54:40 - De 77795363389668@lid: Cuánto cuesta?
+2025-10-28 23:56:01 - Bot: Para saber el precio, necesito que me digas qué producto te interesa. ¿Qué es lo que quieres saber el precio? 😊
+2025-10-28 23:56:21 - De 77795363389668@lid: Café arlistan
+2025-10-28 23:57:27 - Bot: Tenemos estos productos disponibles:
+
+• Café La Virginia 250g ... $400.00
+• Cafetera Philips 1L ... $6000.00
+
+Me indicas cual de estos productos querés agregar a tu pedido? 😊
+2025-10-28 23:58:06 - De 77795363389668@lid: Dame 5 café la Virginia. Necesito muchos para el Finde jaja
+2025-10-28 23:59:13 - Bot: Agregué 2 Café La Virginia 250g al pedido. (Total: $800.00)
+2025-10-29 00:09:27 - De 77795363389668@lid: Que pasa que respondes así?
+2025-10-29 00:10:54 - Bot: ¡Uy, qué bueno que te fijaste! Es que me gusta ser amable y tratar de ayudarte de la mejor manera. Quería asegurarme de que te estuviera entendiendo bien y de que te estuviera ayudando a encontrar lo que necesitas. ¿Te parece que es un estilo de respuesta que te gusta? ¡Me encantaría saber tu opinión! 😊
+2025-10-29 00:11:20 - De 77795363389668@lid: No estabas respondiendo amable, respondías seco
+2025-10-29 00:12:47 - Bot: ¡Ay, qué bien que lo ves! Tené toda la razón, me equivoqué y me volví muy seco. ¡Perdoname! Quería ser más cercano y amigable desde el principio. De verdad que lo siento. ¿Hay algo que pueda hacer para que te sientas más cómodo/a? 😊
+2025-10-29 00:15:36 - De 77795363389668@lid: Que me recomendas?
+2025-10-29 00:17:06 - Bot: ¡Qué buena pregunta! Para hacerte una buena recomendación, ¿qué tipo de cosas te gustan o qué estabas buscando? ¿Algo para cocinar, para el desayuno, para picar...? ¡Cuéntame un poquito y te doy algunas ideas! 😊
+2025-10-29 00:17:36 - De 77795363389668@lid: Algo para tomar
+2025-10-29 00:19:06 - Bot: ¡Perfecto! Para tomar, tenemos muchas opciones. ¿Buscas algo para refrescarte, algo para tomar con un snack, o tal vez algo para beber en general? ¡Dime qué te apetece y te doy algunas sugerencias! 😊
+2025-10-29 01:18:31 - De 77795363389668@lid: Tenés Pepsi
+2025-10-29 01:19:27 - Bot: No tenemos disponibles los ingredientes típicos para 'Tenés Pepsi'.
+2025-10-29 01:21:10 - De 77795363389668@lid: Tenés Pepsi?
+2025-10-29 01:22:06 - Bot: No tenemos disponibles los ingredientes típicos para 'Tenés Pepsi?'.
+2025-10-29 01:23:43 - De 77795363389668@lid: Y vos
+2025-10-29 01:25:15 - Bot: ¡Hola! ¡Qué bueno que te acercaste! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o querés ver lo que tenemos disponible?

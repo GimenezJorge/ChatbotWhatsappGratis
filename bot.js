@@ -23,7 +23,6 @@ const client = new Client({
 	// 	args: ['--no-sandbox', '--disable-setuid-sandbox'],
 	// 	executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
 	// },
-
 });
 
 // --- utilidades ---
@@ -61,7 +60,7 @@ client.on('ready', async () => {
 	}
 
 	try {
-		// MANDAR UN MENSAJE A OTRO TELEFONO
+		// MANDAR UN MENSAJE A OTRO TELEFONO (comentado para pruebas)
 		// const numero = '54911XXXXXXXX';
 		// let chatId = null;
 
@@ -117,3 +116,26 @@ process.on('SIGINT', async () => {
 
 // --- iniciar cliente ---
 client.initialize();
+
+// ===============================
+// 📦 Servidor Express para recibir pedidos desde Python
+// ===============================
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+// Endpoint para recibir el pedido final desde FastAPI
+app.post('/enviar-mensaje', async (req, res) => {
+	const { numero, mensaje } = req.body;
+	try {
+		const chatId = `${numero}@c.us`;
+		await client.sendMessage(chatId, mensaje);
+		console.log('📤 Pedido enviado correctamente al número del encargado.');
+		res.send({ status: 'ok' });
+	} catch (error) {
+		console.error('❌ Error al enviar mensaje:', error);
+		res.status(500).send({ error: 'Fallo al enviar mensaje' });
+	}
+});
+
+app.listen(3000, () => console.log('🟢 Servidor Express escuchando en puerto 3000'));

@@ -71,7 +71,7 @@ client.on('ready', async () => {
 		// await client.sendMessage(chatId, 'hola amigo, este es un mensaje de prueba 😎');
 		// console.log('📤 Mensaje enviado a', chatId);
 	} catch (e) {
-		console.error('❌ Error al enviar mensaje:', e);
+		console.error('Error al enviar mensaje:', e);
 	}
 });
 
@@ -98,7 +98,7 @@ client.on('message', async (msg) => {
 			await client.sendMessage(msg.from, "Lo siento, no pude procesar tu mensaje.");
 		}
 	} catch (err) {
-		console.error('❌ Error procesando mensaje:', err.message);
+		console.error('Error procesando mensaje:', err.message);
 		await client.sendMessage(msg.from, "Lo siento, ocurrió un error al procesar tu mensaje.");
 	}
 });
@@ -109,7 +109,7 @@ process.on('SIGINT', async () => {
 	try {
 		await client.destroy();
 	} catch (e) {
-		console.warn('⚠️ Error al cerrar:', e.message);
+		console.warn('Error al cerrar:', e.message);
 	}
 	process.exit(0);
 });
@@ -117,9 +117,9 @@ process.on('SIGINT', async () => {
 // --- iniciar cliente ---
 client.initialize();
 
-// ===============================
-// 📦 Servidor Express para recibir pedidos desde Python
-// ===============================
+// ==================================================
+// Servidor Express para recibir pedidos desde Python
+// ==================================================
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -133,7 +133,7 @@ app.post('/enviar-mensaje', async (req, res) => {
 		console.log('📤 Pedido enviado correctamente al número del encargado.');
 		res.send({ status: 'ok' });
 	} catch (error) {
-		console.error('❌ Error al enviar mensaje:', error);
+		console.error('Error al enviar mensaje:', error);
 		res.status(500).send({ error: 'Fallo al enviar mensaje' });
 	}
 });

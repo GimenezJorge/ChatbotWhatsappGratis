@@ -323,6 +323,46 @@ def detect_product_with_ai(user_input):
 
         Frase del cliente: "{user_input}"
         """
+        # ==========================
+        # CONTEXTO BREVE PARA IA INPUT (nuevo)
+        # ==========================
+
+        try:
+            session_data = get_datos_traidos_desde_bd("main")  # o el ID real si está disponible
+            resumen_input = session_data.get("resumen_input", "").strip()
+        except Exception:
+            resumen_input = ""
+
+        if resumen_input:
+            prompt = f"""
+            Considerá este contexto previo (solo productos recientes):
+            {resumen_input}
+
+            Ahora analizá la nueva frase del cliente:
+            "{user_input}"
+
+            Detectá:
+            - Intención expresada
+            - Nivel de confianza (0 a 100)
+            - Productos mencionados (si hay)
+
+            Recordá:
+            - Si el cliente se refiere a algo que ya se mencionó, usá ese producto.
+            - No inventes productos ni precios.
+            - Respondé solo con intención, confianza y productos.
+            """
+        else:
+            prompt = f"""
+            Analizá la siguiente frase del cliente y detectá:
+            - Intención expresada
+            - Nivel de confianza (0 a 100)
+            - Productos mencionados (si hay)
+
+            Frase del cliente: "{user_input}"
+            """
+
+
+
 
         raw_response = modelo_input.invoke(prompt).strip()
         cleaned = re.sub(r"<think>.*?</think>", "", raw_response, flags=re.DOTALL | re.IGNORECASE)
@@ -365,21 +405,17 @@ def detect_product_with_ai(user_input):
 # ==============================================================================
 def finalizar_respuesta(session_id: str, respuesta: str) -> str:
     try:
-        # Control para evitar doble ejecución
         session_data = get_datos_traidos_desde_bd(session_id)
         if session_data.get("finalizando", False):
             print("⚠️ finalizar_respuesta() omitido: se detectó doble ejecución.")
             return respuesta.strip()
         session_data["finalizando"] = True
 
-        # Asegurarse de que la sesión exista en memoria
         if session_id not in store:
             store[session_id] = InMemoryChatMessageHistory()
 
-        # Guardar la respuesta del bot en el historial actual
         store[session_id].add_ai_message(respuesta)
 
-        # Leer los últimos mensajes del archivo (persistencia previa)
         historial = log_historial_archivo(session_id)
         ultimos_mensajes = historial[-12:] if len(historial) > 12 else historial
 
@@ -392,43 +428,84 @@ def finalizar_respuesta(session_id: str, respuesta: str) -> str:
             print(f"[{msg['role'].upper()}] {msg['content']}")
         print("=================================================================\n")
 
-        # Generar resumen breve del contexto reciente
+        # ⚠️ Recordatorio para evitar falsas asunciones de carrito
+        recordatorio_contexto = """
+IMPORTANTE:
+El siguiente contexto se provee solo como referencia conversacional.
+NO representa el estado real del pedido ni las acciones realmente ejecutadas.
+Si en los mensajes aparece que se agregó, quitó o mostró un pedido,
+no asumas que el carrito existe o que esos cambios fueron reales.
+En esos casos, siempre debés usar las funciones del sistema para conocer o modificar el pedido:
+- agregar_a_pedido()
+- quitar_de_pedido()
+- mostrar_pedido()
+- vaciar_pedido()
+"""
+
         resumen_prompt = f"""
-        Estos son los últimos mensajes entre el cliente y el bot.
+Estos son los últimos mensajes entre el cliente y el bot.
 
-        Resumí en una o dos frases lo que realmente ocurrió en la conversación reciente.
-        Enfocate en:
-        - Qué producto(s) se mencionaron o agregaron.
-        - Qué acción realizó el cliente (consultar, agregar, ver pedido, etc.).
-        - En qué estado quedó el pedido (por ejemplo: productos agregados, total, consulta pendiente, etc.).
+Generá un resumen claro y completo de lo ocurrido recientemente en la conversación.
+Debe tener la longitud necesaria para reflejar correctamente el contexto actual, pero sin extenderse innecesariamente.
 
-        Usá solo información textual que aparece en los mensajes, sin inventar nada nuevo.
+Enfocate en:
+- Qué producto(s) se mencionaron, consultaron, agregaron o quitaron.
+- Qué acción realizó el cliente (consultar, agregar, ver pedido, vaciar, finalizar, etc.).
+- En qué estado quedó el pedido (productos agregados, etc.).
 
-        Mensajes:
-        {''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
-        """
+⚠️ No incluyas precios, montos ni valores numéricos.
+Solo describí productos, acciones y contexto conversacional.
+Usá únicamente información textual real que aparezca en los mensajes, sin inventar nada nuevo.
 
+Mensajes:
+{''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
+
+{recordatorio_contexto}
+"""
 
         resumen_obj = modelo_output.invoke(resumen_prompt)
         resumen = resumen_obj.content if hasattr(resumen_obj, "content") else str(resumen_obj)
         resumen = resumen.strip()
 
-        # Guardar el resumen también en memoria (como mensaje de sistema)
         session_data["ultimo_resumen"] = resumen
+
+        # 🧠 Resumen corto para IA input
+        resumen_input_prompt = f"""
+A partir de estos mensajes recientes, listá solo los nombres de los productos mencionados.
+No incluyas precios, acciones ni saludos.
+Si no se mencionaron productos, devolvé exactamente la palabra: NINGUNO.
+
+⚠️ Nota:
+Si en los mensajes se dice que se agregó o se mostró un pedido,
+NO asumas que el carrito realmente existe.
+El estado real se obtiene siempre llamando a las funciones del sistema.
+
+Mensajes:
+{''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
+"""
+
+        try:
+            resumen_input_obj = modelo_output.invoke(resumen_input_prompt)
+            resumen_input = resumen_input_obj.content if hasattr(resumen_input_obj, "content") else str(resumen_input_obj)
+            resumen_input = resumen_input.strip()
+
+            session_data["resumen_input"] = resumen_input
+
+            print("\n🧩 Resumen corto (para IA input):")
+            print(resumen_input, "\n")
+
+        except Exception as e:
+            print(f"⚠️ Error al generar resumen para IA input: {e}")
+
         print("\n🧠 Resumen automático actualizado:")
         print(resumen[:250], "\n")
-
 
     except Exception as e:
         print(f"⚠️ Error al generar o guardar resumen automático: {e}")
 
-    # ==========================
-    # ✅ Liberar el flag de control
-    # ==========================
     session_data["finalizando"] = False
-
-    # 6️⃣ Devolver siempre la respuesta final limpia
     return respuesta.strip()
+
 
 
 
@@ -446,7 +523,7 @@ def get_response(user_input: str, session_id: str) -> str:
     # ==========================
     # DETECCIÓN DE INTENCIÓN Y PRODUCTOS (solo mensaje actual)
     # ==========================
-    print(f"\n🗣️ Mensaje real del usuario: {user_input}")
+    print(f"\n🧑 Mensaje real del usuario: {user_input}")
 
     detected = detect_product_with_ai(user_input)
     intencion = detected.get("intencion")
@@ -457,59 +534,28 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-    # ==========================================
-    # REFINAR PRODUCTO DETECTADO USANDO CONTEXTO
-    # ==========================================
-    session_data = get_datos_traidos_desde_bd(session_id)
-    productos_previos = session_data["productos_mostrados"]
-
-    if productos_detectados and productos_previos:
-        # Crear lista textual con todos los productos ya mostrados
-        productos_textuales = "\n".join(
-            [f"- {p['producto']}" for lista in productos_previos.values() for p in lista]
-        )
-
-        prompt_refinamiento = f"""
-        El cliente acaba de decir: "{user_input}"
-        Y estos son los productos que se le mostraron antes:
-
-        {productos_textuales}
-
-        Tu tarea es decidir si el cliente se refiere a alguno de los productos listados.
-
-        ⚠️ Reglas:
-        - Respondé SOLO con el nombre completo del producto (exactamente como aparece en la lista).
-        - Si no se refiere a ninguno, respondé "NINGUNO".
-        - No agregues explicaciones ni texto adicional.
-        """
-
-        try:
-            refinado = modelo_input.invoke(prompt_refinamiento).strip()
-            print(f"🔍 Verificación contextual IA → {refinado}")
-
-            if refinado.lower() != "ninguno":
-                productos_detectados = [refinado]
-        except Exception as e:
-            print(f"⚠️ Error en refinamiento contextual: {e}")
-
-
-
-
 
     # ==========================
-    # DECISIÓN DE BÚSQUEDA EN BASE A LA INTENCIÓN
+    # DECISIÓN SEGÚN INTENCIÓN
     # ==========================
-    requiere_busqueda = intencion in ["AGREGAR_PRODUCTO", "CONSULTAR_INFO"]
+    requiere_accion_directa = intencion in [
+        "AGREGAR_PRODUCTO",
+        "QUITAR_PRODUCTO",
+        "MOSTRAR_PEDIDO",
+        "VACIAR_PEDIDO",
+        "FINALIZAR_PEDIDO"
+    ]
 
-    # Si la intención NO requiere buscar en la base, evitamos consultas innecesarias
-    if not requiere_busqueda:
-        print(f"🧠 Intención '{intencion}' no requiere búsqueda. Usando solo contexto.")
+    # Si la intención no es una acción directa ni una consulta o charla, usar la IA para responder
+    if not requiere_accion_directa and intencion not in ["CONSULTAR_INFO", "CHARLAR"]:
+        print(f"🧠 Intención '{intencion}' no requiere acción directa. Usando solo contexto.")
         result = with_message_history.invoke(
             {"input": user_input},
             config={"configurable": {"session_id": session_id}}
         )
         bot_response = result.content if hasattr(result, "content") else str(result)
         return finalizar_respuesta(session_id, bot_response)
+
 
 
 
@@ -778,7 +824,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE
     if productos_detectados:
-        print(f"Productos detectados: {productos_detectados}")
+        print(f"🛍️ Producto o categoria detectado: {productos_detectados}")
         all_products = []
 
         # Recuperar los datos de sesión (productos ya consultados)

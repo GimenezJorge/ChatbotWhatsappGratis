@@ -1,0 +1,98 @@
+2025-11-03 13:12:06 - De 77795363389668@lid: Hola
+2025-11-03 13:15:04 - Bot: ¡Hola! ¿En qué puedo ayudarte hoy? ¿Buscas algo en particular o te gustaría ver nuestro catálogo?
+2025-11-03 13:15:21 - De 77795363389668@lid: Como estas?
+2025-11-03 13:18:33 - Bot: ¡Muy bien, gracias por preguntar! ¿Y tú, cómo estás hoy?
+2025-11-03 13:30:11 - De 77795363389668@lid: Tenés aceite?
+2025-11-03 13:33:14 - Bot: ¡Claro que sí! Tenemos varias opciones de aceite:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Cuál de estos te gustaría agregar a tu pedido?
+2025-11-03 13:34:13 - De 77795363389668@lid: Agrega 1 aceite lira girasol a mí pedido
+2025-11-03 13:37:01 - Bot: Agregué 1 Aceite Lira Girasol 1L al pedido. (Total: $310.00)
+2025-11-03 13:38:56 - De 77795363389668@lid: Mostrame mí pedido
+2025-11-03 13:42:32 - Bot: Claro que sí!
+
+El pedido actual es:
+
+• Aceite Lira Girasol 1L — $310.00
+
+¿Quieres agregar o quitar algo?
+2025-11-03 14:09:58 - De 77795363389668@lid: hola
+2025-11-03 14:13:51 - Bot: ¡Hola! ¿En qué puedo ayudarte hoy? ¿Tienes alguna pregunta sobre nuestros productos o necesitas añadir algo a tu pedido?
+2025-11-03 14:14:06 - De 77795363389668@lid: tenes aceite?
+2025-11-03 14:19:54 - De 77795363389668@lid: hola
+2025-11-03 14:23:30 - Bot: ¡Hola! ¿En qué puedo ayudarte hoy? ¿Tienes alguna pregunta sobre nuestros productos o te gustaría ver qué tenemos disponible?
+2025-11-03 14:24:29 - De 77795363389668@lid: tenes muebles?
+2025-11-03 14:28:24 - Bot: ¡Claro que sí! Tenemos algunas opciones de muebles disponibles:
+
+• Biblioteca Seis Mobiliario — $13000.00
+• Escritorio Genoud — $15000.00
+• Mesa de Comedor Peter Wells — $20000.00
+• Silla de Oficina Mite — $12000.00
+• Sillón Safari — $18000.00
+
+¿Te gustaría agregar alguno de estos a tu pedido?
+2025-11-03 14:28:45 - De 77795363389668@lid: agregame un genoud
+2025-11-03 14:31:36 - Bot: Agregué 1 Escritorio Genoud al pedido. (Total: $15000.00)
+2025-11-03 14:32:14 - De 77795363389668@lid: y también quiero un safari
+2025-11-03 14:35:14 - Bot: Agregué 1 Sillón Safari al pedido. (Total: $33000.00)
+2025-11-03 14:35:37 - De 77795363389668@lid: ahora mostrame mi pedido
+2025-11-03 14:38:19 - Bot: Actualmente tu pedido tiene:
+
+Escritorio Genoud $15000.00(1) : $15000.00
+Sillón Safari $18000.00(1) : $18000.00
+
+🧾 Total: $33000.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-11-03 14:38:50 - De 77795363389668@lid: mostrame que aceites tienen
+2025-11-03 14:42:31 - Bot: ¡Claro que sí! Tenemos estos aceites disponibles:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Cuál de estos te gustaría agregar a tu pedido?
+2025-11-03 14:43:12 - De 77795363389668@lid: no, mejor agregame una mesa peter wells
+2025-11-03 14:46:13 - Bot: Agregué 1 Mesa de Comedor Peter Wells al pedido. (Total: $53000.00)
+2025-11-03 14:47:43 - De 77795363389668@lid: como va mi pedido?
+2025-11-03 14:50:35 - Bot: Actualmente tu pedido tiene:
+
+Escritorio Genoud $15000.00(1) : $15000.00
+Sillón Safari $18000.00(1) : $18000.00
+Mesa de Comedor Peter Wells $20000.00(1) : $20000.00
+
+🧾 Total: $53000.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-11-03 15:25:23 - De 77795363389668@lid: cual fue el ultimo pedido del que hablamos?
+2025-11-03 15:29:25 - Bot: Parece que todavía no tenés productos en tu pedido.
+2025-11-03 15:30:02 - De 77795363389668@lid: me refiero a la ultima vez que hablamos, hablamos de varios productos, quiero saber cual fue el ultimo que mencionamos
+2025-11-03 15:35:16 - Bot: El último producto que mencionamos fue el Aceite Natura. ¿Querés saber algo más al respecto o te gustaría agregar algo a tu pedido?
+2025-11-03 15:39:57 - De 77795363389668@lid: tenes aceite?
+2025-11-03 15:44:22 - Bot: ¡Claro que sí! Tenemos varias opciones de aceite disponibles:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Cuál de estos te gustaría agregar a tu pedido?
+2025-11-03 15:45:05 - De 77795363389668@lid: que caro que esta el aceite lira
+2025-11-03 15:49:33 - Bot: ¡Claro que sí! Entiendo tu preocupación sobre el precio del Aceite Lira. Aquí tienes la información que buscabas:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Te gustaría agregar alguno de estos a tu pedido?
+2025-11-03 15:50:09 - De 77795363389668@lid: me recomendas ese producto?
+2025-11-03 15:54:41 - Bot: No dispongo de información sobre recomendaciones. Tenemos varios aceites disponibles:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Cuál de estos te gustaría agregar a tu pedido?
+2025-11-03 15:57:05 - De 77795363389668@lid: cual es la capital de Francia?
+2025-11-03 16:02:12 - Bot: La capital de Francia es París. ¿Te gustaría agregar algo a tu pedido?

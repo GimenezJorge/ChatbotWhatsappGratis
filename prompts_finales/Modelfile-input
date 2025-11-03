@@ -31,6 +31,10 @@ REGLAS GENERALES:
 8. Si el mensaje es ambiguo o dudoso, igual devolvé una intención estimada con confianza baja (<70).
 9. Si el CLIENTE usa frases breves o referenciales (por ejemplo: “ese”, “esa”, “el primero”, “el molto”, “ese pan”, “agregalo”, “dale”), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
 No interpretes estas frases como nuevas consultas ni como información general, salvo que el contexto indique lo contrario.
+10. Detectar un producto no implica que el cliente quiera buscarlo o agregarlo.  
+El cliente puede mencionarlo solo como parte de la conversación o en acciones que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).  
+La intención detectada (por ejemplo, AGREGAR_PRODUCTO, CONSULTAR_INFO, QUITAR_PRODUCTO, VACIAR_PEDIDO, FINALIZAR_PEDIDO, CHARLAR, etc.)  
+es la que determina si corresponde o no realizar una búsqueda en la base de datos.  
 
 ---
 EJEMPLOS:

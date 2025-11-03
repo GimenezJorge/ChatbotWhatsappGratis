@@ -252,9 +252,44 @@ def get_product_info(product_name: str):
     AND NOT LOWER(p.nombre) LIKE %s
     ORDER BY p.nombre ASC;"""
 
+
+
     product_name_lower = product_name.strip().lower()
     words = product_name_lower.split()
     first_word = words[0] if words else product_name_lower
+
+
+    # =====================================================
+    # Verificar si el texto coincide con una categoría
+    # =====================================================
+    cursor.execute("SELECT id, nombre FROM categorias WHERE LOWER(nombre) = %s;", (product_name_lower,))
+    categoria_row = cursor.fetchone()
+
+    if categoria_row:
+        print(f"📂 Coincidencia con categoría detectada: {categoria_row['nombre']}")
+        categoria_id = categoria_row["id"]
+
+        cursor.execute("""
+            SELECT 
+                p.id,
+                p.nombre AS producto,
+                p.descripcion,
+                p.precio_venta,
+                m.nombre AS marca,
+                c.nombre AS categoria
+            FROM productos p
+            INNER JOIN marcas m ON p.marca_id = m.id
+            INNER JOIN categorias c ON p.categoria_id = c.id
+            WHERE p.categoria_id = %s
+            ORDER BY p.nombre ASC;
+        """, (categoria_id,))
+
+        productos_categoria = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return productos_categoria
+
+
 
     cursor.execute(QUERY_START, (f"{first_word}%", f"{first_word}%", f"{first_word}%"))
     start_results = cursor.fetchall()
@@ -294,7 +329,7 @@ def detect_product_with_ai(user_input):
 
         intent_match = re.search(r"intenci[oó]n\s*(detectada|:)?\s*[:\-]?\s*([A-Z_]+)", cleaned, re.IGNORECASE)
         conf_match = re.search(r"confianza\s*[:\-]?\s*(\d+)", cleaned, re.IGNORECASE)
-        prod_match = re.search(r"productos\s*(mencionados|:)?\s*[:\-]?\s*(.*)", cleaned, re.IGNORECASE | re.DOTALL)
+        prod_match = re.search(r"productos\s*(mencionados|:)?\s*[:\-]?\s*([^\n\r]+)", cleaned, re.IGNORECASE)
 
         intent = intent_match.group(2).upper() if intent_match else None
         confidence = int(conf_match.group(1)) if conf_match else None
@@ -419,6 +454,47 @@ def get_response(user_input: str, session_id: str) -> str:
     productos_detectados = detected.get("productos", [])
 
     print(f"🧠 Intención detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}") 
+
+
+
+    # ==========================================
+    # REFINAR PRODUCTO DETECTADO USANDO CONTEXTO
+    # ==========================================
+    session_data = get_datos_traidos_desde_bd(session_id)
+    productos_previos = session_data["productos_mostrados"]
+
+    if productos_detectados and productos_previos:
+        # Crear lista textual con todos los productos ya mostrados
+        productos_textuales = "\n".join(
+            [f"- {p['producto']}" for lista in productos_previos.values() for p in lista]
+        )
+
+        prompt_refinamiento = f"""
+        El cliente acaba de decir: "{user_input}"
+        Y estos son los productos que se le mostraron antes:
+
+        {productos_textuales}
+
+        Tu tarea es decidir si el cliente se refiere a alguno de los productos listados.
+
+        ⚠️ Reglas:
+        - Respondé SOLO con el nombre completo del producto (exactamente como aparece en la lista).
+        - Si no se refiere a ninguno, respondé "NINGUNO".
+        - No agregues explicaciones ni texto adicional.
+        """
+
+        try:
+            refinado = modelo_input.invoke(prompt_refinamiento).strip()
+            print(f"🔍 Verificación contextual IA → {refinado}")
+
+            if refinado.lower() != "ninguno":
+                productos_detectados = [refinado]
+        except Exception as e:
+            print(f"⚠️ Error en refinamiento contextual: {e}")
+
+
+
+
 
     # ==========================
     # DECISIÓN DE BÚSQUEDA EN BASE A LA INTENCIÓN
@@ -577,37 +653,30 @@ def get_response(user_input: str, session_id: str) -> str:
         # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
 
 
-        # 🧠 Verificar si el producto ya fue mostrado o está en el pedido actual
-        session_data = get_datos_traidos_desde_bd(session_id)
-        productos_previos = session_data["productos_mostrados"]
-
-
-        # Si alguno de los productos detectados ya está en productos_mostrados, lo agregamos directamente
+        # 🧠 Verificar si alguno de los productos detectados ya fue mostrado
+        encontrado_en_sesion = False
         for product_name in productos_detectados:
-            for lista in productos_previos.values():
+            for lista in session_data["productos_mostrados"].values():
                 for p in lista:
                     if product_name.lower() in p["producto"].lower():
                         cantidad = convertir_a_numero_es(user_input_lower)
                         nombre = p["producto"]
                         precio = p["precio_venta"]
+                        print(f"✅ Producto encontrado en sesión: {nombre} — se agrega sin buscar en BD")
                         mensaje_confirmacion = agregar_a_pedido(session_id, nombre, cantidad, precio)
-                        print(f"✅ Producto agregado directamente desde contexto: {nombre} x{cantidad}")
+                        encontrado_en_sesion = True
                         return finalizar_respuesta(session_id, mensaje_confirmacion)
 
-
-        for product_name in productos_detectados:
-            products = get_product_info(product_name)
-
-
+        # Solo si no se encontró en sesión, recién ahí buscar en la base
+        if not encontrado_en_sesion:
+            for product_name in productos_detectados:
+                products = get_product_info(product_name)
 
 
             if isinstance(products, list) and len(products) > 0:
                 # Guardar también en los productos mostrados de la sesión
                 session_data = get_datos_traidos_desde_bd(session_id)
                 session_data["productos_mostrados"][product_name.lower()] = products
-
-
-
 
 
                 # 🧠 Pedirle a la IA que genere la lista con formato de viñetas

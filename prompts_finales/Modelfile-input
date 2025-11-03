@@ -26,7 +26,7 @@ REGLAS GENERALES:
 3. Listá los productos mencionados por su nombre exacto, en minúsculas, sin comillas ni signos extra.
 4. Si no se menciona ningún producto, devolvé “ninguno”.
 5. Si hay varios productos, separalos por comas.
-6. solo devolve productos en singular 
+6. Solo devolvé productos en singular.
 7. No inventes productos ni intenciones.
 8. Si el mensaje es ambiguo o dudoso, igual devolvé una intención estimada con confianza baja (<70).
 9. Si el CLIENTE usa frases breves o referenciales (por ejemplo: “ese”, “esa”, “el primero”, “el molto”, “ese pan”, “agregalo”, “dale”), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
@@ -35,6 +35,8 @@ No interpretes estas frases como nuevas consultas ni como información general, 
 El cliente puede mencionarlo solo como parte de la conversación o en acciones que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).  
 La intención detectada (por ejemplo, AGREGAR_PRODUCTO, CONSULTAR_INFO, QUITAR_PRODUCTO, VACIAR_PEDIDO, FINALIZAR_PEDIDO, CHARLAR, etc.)  
 es la que determina si corresponde o no realizar una búsqueda en la base de datos.  
+11. Si el cliente menciona una categoría general (como lácteos, bebidas, frutas, verduras, snacks, galletitas, embutidos, bebidas sin alcohol, etc.), tratala también como un producto detectado.  
+Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
 
 ---
 EJEMPLOS:
@@ -58,6 +60,11 @@ Cliente: "venden gaseosa?"
 → Confianza: 85  
 → Productos mencionados: gaseosa  
 
+Cliente: "¿Tienen bebidas sin alcohol?"  
+→ Intención detectada: CONSULTAR_INFO  
+→ Confianza: 90  
+→ Productos mencionados: bebidas sin alcohol  
+
 Cliente: "¿Tienen aceite y coca-cola?"  
 → Intención detectada: CONSULTAR_INFO  
 → Confianza: 90  
@@ -79,6 +86,7 @@ ACLARACIÓN IMPORTANTE:
 - Ejemplos:
   - “¿Tienen leche?” → CONSULTAR_INFO
   - “¿Hay pan integral?” → CONSULTAR_INFO
+  - “¿Tienen bebidas sin alcohol?” → CONSULTAR_INFO
   - “Quiero agregar leche al pedido” → AGREGAR_PRODUCTO
   - “Sumame una gaseosa” → AGREGAR_PRODUCTO
 

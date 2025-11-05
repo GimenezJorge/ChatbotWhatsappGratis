@@ -553,7 +553,7 @@ Mensajes:
             session_data["resumen_input"] = resumen_input
 
             print("\n🧩 Resumen de productos detectados (para IA input):")
-            print(resumen_input, "\n")
+            print(resumen_input)
 
         except Exception as e:
             print(f"⚠️ Error al generar resumen para IA input: {e}")
@@ -584,7 +584,7 @@ def get_response(user_input: str, session_id: str) -> str:
     # ==========================
     # DETECCIÓN DE INTENCIÓN Y PRODUCTOS (solo mensaje actual)
     # ==========================
-    print("-----------------------------------------------------------------------------------------")
+    print("===================================================================================================")
     print(f"\n🧑 Mensaje real del usuario: {user_input}")
 
     detected = detect_product_with_ai(user_input)

@@ -53,3 +53,14 @@ def mostrar_pedido(session_id: str) -> str:
         f"🧾 Total: ${total:.2f}\n"
         f"¿Querés agregar algo más o cerrar el pedido?"
     )
+
+
+
+def vaciar_pedido(session_id: str) -> str:
+    if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
+        return "todavía no agregaste productos a tu pedido 😕"
+
+    pedidos_por_cliente[session_id] = []
+    print(f"Pedido vaciado ({session_id})")
+    return "Vacié tu pedido. Podés empezar un nuevo pedido cuando quieras. 🧺"
+

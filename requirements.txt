@@ -9,3 +9,4 @@ mysql-connector-python>=8.0.0
 sqlalchemy>=2.0.0
 word2number>=1.1
 text2num>=3.0.0
+requests==2.32.4

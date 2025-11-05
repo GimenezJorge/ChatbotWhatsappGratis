@@ -15,7 +15,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from app.pedidos import agregar_a_pedido
+from app.pedidos import agregar_a_pedido, mostrar_pedido, finalizar_pedido
 from app.database import connect_to_db
 from app.info_super import leer_info_supermercado
 
@@ -477,6 +477,8 @@ def finalizar_respuesta(session_id: str, respuesta: str) -> str:
 
         store[session_id].add_ai_message(respuesta)
 
+
+
         historial = log_historial_archivo(session_id)
         ultimos_mensajes = historial[-12:] if len(historial) > 12 else historial
 
@@ -614,6 +616,31 @@ def get_response(user_input: str, session_id: str) -> str:
         session_data["ultimo_producto_detectado"] = (
             productos_detectados[0] if productos_detectados else None
         )
+
+
+
+    # 🚫 Si la última intención fue FINALIZAR_PEDIDO, no pasar más por la IA
+    if session_data.get("ultima_intencion_detectada") == "FINALIZAR_PEDIDO":
+        from app.pedidos import finalizar_pedido
+
+        # Tomar todo lo que el cliente haya escrito como datos de envío
+        datos_cliente = user_input.strip()
+        numero_cliente = session_id
+
+        finalizar_pedido(session_id, datos_cliente, numero_cliente)
+
+        mensaje_confirmacion = (
+            "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
+        )
+
+        # Devolvemos la respuesta sin usar la IA
+        return finalizar_respuesta(session_id, mensaje_confirmacion)
+
+
+
+
+
+
 
     # Si ahora la IA detecta CHARLAR o CONSULTAR_INFO,
     # pero hay una intención previa válida, la reasigna automáticamente.
@@ -859,54 +886,46 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-    # SI SE DETECTA LA INTENCIÓN: MOSTRAR_PEDIDO
-    if intencion == "MOSTRAR_PEDIDO":
-        print("🧾 Intención de mostrar pedido detectada.")
 
-        if confianza < 90:
-            try:
-                mensaje_confirmacion = (
-                    f"El cliente dijo: '{user_input}'. "
-                    f"Detectaste intención de MOSTRAR_PEDIDO con confianza {confianza}%. "
-                    "Pedí confirmación de manera natural y amable, "
-                    "preguntándole si desea que le muestres su pedido actual."
-                )
-                result = with_message_history.invoke(
-                    {"input": mensaje_confirmacion},
-                    config={"configurable": {"session_id": session_id}}
-                )
-                bot_response = result.content if hasattr(result, "content") else str(result)
-                return finalizar_respuesta(session_id, bot_response)
-            except Exception as e:
-                print(f"Error al pedir confirmación con baja confianza: {e}")
-                mensaje_ia = (
-                    f"El sistema no está seguro si el cliente quiso ver su pedido. "
-                    f"Formulá una pregunta amable y breve para confirmar si desea verlo."
-                )
-                result = with_message_history.invoke(
-                    {"input": mensaje_ia},
-                    config={"configurable": {"session_id": session_id}}
-                )
-                bot_response = result.content if hasattr(result, "content") else str(result)
-                return finalizar_respuesta(session_id, bot_response)
+    # SI SE DETECTA LA INTENCIÓN: FINALIZAR_PEDIDO
+    if intencion == "FINALIZAR_PEDIDO":
+        from app.pedidos import mostrar_pedido, finalizar_pedido
 
-        from app.pedidos import mostrar_pedido
-        try:
-            resumen = mostrar_pedido(session_id)
-            return finalizar_respuesta(session_id, resumen)
-        except Exception as e:
-            print(f"Error al mostrar el pedido: {e}")
-            mensaje_ia = (
-                f"Ocurrió un problema al intentar mostrar el pedido del cliente. "
-                f"Respondé de forma amable y natural, explicando que hubo un inconveniente "
-                f"y ofreciendo volver a intentar o ayudar con otra consulta."
-            )
-            result = with_message_history.invoke(
-                {"input": mensaje_ia},
-                config={"configurable": {"session_id": session_id}}
-            )
-            bot_response = result.content if hasattr(result, "content") else str(result)
-            return finalizar_respuesta(session_id, bot_response)
+        resumen = mostrar_pedido(session_id)
+
+        # Mostrar resumen y pedir nombre + dirección en una sola pregunta (sin IA)
+        mensaje_finalizacion = (
+            f"Perfecto 👍 Este es el resumen de tu pedido:\n\n"
+            f"{resumen}\n\n"
+            f"Por favor, decime tu nombre y dirección para coordinar la entrega. 😊"
+        )
+
+        # Marcamos que está esperando los datos del cliente
+        session_data = get_datos_traidos_desde_bd(session_id)
+        session_data["esperando_datos_cliente"] = True
+
+        return finalizar_respuesta(session_id, mensaje_finalizacion)
+
+
+    # SI EL CLIENTE RESPONDE CON SUS DATOS (nombre + dirección)
+    session_data = get_datos_traidos_desde_bd(session_id)
+    if session_data.get("esperando_datos_cliente"):
+        from app.pedidos import finalizar_pedido
+
+        datos_cliente = user_input.strip()
+        numero_cliente = session_id
+
+        finalizar_pedido(session_id, datos_cliente, numero_cliente)
+        session_data["esperando_datos_cliente"] = False
+
+        mensaje_confirmacion = (
+            "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
+        )
+
+        return finalizar_respuesta(session_id, mensaje_confirmacion)
+
+
+
 
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE

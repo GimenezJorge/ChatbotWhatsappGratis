@@ -1,0 +1,54 @@
+2025-11-05 11:28:53 - De 77795363389668@lid: tenes leche?
+2025-11-05 11:32:44 - Bot: ¡Mirá, tenemos varias opciones de leche! 😊 Acá te las dejo para que elígas la que te guste:
+
+*   • Leche Chocolatada Ilolay 1L — $300.00
+*   • Leche Chocolatada La Serenísima 1L — $190.00
+*   • Leche Descremada La Serenísima 1L — $175.00
+*   • Leche en Polvo Descremada 400g — $540.00
+*   • Leche en Polvo Entera 400g — $550.00
+*   • Leche en polvo La Serenísima 400g — $420.00
+*   • Leche Entera La Serenísima 1L — $180.00
+*   • Leche Ilolay UAT 1L — $270.00
+*   • Leche Infantil La Serenísima 1L — $220.00
+*   • Leche Orgánica 1L — $210.00
+*   • Leche Parcialmente Descremada La Serenísima 1L — $178.00
+*   • Leche UAT Sin Lactosa 1L — $190.00
+
+¿Cuál te gustaría agregar a tu pedido? 😉
+2025-11-05 11:33:26 - De 77795363389668@lid: quiero comprar 2 chocolatadas ilolay, cuanto es?
+2025-11-05 11:36:43 - Bot: 🛒 Agregué 2 Leche Chocolatada Ilolay 1L al pedido. (Total: $600.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-05 11:45:38 - De 77795363389668@lid: mostrame mi pedido
+2025-11-05 11:48:52 - Bot: Actualmente tu pedido tiene:
+
+Leche Chocolatada Ilolay 1L $300.00(2) : $600.00
+
+🧾 Total: $600.00
+¿Querés agregar algo más o cerrar el pedido?
+2025-11-05 11:52:32 - De 77795363389668@lid: agregame una mas
+2025-11-05 11:56:58 - Bot: Dale, sin problema. ¿Qué te gustaría agregar? 😊  
+Te cuento que tenemos muchas opciones de aceite, ¿uno de esos te interesa? 😊
+
+*   • Aceite Natura 900ml — $320.00
+*   • Aceite Lira 900ml — $310.00
+*   • Aceite de Girasol 900ml — $280.00
+*   • Aceite de Sésamo 900ml — $350.00
+*   • Aceite de Oliva 900ml — $450.00
+
+¿Cuál te parece? 😉
+2025-11-05 11:58:06 - De 77795363389668@lid: 3 de la ilolay infantil
+2025-11-05 12:02:42 - Bot: ¡Hola! Acá te muestro las opciones que tenemos disponibles:
+
+• Leche Chocolatada Ilolay 1L - $300.00
+• Leche Ilolay UAT 1L - $270.00
+
+¿Te gustaría agregar alguna de estas a tu pedido? 😊
+2025-11-05 12:12:13 - De 77795363389668@lid: Perdón, me equivoqué, quise decir la leche infantil, la de la Serenísima, Quiro III.
+2025-11-05 12:15:43 - Bot: 🛒 Agregué 1 Leche Infantil La Serenísima 1L al pedido. (Total: $820.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-05 12:18:12 - De 77795363389668@lid: mostrame el pedido
+2025-11-05 12:21:37 - Bot: Actualmente tu pedido tiene:
+
+Leche Chocolatada Ilolay 1L $300.00(2) : $600.00
+Leche Infantil La Serenísima 1L $220.00(1) : $220.00
+
+🧾 Total: $820.00
+¿Querés agregar algo más o cerrar el pedido?

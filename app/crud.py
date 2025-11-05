@@ -552,13 +552,13 @@ Mensajes:
 
             session_data["resumen_input"] = resumen_input
 
-            print("\n🧩 Resumen corto (para IA input):")
+            print("\n🧩 Resumen de productos detectados (para IA input):")
             print(resumen_input, "\n")
 
         except Exception as e:
             print(f"⚠️ Error al generar resumen para IA input: {e}")
 
-        print("\n🧠 Resumen automático actualizado:")
+        print("\n🧩 Resumen (para IA output):")
         print(resumen[:250], "\n")
 
     except Exception as e:
@@ -584,7 +584,7 @@ def get_response(user_input: str, session_id: str) -> str:
     # ==========================
     # DETECCIÓN DE INTENCIÓN Y PRODUCTOS (solo mensaje actual)
     # ==========================
-    print("---------------------------------------------")
+    print("-----------------------------------------------------------------------------------------")
     print(f"\n🧑 Mensaje real del usuario: {user_input}")
 
     detected = detect_product_with_ai(user_input)
@@ -595,6 +595,33 @@ def get_response(user_input: str, session_id: str) -> str:
     print(f"🧠 Intención detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}") 
 
 
+    # ================================================================
+    # CORRECCIÓN AUTOMÁTICA DE INTENCIÓN SEGÚN CONTEXTO PREVIO
+    # ================================================================
+    session_data = get_datos_traidos_desde_bd(session_id)
+
+    intenciones_validas = [
+        "AGREGAR_PRODUCTO",
+        "QUITAR_PRODUCTO",
+        "MOSTRAR_PEDIDO",
+        "VACIAR_PEDIDO",
+        "FINALIZAR_PEDIDO"
+    ]
+
+    # Guardar la última intención válida y su producto detectado
+    if intencion in intenciones_validas:
+        session_data["ultima_intencion_detectada"] = intencion
+        session_data["ultimo_producto_detectado"] = (
+            productos_detectados[0] if productos_detectados else None
+        )
+
+    # Si ahora la IA detecta CHARLAR o CONSULTAR_INFO,
+    # pero hay una intención previa válida, la reasigna automáticamente.
+    elif intencion in ["CHARLAR", "CONSULTAR_INFO"]:
+        ultima_intencion = session_data.get("ultima_intencion_detectada")
+        if ultima_intencion in intenciones_validas:
+            print(f"⚙️ Corrigiendo intención: {intencion} → {ultima_intencion}")
+            intencion = ultima_intencion
 
 
     # ==========================

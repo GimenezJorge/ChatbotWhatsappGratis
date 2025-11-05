@@ -28,9 +28,9 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
             "subtotal": subtotal
         })
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"Agregué {cantidad} {producto} al pedido. (Total: ${total_actual:.2f})"
+        mensaje = f"🛒 Agregué {cantidad} {producto} al pedido. (Total: ${total_actual:.2f}), cuando quieras finalizar tu pedido me avisas 😊"
 
-    print(f"[DEBUG] Pedido actualizado para {session_id}: {pedido}")
+    print(f"Pedido actualizado!({session_id})")
     return mensaje
 
 

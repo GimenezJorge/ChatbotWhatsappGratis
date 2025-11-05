@@ -39,6 +39,17 @@ es la que determina si corresponde o no realizar una búsqueda en la base de dat
 Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
 
 ---
+🔍 NUEVA REGLA DE COINCIDENCIA INTELIGENTE:
+Si el nombre del producto mencionado por el cliente no coincide exactamente con los productos mostrados anteriormente,  
+comparalo con la lista de productos mostrados y devolvé el nombre más parecido o más probable.  
+Debe ser un nombre que exista en esa lista.  
+No inventes nombres nuevos.  
+Si la similitud es muy baja o no hay coincidencia razonable, devolvé “ninguno”.
+
+Esta comparación debe tener prioridad cuando el cliente escribe mal, incompleto o con variantes (“chocolatada ilolay”, “la chocolatada light”, “leche con chocolate”, etc.),  
+tratando de vincularlo al producto correcto de la lista previa.
+
+---
 REGLAS SEMÁNTICAS ADICIONALES (ajustes por uso real):
 Estas reglas refinan la interpretación basándose en ejemplos reales de conversaciones con clientes.
 

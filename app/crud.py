@@ -379,60 +379,56 @@ def buscar_ingredientes_para_comida(nombre_plato: str):
 # DETECCIÓN DE INTENCIÓN Y PRODUCTOS CON IA
 # =============================================================================
 
-def detect_product_with_ai(user_input):
+def detect_product_with_ai(user_input, session_id="main"):
     try:
+        session_data = get_datos_traidos_desde_bd(session_id)
+        resumen_input = session_data.get("resumen_input", "").strip()
+        productos_mostrados = session_data.get("productos_mostrados", {})
+
+        # Construir lista textual con los productos ya mostrados
+        productos_previos_texto = ""
+        if productos_mostrados:
+            productos_previos_texto = "Estos son los productos que ya se le mostraron al cliente:\n"
+            for lista in productos_mostrados.values():
+                for p in lista:
+                    productos_previos_texto += f"- {p['producto']}\n"
+
+        # Prompt base
         prompt = f"""
-        Analiza la siguiente frase del cliente y detectá:
-        - Intención expresada
-        - Nivel de confianza (0 a 100)
-        - Productos mencionados (si hay)
+Analizá la siguiente frase del cliente y detectá:
+- Intención expresada
+- Nivel de confianza (0 a 100)
+- Productos mencionados (si hay)
 
-        Frase del cliente: "{user_input}"
-        """
-        # ==========================
-        # CONTEXTO BREVE PARA IA INPUT (nuevo)
-        # ==========================
+Frase del cliente: "{user_input}"
+"""
 
-        try:
-            session_data = get_datos_traidos_desde_bd("main")  # o el ID real si está disponible
-            resumen_input = session_data.get("resumen_input", "").strip()
-        except Exception:
-            resumen_input = ""
-
-        if resumen_input:
+        # Si hay contexto o productos mostrados, incluirlos en el prompt
+        if resumen_input or productos_previos_texto:
             prompt = f"""
-            Considerá este contexto previo (solo productos recientes):
-            {resumen_input}
+Considerá este contexto previo:
+{resumen_input}
 
-            Ahora analizá la nueva frase del cliente:
-            "{user_input}"
+{productos_previos_texto}
 
-            Detectá:
-            - Intención expresada
-            - Nivel de confianza (0 a 100)
-            - Productos mencionados (si hay)
+Analizá la nueva frase del cliente:
+"{user_input}"
 
-            Recordá:
-            - Si el cliente se refiere a algo que ya se mencionó, usá ese producto.
-            - No inventes productos ni precios.
-            - Respondé solo con intención, confianza y productos.
-            """
-        else:
-            prompt = f"""
-            Analizá la siguiente frase del cliente y detectá:
-            - Intención expresada
-            - Nivel de confianza (0 a 100)
-            - Productos mencionados (si hay)
+Si el producto mencionado no coincide exactamente con los anteriores,
+buscá el nombre más parecido entre los productos mostrados y devolvelo como producto detectado.
+No inventes nombres nuevos.
 
-            Frase del cliente: "{user_input}"
-            """
+Detectá:
+- Intención expresada
+- Nivel de confianza (0 a 100)
+- Productos mencionados (si hay)
+"""
 
-
-
-
+        # Llamada a la IA input
         raw_response = modelo_input.invoke(prompt).strip()
         cleaned = re.sub(r"<think>.*?</think>", "", raw_response, flags=re.DOTALL | re.IGNORECASE)
 
+        # Extraer intención, confianza y productos
         intent_match = re.search(r"intenci[oó]n\s*(detectada|:)?\s*[:\-]?\s*([A-Z_]+)", cleaned, re.IGNORECASE)
         conf_match = re.search(r"confianza\s*[:\-]?\s*(\d+)", cleaned, re.IGNORECASE)
         prod_match = re.search(r"productos\s*(mencionados|:)?\s*[:\-]?\s*([^\n\r]+)", cleaned, re.IGNORECASE)
@@ -446,10 +442,10 @@ def detect_product_with_ai(user_input):
         else:
             products = [p.strip() for p in re.split(r",|\s+y\s+|\n", products_text) if p.strip()]
 
-        print("🧩 Resultado IA Detector:")
-        print(f"  • Intención: {intent or 'No detectada'}")
-        print(f"  • Confianza: {confidence or 'No indicada'}")
-        print(f"  • Productos: {products or 'Ninguno'}")
+        print("🧩 Resultado de la deteccion de input:")
+        print(f"  🔹 Intención: {intent or 'No detectada'}")
+        print(f"  🔹 Confianza: {confidence or 'No indicada'}")
+        print(f"  🔹 Productos: {products or 'Ninguno'}")
 
         return {
             "intencion": intent,
@@ -464,7 +460,6 @@ def detect_product_with_ai(user_input):
             "confianza": None,
             "productos": []
         }
-
 
 # ==============================================================================
 # CIERRE COMÚN A TODOS LOS CAMINOS DEL GET_RESPONSE
@@ -589,6 +584,7 @@ def get_response(user_input: str, session_id: str) -> str:
     # ==========================
     # DETECCIÓN DE INTENCIÓN Y PRODUCTOS (solo mensaje actual)
     # ==========================
+    print("---------------------------------------------")
     print(f"\n🧑 Mensaje real del usuario: {user_input}")
 
     detected = detect_product_with_ai(user_input)
@@ -641,7 +637,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
             # 🧠 Si NO se encontró el producto, buscar posibles ingredientes
             elif isinstance(products, str) and "no se encontró" in products.lower():
-                print(f"🍕 No se encontró '{product_name}' en la base. Buscando ingredientes...")
+                print(f"No se encontró '{product_name}' en la base. Buscando ingredientes...")
                 ingredientes = buscar_ingredientes_para_comida(product_name)
 
                 if ingredientes:
@@ -719,7 +715,7 @@ def get_response(user_input: str, session_id: str) -> str:
         print("\n📋 Productos actualmente mostrados al cliente:")
         if productos_previos:
             for clave, lista in productos_previos.items():
-                print(f"  🔹 Clave '{clave}' → {len(lista)} producto(s):")
+                print(f"  🔹 Producto '{clave}' → {len(lista)} producto(s):")
                 for p in lista:
                     print(f"     • {p['producto']} — ${p['precio_venta']}")
         else:

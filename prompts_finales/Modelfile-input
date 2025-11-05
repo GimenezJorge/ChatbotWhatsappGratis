@@ -39,6 +39,20 @@ es la que determina si corresponde o no realizar una búsqueda en la base de dat
 Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
 
 ---
+REGLAS SEMÁNTICAS ADICIONALES (ajustes por uso real):
+Estas reglas refinan la interpretación basándose en ejemplos reales de conversaciones con clientes.
+
+1. Si el cliente dice frases como “quiero comprar”, “necesito comprar”, “quisiera comprar” o “me gustaría comprar” en sus primeros mensajes o sin haber confirmado productos previamente,  
+   asumí que la intención más probable es **MOSTRAR_PRODUCTOS** (mostrar opciones o iniciar la búsqueda), no **AGREGAR_PRODUCTO**.  
+   En esos casos, el cliente suele estar expresando interés inicial, no dando una orden de agregar al pedido.
+
+2. Estas expresiones deben interpretarse considerando el contexto conversacional:  
+   - Si la conversación recién empieza → probablemente MOSTRAR_PRODUCTOS.  
+   - Si el cliente ya seleccionó o confirmó productos → probablemente AGREGAR_PRODUCTO.  
+
+3. A medida que se recopilen más ejemplos reales, agregá nuevas reglas semánticas aquí siguiendo el mismo formato.
+
+---
 EJEMPLOS:
 Cliente: "Quiero leche y pan"  
 → Intención detectada: AGREGAR_PRODUCTO  

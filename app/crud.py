@@ -309,6 +309,72 @@ def get_product_info(product_name: str):
     return f"No se encontró ningún producto relacionado con '{product_name}'."
 
 
+
+# =============================================================================
+# DETECCIÓN DE COMIDAS COMPUESTAS Y BÚSQUEDA DE SUS INGREDIENTES
+# =============================================================================
+
+def buscar_ingredientes_para_comida(nombre_plato: str):
+    """
+    Si un producto no se encuentra en la base, esta función intenta detectar
+    si el nombre corresponde a una comida compuesta (ej: pizza, ensalada, torta)
+    y busca los ingredientes en la base de datos.
+    """
+
+    # 1️⃣ Pedimos a la IA que identifique los ingredientes
+    prompt_ingredientes = f"""
+    Tu tarea es detectar los ingredientes principales necesarios para preparar "{nombre_plato}".
+
+    ⚠️ No respondas con formato de detección de intención, confianza o productos mencionados.
+    Solo devolvé los ingredientes, separados por comas.
+
+    Si el texto NO se refiere a una comida o plato preparado (por ejemplo, si fuera "jabón" o "aceite de auto"),
+    respondé exactamente con la palabra: NINGUNO.
+
+    Usá términos comunes en Argentina:
+    - manteca (no mantequilla)
+    - porotos (no alubias)
+    - zapallo (no calabaza)
+    - choclo (no maíz)
+    - panceta (no tocino)
+
+    Ejemplo de salida válida:
+    pizza → harina, levadura, queso, salsa de tomate, aceite, sal
+    torta → harina, azúcar, huevos, manteca, leche, polvo de hornear
+    empanada → harina, carne, cebolla, huevo, aceitunas
+    """
+
+
+
+    try:
+        respuesta_ia = modelo_input.invoke(prompt_ingredientes).strip()
+        respuesta_ia = re.sub(r"<think>.*?</think>", "", respuesta_ia, flags=re.DOTALL).strip()
+        print(f"🤖 Ingredientes detectados por IA: {respuesta_ia}")
+
+        if respuesta_ia.upper() == "NINGUNO":
+            return None
+
+        # Convertimos los ingredientes en lista
+        ingredientes = [i.strip().lower() for i in re.split(r",|\n|y", respuesta_ia) if i.strip()]
+        encontrados = []
+
+        # 2️⃣ Buscamos los ingredientes reales en la base
+        for ingrediente in ingredientes:
+            resultados = get_product_info(ingrediente)
+            if isinstance(resultados, list) and len(resultados) > 0:
+                encontrados.extend(resultados)
+
+        if not encontrados:
+            return None
+
+        return encontrados
+
+    except Exception as e:
+        print(f"⚠️ Error en buscar_ingredientes_para_comida: {e}")
+        return None
+
+
+
 # =============================================================================
 # DETECCIÓN DE INTENCIÓN Y PRODUCTOS CON IA
 # =============================================================================
@@ -423,10 +489,10 @@ def finalizar_respuesta(session_id: str, respuesta: str) -> str:
             session_data["finalizando"] = False
             return respuesta.strip()
 
-        print("\n====================== 📜 CONTEXTO ACTUAL IA ======================")
-        for msg in ultimos_mensajes:
-            print(f"[{msg['role'].upper()}] {msg['content']}")
-        print("=================================================================\n")
+        #print("\n====================== 📜 CONTEXTO ACTUAL IA ======================")
+        #for msg in ultimos_mensajes:
+        #    print(f"[{msg['role'].upper()}] {msg['content']}")
+        #print("=================================================================\n")
 
         # ⚠️ Recordatorio para evitar falsas asunciones de carrito
         recordatorio_contexto = """
@@ -555,9 +621,87 @@ def get_response(user_input: str, session_id: str) -> str:
         )
         bot_response = result.content if hasattr(result, "content") else str(result)
         return finalizar_respuesta(session_id, bot_response)
+    
+    # ==========================
+    # CONSULTAR_INFO — BÚSQUEDA DE PRODUCTOS O INGREDIENTES
+    # ==========================
+    if intencion == "CONSULTAR_INFO" and productos_detectados:
+        print("🔍 Intención de consulta detectada. Buscando productos o posibles ingredientes...")
 
+        session_data = get_datos_traidos_desde_bd(session_id)
+        all_products = []
 
+        for product_name in productos_detectados:
+            products = get_product_info(product_name)
 
+            # Si se encontraron productos, los mostramos normalmente
+            if isinstance(products, list) and len(products) > 0:
+                session_data["productos_mostrados"][product_name.lower()] = products
+                all_products.extend(products)
+
+            # 🧠 Si NO se encontró el producto, buscar posibles ingredientes
+            elif isinstance(products, str) and "no se encontró" in products.lower():
+                print(f"🍕 No se encontró '{product_name}' en la base. Buscando ingredientes...")
+                ingredientes = buscar_ingredientes_para_comida(product_name)
+
+                if ingredientes:
+                    print(f"✅ Ingredientes encontrados para {product_name}: {len(ingredientes)} productos")
+
+                    # Generar respuesta amable con IA
+                    try:
+                        prompt_ingredientes = f"""
+                        El cliente preguntó por "{product_name}", pero no está disponible.
+                        Mostrale una respuesta amable y natural, diciendo que ese producto no está en stock,
+                        pero que puede prepararlo él mismo con estos ingredientes.
+                        Mostrá los ingredientes en formato de lista (•).
+                        Al final, preguntale de forma cordial si quiere consultar otro producto.
+
+                        Ingredientes disponibles:
+                        {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
+                        """
+                        result_ingredientes = modelo_output.invoke(prompt_ingredientes)
+                        respuesta = result_ingredientes.content if hasattr(result_ingredientes, "content") else str(result_ingredientes)
+                    except Exception as e:
+                        print(f"⚠️ Error al generar lista de ingredientes con IA: {e}")
+                        respuesta = (
+                            f"Lamentablemente no tenemos {product_name} en este momento, "
+                            "pero podés prepararla vos mismo con algunos de estos ingredientes:\n\n" +
+                            "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in ingredientes]) +
+                            "\n\n¿Qué otro producto te gustaría consultar?"
+                        )
+
+                    return finalizar_respuesta(session_id, respuesta)
+
+                else:
+                    # No se encontraron ingredientes ni productos
+                    mensaje = (
+                        f"Lamentablemente no tenemos {product_name} en este momento "
+                        "y no encontré ingredientes relacionados. "
+                        "¿Querés consultar otro producto?"
+                    )
+                    return finalizar_respuesta(session_id, mensaje)
+
+        # Si sí había productos normales, mostramos la lista como siempre
+        if all_products:
+            try:
+                prompt_lista = f"""
+                El cliente preguntó: "{user_input}"
+                Estos son los productos encontrados en la base:
+                {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in all_products])}
+                Mostrale la lista con tono amable y natural, usando viñetas (•),
+                y preguntale cuál de ellos quiere agregar a su pedido.
+                """
+                result_lista = modelo_output.invoke(prompt_lista)
+                respuesta = result_lista.content if hasattr(result_lista, "content") else str(result_lista)
+            except Exception as e:
+                print(f"⚠️ Error al generar lista con IA: {e}")
+                respuesta = (
+                    "Tenemos estos productos disponibles:\n\n" +
+                    "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in all_products]) +
+                    "\n\n¿Querés agregar alguno a tu pedido? 😊"
+                )
+
+            return finalizar_respuesta(session_id, respuesta)
 
 
 
@@ -617,86 +761,6 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-        # 🧠 Recuperar los productos ya mostrados en esta sesión
-        # session_data = get_datos_traidos_desde_bd(session_id)
-        # productos_previos = session_data["productos_mostrados"]
-        # productos_previos_lista = list(productos_previos.keys())
-
- 
-        # 🧠 Verificar con IA si el producto mencionado ya estaba en la lista textual mostrada
-        # session_data = get_datos_traidos_desde_bd(session_id)
-        # productos_textuales = session_data.get("productos_textuales", "")
-
-        # if productos_textuales:
-        #     prompt_verificacion = f"""
-        #     Tenés esta lista de productos que se le mostraron antes al cliente:
-        #     {productos_textuales}
-
-        #     El cliente acaba de decir: "{user_input}"
-
-        #     Tu tarea es decidir si el cliente se refiere a alguno de esos productos.
-
-        #     ⚠️ IMPORTANTE:
-        #     - Respondé SOLO con el nombre completo del producto EXACTO tal como aparece en la lista.
-        #     - NO agregues texto, explicaciones ni análisis.
-        #     - NO menciones intención, confianza ni nada similar.
-        #     - Si no se refiere a ninguno, respondé exactamente con la palabra: NINGUNO.
-
-        #     Ejemplos válidos:
-        #     Cliente dice "quiero el marolio" → responde "Aceite de Girasol Marolio"
-        #     Cliente dice "poneme uno de natura" → responde "Aceite de Girasol Natura 1L"
-        #     Cliente dice "no sé todavía" → responde "NINGUNO"
-        #     """
-
-
-
-
-            # try:
-            #     respuesta_verificacion = modelo_input.invoke(prompt_verificacion).strip()
-            #     print(f"🤖 Resultado verificación IA (texto limpio): {respuesta_verificacion}")
-
-            #     if respuesta_verificacion.lower() != "ninguno":
-            #         # 🧠 Validar que haya alguna palabra en común entre lo que dijo el cliente y el producto detectado
-            #         palabras_cliente = set(user_input.lower().split())
-            #         palabras_producto = set(respuesta_verificacion.lower().split())
-            #         coincidencias = palabras_cliente.intersection(palabras_producto)
-
-            #         if not coincidencias:
-            #             print(f"⚠️ Coincidencia descartada: '{respuesta_verificacion}' no coincide con '{user_input}'")
-            #         else:
-            #             # Buscar coincidencia dentro de los productos mostrados
-            #             for productos in session_data["productos_mostrados"].values():
-            #                 for p in productos:
-            #                     if respuesta_verificacion.lower() in p["producto"].lower():
-            #                         nombre = p["producto"]
-            #                         precio = p["precio_venta"]
-                                    
-            #                         # Detectar cantidad (número o palabra, en español o inglés)
-            #                         cantidad = convertir_a_numero_es(user_input_lower)
-            #                         print(f"🧮 Cantidad detectada: {cantidad}")
-
-
-            #                         mensaje_confirmacion = agregar_a_pedido(session_id, nombre, cantidad, precio)
-
-            #                         print(f"✅ Producto agregado desde lista textual: {nombre}")
-            #                         return finalizar_respuesta(session_id, mensaje_confirmacion)
-
-
-            # except Exception as e:
-            #     print(f"⚠️ Error en verificación IA: {e}")
-
-            #nueva version, todavia no se si la voy a usar, tengo que probar:
-            # 🧠 Verificar si el cliente se refiere a un producto mostrado recientemente (sin usar lista textual)
-            # if productos_detectados:
-            #     # El modelo ya entiende el contexto gracias al resumen, así que no hace falta verificar manualmente
-            #     print("🔍 Producto detectado por IA con contexto, no se usa lista textual.")
-            # else:
-            #     print("⚠️ No se detectaron productos explícitos, se intentará deducir con contexto.")
-
-            # 🧭 Si la IA no encontró coincidencia válida, o fue descartada, buscar en la base
-            # print("🧭 No se encontró coincidencia en productos mostrados. Buscando en la base de datos...")
-
-        # ⚙️ Si no estaba en los productos mostrados, buscar en la base de datos
 
 
         # 🧠 Verificar si alguno de los productos detectados ya fue mostrado

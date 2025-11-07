@@ -1,0 +1,185 @@
+2025-11-07 04:42:11 - De 77795363389668@lid: hola tenés coca?
+2025-11-07 04:45:35 - Bot: ¡Hola! Sí, tenés Coca-Cola 2.25L. 😊
+
+• Coca-Cola 2.25L — $650.00
+
+¿Te gustaría agregar alguna de estas opciones a tu pedido? 😉
+2025-11-07 04:46:54 - De 77795363389668@lid: quiero 3 de esas
+2025-11-07 04:50:23 - Bot: ¡Dale! Entonces, ¿querés agregar 3 Coca-Cola 2.25L a tu pedido? 👍
+2025-11-07 04:50:40 - De 77795363389668@lid: si
+2025-11-07 04:54:18 - Bot: ¡Excelente! 😊  Te cuento, agregué 3 Coca-Cola 2.25L a tu pedido. ¿Algo más que te gustaría agregar? 😉
+2025-11-07 05:06:52 - De 77795363389668@lid: hola tenés coca?
+2025-11-07 05:10:33 - Bot: ¡Hola! Sí, tenés Coca-Cola 2.25L. 😊
+
+• Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguna de estas a tu pedido? 😉
+2025-11-07 05:11:56 - De 77795363389668@lid: quiero 3 de esas
+2025-11-07 05:15:39 - Bot: ¡Dale! Entonces, querés tres de esas Coca-Cola, ¿es así? 😉 Para estar seguro, ¿querés que las agregue al pedido? 😊
+2025-11-07 05:16:07 - De 77795363389668@lid: si
+2025-11-07 05:20:26 - Bot: ¡Tremendo! Dale, agregué las tres Coca-Cola 2.25L a tu pedido. 😎 Ahora tenés:
+
+• Coca-Cola 2.25L – 3 unidades – $1950.00
+
+¿Querés agregar algo más o ya terminaste? 😉
+2025-11-07 05:32:00 - De 77795363389668@lid: tenes aceite
+2025-11-07 05:38:16 - Bot: ¡Mirá, tenés estas opciones de aceite! 😊
+
+*   • Aceite de Girasol Natura — $130.00
+*   • Aceite de Girasol Natura 1L — $320.00
+*   • Aceite Lira Girasol 1L — $310.00
+
+¿Tenés alguna preferencia? ¿Querés que agregue alguno a tu pedido? 😉
+2025-11-07 05:39:14 - De 77795363389668@lid: tenes coca?
+2025-11-07 05:45:36 - Bot: ¡Dale! Tenemos Coca-Cola 2.25L por $650.00. 😊  Te cuento, ¿te gustaría agregarla a tu pedido?
+2025-11-07 06:18:54 - De 77795363389668@lid: hola tenes coca?
+2025-11-07 06:22:17 - Bot: ¡Hola! Sí, tenés Coca-Cola 2.25L. 😊 Tenemos:
+
+• Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguna de estas a tu pedido? 😉
+2025-11-07 06:24:36 - De 77795363389668@lid: tenes aceite?
+2025-11-07 06:28:33 - Bot: ¡Mirá, tenés varias opciones de aceite! 😊 Te cuento:
+
+*   • Aceite de Girasol Natura — $130.00
+*   • Aceite de Girasol Natura 1L — $320.00
+*   • Aceite Lira Girasol 1L — $310.00
+
+¿Tenés alguna preferencia para agregar a tu pedido? 😉
+2025-11-07 07:06:28 - De 77795363389668@lid: tenes coca?
+2025-11-07 07:10:57 - Bot: ¡Mirá, tenemos Coca-Cola 2.25L por $650! 😊 ¿Querés agregarla a tu pedido?
+2025-11-07 07:57:05 - De 77795363389668@lid: tenes aceite?
+2025-11-07 10:12:25 - Bot: ¡Dale! Sí, tenemos varios aceites. Te cuento, tenemos estas opciones:
+
+• Aceite de Girasol Natura - $130.00
+• Aceite de Girasol Natura 1L - $320.00
+• Aceite Lira Girasol 1L - $310.00
+
+¿Cuál te gustaría agregar a tu pedido? 😊
+2025-11-07 10:18:44 - De 77795363389668@lid: tenes aceite?
+2025-11-07 10:23:42 - Bot: ¡Mirá, tenés varias opciones de aceite! 😊 Te cuento:
+
+•	Aceite de Girasol Natura — $130.00
+•	Aceite de Girasol Natura 1L — $320.00
+•	Aceite Lira Girasol 1L — $310.00
+
+¿Cuál te gustaría agregar a tu pedido? 😉
+2025-11-07 11:01:32 - De 77795363389668@lid: tenes aceite?
+2025-11-07 11:06:51 - Bot: ¡Dale! Tenemos varios aceites para vos. Te los voy a mostrar así tenés fácil:
+
+• Aceite de Girasol Natura – $130.00
+• Aceite de Girasol Natura 1L – $320.00
+• Aceite Lira Girasol 1L – $310.00
+
+¿Tenés alguna preferencia? ¡Podés agregar cualquiera de estos a tu pedido! 😊
+2025-11-07 11:25:21 - De 77795363389668@lid: tenes aceite?
+2025-11-07 11:30:25 - Bot: ¡Mirá, tenés varias opciones de aceite! 😊 Acá te dejo la lista:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Tenés alguna preferencia para agregar a tu pedido? 😉
+2025-11-07 11:38:11 - De 77795363389668@lid: tenes aceite?
+2025-11-07 11:43:08 - Bot: ¡Claro que sí! Tenemos varios aceites para vos. Te cuento, estos son los que tenemos disponibles:
+
+*   • Aceite de Girasol Natura — $130.00
+*   • Aceite de Girasol Natura 1L — $320.00
+*   • Aceite Lira Girasol 1L — $310.00
+
+¿Cuál te gustaría agregar a tu pedido? 😊
+2025-11-07 11:44:04 - De 77795363389668@lid: agrega un lira a mi pedido
+2025-11-07 11:47:25 - Bot: 🛒 Agregué 1 Aceite Lira Girasol 1L al pedido. (Total: $310.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-07 11:48:09 - De 77795363389668@lid: tenes coca?
+2025-11-07 11:52:41 - Bot: ¡Dale! Acá te muestro lo que tenemos disponible:
+
+• Coca-Cola 2.25L - $650.00
+
+😊 ¿Te gustaría agregar alguna de estas opciones al pedido?
+2025-11-07 11:56:45 - De 77795363389668@lid: agregame 3 de esas
+2025-11-07 12:01:03 - Bot: ¡Dale! Entiendo, agregame 3 de esas. 😊
+
+Para confirmar, ¿querés agregar 3 de las opciones que te mostré? 😉
+2025-11-07 12:07:45 - De 77795363389668@lid: tenes aceite?
+2025-11-07 12:12:58 - Bot: ¡Mirá, tenemos varios aceites! 😊 Te cuento, tenemos:
+
+*   • Aceite de Girasol Natura — $130.00
+*   • Aceite de Girasol Natura 1L — $320.00
+*   • Aceite Lira Girasol 1L — $310.00
+
+¿Cuál te gustaría agregar a tu pedido? 😉
+2025-11-07 12:16:51 - De 77795363389668@lid: agrega 2 lira a mi pedido
+2025-11-07 12:20:46 - Bot: 🛒 Agregué 2 Aceite Lira Girasol 1L al pedido. (Total: $620.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-07 12:27:01 - De 77795363389668@lid: tenes coca
+2025-11-07 12:32:02 - Bot: ¡Dale! Tenemos Coca-Cola 2.25L por $650.00 😊. Te cuento, para que lo veas bien claro:
+
+• Coca-Cola 2.25L — $650.00
+
+¿Querés agregar este a tu pedido? 😉
+2025-11-07 12:32:48 - De 77795363389668@lid: quiero 3 de esas
+2025-11-07 12:37:21 - Bot: ¡Che, mirá! ¿Querés que agregue 3 de esas Coca-Colas al pedido? 😊
+2025-11-07 13:08:54 - De 77795363389668@lid: hola tenes coca?
+2025-11-07 13:14:01 - Bot: ¡Hola! Sí, tenemos Coca-Cola 2.25L. 😊
+
+• Coca-Cola 2.25L — $650.00
+
+¿Querés agregar alguna de estas a tu pedido? 😉
+2025-11-07 13:15:55 - De 77795363389668@lid: quiero 3 de esas
+2025-11-07 13:19:41 - Bot: ¡Dale! Entonces, ¿querés agregar 3 Coca-Cola 2.25L a tu pedido? 😉
+2025-11-07 13:24:49 - De 77795363389668@lid: hola tenes coca?
+2025-11-07 13:29:40 - Bot: ¡Hola! Sí, tenemos Coca-Cola 2.25L. 😊
+
+• Coca-Cola 2.25L — $650.00
+
+¿Te gustaría agregar alguna de estas a tu pedido?
+2025-11-07 13:30:08 - De 77795363389668@lid: quiero 3 de esas
+2025-11-07 13:33:12 - Bot: 🛒 Agregué 3 Coca-Cola 2.25L al pedido. (Total: $1950.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-07 13:33:41 - De 77795363389668@lid: mostrame mi pedido
+2025-11-07 13:38:10 - Bot: ¡Dale, te muestro tu pedido! 😊
+
+Actualmente tienes:
+
+*   Coca-Cola 2.25L - 3 unidades - $1950.00
+
+¡Listo! ¿Te gustaría agregar algo más o ya te animás a finalizar? 😉
+2025-11-07 13:40:29 - De 77795363389668@lid: dame una mas, no me quiero quedar corto
+2025-11-07 13:43:27 - Bot: Se actualizaron las unidades de Coca-Cola 2.25L (ahora x4).               Total: $2600.00
+2025-11-07 13:45:32 - De 77795363389668@lid: a ver el pedido?
+2025-11-07 13:49:37 - Bot: ¡Mirá, te muestro el pedido actualizado! 😊
+
+Actualmente tienes:
+
+*   Coca-Cola 2.25L - 4 unidades - $2600.00
+
+¡Ya podés pensar en el postre! 😉 ¿Te gustaría agregar algo más al pedido?
+2025-11-07 13:50:11 - De 77795363389668@lid: tenes aceite?
+2025-11-07 13:54:19 - Bot: ¡Mirá, tenemos varias opciones de aceite! Acá te las dejo:
+
+• Aceite de Girasol Natura — $130.00
+• Aceite de Girasol Natura 1L — $320.00
+• Aceite Lira Girasol 1L — $310.00
+
+¿Tenés alguna preferencia? ¿Querés que lo agregue a tu pedido? 😊
+2025-11-07 13:55:13 - De 77795363389668@lid: agregame 2 lira
+2025-11-07 13:58:31 - Bot: 🛒 Agregué 2 Aceite Lira Girasol 1L al pedido. (Total: $3220.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-07 14:03:03 - De 77795363389668@lid: agregame una mas de ese
+2025-11-07 14:05:58 - Bot: Se actualizaron las unidades de Aceite Lira Girasol 1L (ahora x3).               Total: $3530.00
+2025-11-07 14:06:43 - De 77795363389668@lid: mostrame el pedido
+2025-11-07 14:11:08 - Bot: ¡Dale, te muestro el pedido actualizado! 😊
+
+Actualmente tienes:
+
+*   Coca-Cola 2.25L - 4 unidades - $2600.00
+*   Aceite Lira Girasol 1L - 3 unidades - $3220.00
+
+¡Ya podés pensar en el postre! ¿Te gustaría agregar algo más al pedido? 😉
+2025-11-07 14:13:37 - De 77795363389668@lid: tenes pizza?
+2025-11-07 14:18:32 - Bot: ¡Qué buena pregunta! 😊
+
+¡Sí, tenemos pizza! Tenemos varias opciones:
+
+*   Pizza Margarita (Media) - $850.00
+*   Pizza Familiar (Media) - $1400.00
+*   Pizza Huevo - $1600.00
+
+¿Te animás a agregar alguna pizza a tu pedido? 😊

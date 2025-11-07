@@ -95,7 +95,7 @@ client.on('message', async (msg) => {
 			console.log(`✅ Respuesta enviada: ${reply}`);
 		} else {
 			console.log('⚠️ Respuesta inválida del endpoint:', response.data);
-			await client.sendMessage(msg.from, " ");
+			//await client.sendMessage(msg.from, " ");
 		}
 	} catch (err) {
 		console.error('Error procesando mensaje:', err.message);

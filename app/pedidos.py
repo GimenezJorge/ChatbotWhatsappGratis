@@ -17,7 +17,7 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
         producto_existente["cantidad"] += cantidad
         producto_existente["subtotal"] = float(Decimal(producto_existente["precio_unitario"]) * producto_existente["cantidad"])
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"Se actualizaron las unidades de {producto} (ahora x{producto_existente['cantidad']}).               Total: ${total_actual:.2f}"
+        mensaje = f"🛒 Se actualizaron las unidades de {producto} (ahora x{producto_existente['cantidad']}).               Total: ${total_actual:.2f}"
     else:
         # Si no existe, agregarlo nuevo
         subtotal = float(Decimal(precio_unitario) * cantidad)

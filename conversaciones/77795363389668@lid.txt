@@ -183,3 +183,31 @@ Actualmente tienes:
 *   Pizza Huevo - $1600.00
 
 ¿Te animás a agregar alguna pizza a tu pedido? 😊
+2025-11-08 01:12:47 - De 77795363389668@lid: tenes aceite?
+2025-11-08 01:17:58 - Bot: ¡Dale! Sí, tenemos varios aceites. Te cuento, tenemos estas opciones:
+
+• Aceite de Girasol Natura – $130.00
+• Aceite de Girasol Natura 1L – $320.00
+• Aceite Lira Girasol 1L – $310.00
+
+¿Cuál te gustaría agregar a tu pedido? 😊
+2025-11-08 01:18:22 - De 77795363389668@lid: me gustaria agregar un aceite lira girasol
+2025-11-08 01:21:36 - Bot: 🛒 Agregué 1 Aceite Lira Girasol 1L al pedido. (Total: $310.00), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-08 01:28:22 - De 77795363389668@lid: ahora dos del de 1 litro
+2025-11-08 01:31:39 - Bot: ¿Querés que te agregue leche (del de 1 litro) al pedido?
+2025-11-08 01:32:40 - De 77795363389668@lid: no, quiero 2 aceite natura de 1 litro
+2025-11-08 01:36:53 - Bot: ¡Hola! Acá te muestro los aceites de girasol que tenemos disponibles:
+
+• Aceite de Girasol Natura - $130.00
+• Aceite de Girasol Natura 1L - $320.00
+• Aceite Lira Girasol 1L - $310.00
+
+¿Cuál de estos te gustaría agregar al pedido? 😊
+2025-11-08 01:44:32 - De 77795363389668@lid: 2 aceite girasol natura 1L
+2025-11-08 01:48:43 - Bot: ¡Dale! Acá te muestro las opciones de aceites de girasol que tenemos disponibles:
+
+•	Aceite de Girasol Natura – $130.00
+•	Aceite de Girasol Natura 1L – $320.00
+•	Aceite Lira Girasol 1L – $310.00
+
+¿Qué te gustaría agregar al pedido? 😊

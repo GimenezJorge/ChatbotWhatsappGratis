@@ -1,8 +1,8 @@
-# =============================================================================
+# ==============================================================================
 # Asistente inteligente para atención de clientes de supermercados
 # Procesa los mensajes recibidos por WhatsApp, detecta intenciones y productos,
 # consulta la base de datos y gestiona pedidos usando modelos de IA locales.
-# =============================================================================
+# ==============================================================================
 
 import os
 import re

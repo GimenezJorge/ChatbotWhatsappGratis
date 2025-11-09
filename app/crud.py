@@ -228,14 +228,16 @@ No inventes nombres nuevos.
         detected = detect_product_with_ai(contexto, session_id)
         productos = detected.get("productos", [])
         intencion = detected.get("intencion")
-        confianza = detected.get("confianza")
+
 
         if not productos:
             print("🤖 IA: no se encontró coincidencia con los productos mostrados.")
             return None
 
         producto_detectado = productos[0]
-        print(f"🤖 IA: coincidencia encontrada → Intención: {intencion} | Confianza: {confianza} | Producto: {producto_detectado}")
+        print(f"🤖 IA: coincidencia encontrada → Intención: {intencion} | Producto: {producto_detectado}")
+        
+
         return producto_detectado
 
     except Exception as e:
@@ -288,7 +290,8 @@ def convertir_a_numero_es(user_input: str) -> int:
 # BÚSQUEDA DE PRODUCTOS EN LA BASE DE DATOS
 # =============================================================================
 
-def get_product_info(product_name: str):
+#def get_product_info(product_name: str):
+def get_product_info(product_name: str, session_id: str):
     connection = connect_to_db()
     if not connection:
         return print("no se conecto a la bd")
@@ -361,8 +364,15 @@ def get_product_info(product_name: str):
         """, (categoria_id,))
 
         productos_categoria = cursor.fetchall()
+
+        # Guardar en memoria los productos de la categoría mostrados al cliente
+        session_data = get_datos_traidos_desde_bd(session_id)
+        session_data["productos_mostrados"][product_name.lower()] = productos_categoria
+
+
         cursor.close()
         connection.close()
+
         return productos_categoria
 
 
@@ -390,7 +400,7 @@ def get_product_info(product_name: str):
 # DETECCIÓN DE COMIDAS COMPUESTAS Y BÚSQUEDA DE SUS INGREDIENTES
 # =============================================================================
 
-def buscar_ingredientes_para_comida(nombre_plato: str):
+def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
     """
     Si un producto no se encuentra en la base, esta función intenta detectar
     si el nombre corresponde a una comida compuesta (ej: pizza, ensalada, torta)
@@ -420,8 +430,6 @@ def buscar_ingredientes_para_comida(nombre_plato: str):
     empanada → harina, carne, cebolla, huevo, aceitunas
     """
 
-
-
     try:
         respuesta_ia = modelo_input.invoke(prompt_ingredientes).strip()
         respuesta_ia = re.sub(r"<think>.*?</think>", "", respuesta_ia, flags=re.DOTALL).strip()
@@ -430,13 +438,12 @@ def buscar_ingredientes_para_comida(nombre_plato: str):
         if respuesta_ia.upper() == "NINGUNO":
             return None
 
-        # Convertimos los ingredientes en lista
         ingredientes = [i.strip().lower() for i in re.split(r",|\n|y", respuesta_ia) if i.strip()]
         encontrados = []
 
-        # 2️⃣ Buscamos los ingredientes reales en la base
+        # 2️⃣ Buscamos los ingredientes reales en la base usando la sesión actual
         for ingrediente in ingredientes:
-            resultados = get_product_info(ingrediente)
+            resultados = get_product_info(ingrediente, session_id)
             if isinstance(resultados, list) and len(resultados) > 0:
                 encontrados.extend(resultados)
 
@@ -473,11 +480,11 @@ def detect_product_with_ai(user_input, session_id="main"):
         prompt = f"""
 Analizá la siguiente frase del cliente y detectá:
 - Intención expresada
-- Nivel de confianza (0 a 100)
 - Productos mencionados (si hay)
 
 Frase del cliente: "{user_input}"
 """
+
 
         # Si hay contexto, productos mostrados o producto_actual, incluirlos en el prompt
         producto_actual = session_data.get("producto_actual", None)
@@ -501,22 +508,20 @@ No inventes nombres nuevos.
 
 Detectá:
 - Intención expresada
-- Nivel de confianza (0 a 100)
 - Productos mencionados (si hay)
 """
+
 
 
         # Llamada a la IA input
         raw_response = modelo_input.invoke(prompt).strip()
         cleaned = re.sub(r"<think>.*?</think>", "", raw_response, flags=re.DOTALL | re.IGNORECASE)
 
-        # Extraer intención, confianza y productos
+        # Extraer intención y productos
         intent_match = re.search(r"intenci[oó]n\s*(detectada|:)?\s*[:\-]?\s*([A-Z_]+)", cleaned, re.IGNORECASE)
-        conf_match = re.search(r"confianza\s*[:\-]?\s*(\d+)", cleaned, re.IGNORECASE)
         prod_match = re.search(r"productos\s*(mencionados|:)?\s*[:\-]?\s*([^\n\r]+)", cleaned, re.IGNORECASE)
 
         intent = intent_match.group(2).upper() if intent_match else None
-        confidence = int(conf_match.group(1)) if conf_match else None
         products_text = prod_match.group(2).strip() if prod_match else ""
 
         if not products_text or products_text.lower().startswith("ninguno"):
@@ -524,24 +529,20 @@ Detectá:
         else:
             products = [p.strip() for p in re.split(r",|\s+y\s+|\n", products_text) if p.strip()]
 
-
-
-        print("🧩 Resultado de la deteccion de input:")
+        print("🧩 Resultado de la detección de input:")
         print(f"  🔹 Intención: {intent or 'No detectada'}")
-        print(f"  🔹 Confianza: {confidence or 'No indicada'}")
         print(f"  🔹 Productos: {products or 'Ninguno'}")
 
         return {
             "intencion": intent,
-            "confianza": confidence,
             "productos": products
         }
+
 
     except Exception as e:
         print(f"Error en detect_product_with_ai: {e}")
         return {
             "intencion": None,
-            "confianza": None,
             "productos": []
         }
 
@@ -700,13 +701,14 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-    detected = detect_product_with_ai(user_input)
+    #detected = detect_product_with_ai(user_input)
+    detected = detect_product_with_ai(user_input, session_id)
+
     intencion = detected.get("intencion")
-    confianza = detected.get("confianza") or 0
     productos_detectados = detected.get("productos", [])
 
 
-    #print(f"🧠 Intención detectada: {intencion} (confianza {confianza}%) — productos: {productos_detectados}") 
+
 
 
 
@@ -745,7 +747,7 @@ def get_response(user_input: str, session_id: str) -> str:
             # Si no se detectó nada, mantenemos el último producto conocido
             print(f"♻️  Manteniendo producto_actual previo: {session_data['producto_actual']}")
         else:
-            print("🕐 No se actualizó producto_actual (IA devolvió 'ninguna' o vacío')")
+            print("🕐 No se actualizó producto_actual)")
 
 
 
@@ -754,7 +756,6 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # 🚫 Si la última intención fue FINALIZAR_PEDIDO, no pasar más por la IA
     if session_data.get("ultima_intencion_detectada") == "FINALIZAR_PEDIDO":
-        from app.pedidos import finalizar_pedido
 
         # Tomar todo lo que el cliente haya escrito como datos de envío
         datos_cliente = user_input.strip()
@@ -797,7 +798,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # Si la intención no es una acción directa ni una consulta o charla, usar la IA para responder
     if not requiere_accion_directa and intencion not in ["CONSULTAR_INFO", "CHARLAR"]:
-        print(f"🧠 Intención '{intencion}' no requiere acción directa. Usando solo contexto.")
+        print(f"🧠 Intención '{intencion}'")
         result = with_message_history.invoke(
             {"input": user_input},
             config={"configurable": {"session_id": session_id}}
@@ -816,7 +817,10 @@ def get_response(user_input: str, session_id: str) -> str:
 
         # 🧠 Recorremos todos los productos detectados (por ejemplo: "coca" y "sprite")
         for product_name in productos_detectados:
-            products = get_product_info(product_name)
+            #products = get_product_info(product_name, session_id)
+            products = get_product_info(product_name, session_id)
+
+
 
             # Si la BD devuelve un solo producto, lo fijamos como producto_actual
             if isinstance(products, list) and len(products) == 1:
@@ -837,39 +841,18 @@ def get_response(user_input: str, session_id: str) -> str:
                 session_data["productos_mostrados"][product_name.lower()] = products
                 all_products.extend(products)
                 mostrar_productos_en_memoria(session_id)
+            # ================================================================
+            # COMPARACIÓN POST-BD (una vez mostrados los productos)
+            # ================================================================
+            if productos_detectados:
+                coincidencia = comparar_con_producto_mostrado(productos_detectados[0], session_id)
+                if coincidencia:
+                    session_data["producto_actual"] = coincidencia
+                    print(f"🔁 Producto actual actualizado tras búsqueda en BD: {coincidencia}")
+                else:
+                    print("🔁 No se encontró coincidencia tras BD; se mantiene el producto_actual previo.")
 
 
-                # 🔍 Comparar los productos detectados con los ya mostrados en la sesión
-                if productos_detectados:
-                    coincidencias = []
-                    for producto_detectado in productos_detectados:
-                        coincidencia = comparar_con_producto_mostrado(producto_detectado, session_id)
-
-                        if coincidencia:
-                            coincidencias.append(coincidencia)
-
-                    if coincidencias:
-                        print(f"📎 Coincidencias detectadas tras IA: {coincidencias}")
-                        session_data = get_datos_traidos_desde_bd(session_id)
-
-                        # Buscamos el nombre real del producto en la base de datos (según coincidencia)
-                        nombre_real = coincidencias[0] if len(coincidencias) == 1 else coincidencias
-
-                        if isinstance(nombre_real, list):
-                            session_data["producto_actual"] = []
-                            for nombre in nombre_real:
-                                for lista in session_data["productos_mostrados"].values():
-                                    for p in lista:
-                                        if nombre.lower() in p["producto"].lower():
-                                            session_data["producto_actual"].append(p["producto"])
-                            print(f"🔁 Productos actuales actualizados con nombres reales: {session_data['producto_actual']}")
-                        else:
-                            for lista in session_data["productos_mostrados"].values():
-                                for p in lista:
-                                    if nombre_real.lower() in p["producto"].lower():
-                                        session_data["producto_actual"] = p["producto"]
-                                        print(f"🔁 Producto actual actualizado con nombre real: {p['producto']}")
-                                        break
 
 
 
@@ -877,7 +860,7 @@ def get_response(user_input: str, session_id: str) -> str:
             # Si no se encontró el producto, intentar buscar ingredientes
             elif isinstance(products, str) and "no se encontró" in products.lower():
                 print(f"❌ No se encontró '{product_name}' en la base. Buscando ingredientes...")
-                ingredientes = buscar_ingredientes_para_comida(product_name)
+                ingredientes = buscar_ingredientes_para_comida(product_name, session_id)
 
                 if ingredientes:
                     print(f"✅ Ingredientes encontrados para {product_name}: {len(ingredientes)} productos")
@@ -942,6 +925,20 @@ def get_response(user_input: str, session_id: str) -> str:
     if intencion == "AGREGAR_PRODUCTO":
         session_data = get_datos_traidos_desde_bd(session_id)
 
+        # ================================================================
+        # COMPARACIÓN CON PRODUCTOS MOSTRADOS (para actualizar el producto actual)
+        # ================================================================
+        if session_data.get("productos_mostrados"):
+            coincidencia = comparar_con_producto_mostrado(user_input, session_id)
+            if coincidencia:
+                session_data["producto_actual"] = coincidencia
+                print(f"🔁 Producto actual actualizado durante 'AGREGAR_PRODUCTO': {coincidencia}")
+            else:
+                print("🔁 No se encontró coincidencia durante 'AGREGAR_PRODUCTO'; se mantiene el producto_actual previo.")
+        else:
+            print("⚠️ No hay productos mostrados aún para comparar en 'AGREGAR_PRODUCTO'.")
+
+
         # 🧠 Si la IA no detectó producto o devolvió "ninguna", pero hay uno actual, usar ese
         if (
             (not productos_detectados or all(p.lower() in ["ninguno", "ninguna"] for p in productos_detectados))
@@ -953,8 +950,17 @@ def get_response(user_input: str, session_id: str) -> str:
 
         # Si aún así no hay productos, salir
         if not productos_detectados:
-            print("⚠️ No se detectaron productos para agregar, ni producto_actual disponible.")
-            return finalizar_respuesta(session_id, "¿Podrías aclararme qué producto querés agregar?")
+            prompt_aclaracion = f"""
+            El cliente expresó que quiere agregar algo, pero no especificó qué producto.
+            Formulá una pregunta amable y natural para que aclare qué quiere agregar.
+            Usá un tono cercano, sin repetir exactamente su frase.
+            Respondé directamente con la frase, sin comillas ni formato adicional.
+            """
+            result_aclaracion = modelo_output.invoke(prompt_aclaracion)
+            respuesta_aclaracion = result_aclaracion.content if hasattr(result_aclaracion, "content") else str(result_aclaracion)
+            return finalizar_respuesta(session_id, respuesta_aclaracion)
+
+
 
         print(f"🛒 Intención de agregar producto detectada: {productos_detectados}")
 
@@ -981,20 +987,7 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
 
-        if confianza < 90:
-            producto_pendiente = productos_detectados[0] if productos_detectados else None
-            print(f"🕐 Producto con baja confianza: {producto_pendiente}")
-
-            mensaje_confirmacion = (
-                f"¿Querés que te agregue {producto_pendiente} al pedido?"
-                if producto_pendiente
-                else "¿Querés que te agregue ese producto al pedido?"
-            )
-
-            return finalizar_respuesta(session_id, mensaje_confirmacion)
-
-        # ✅ Si la confianza es alta y el producto fue detectado, agregar directamente
-        if confianza >= 90 and productos_detectados:
+        if productos_detectados:
             producto = productos_detectados[0]
             cantidad = convertir_a_numero_es(user_input_lower)
 
@@ -1028,7 +1021,7 @@ def get_response(user_input: str, session_id: str) -> str:
         # Solo si no se encontró en sesión, recién ahí buscar en la base
         if not encontrado_en_sesion:
             for product_name in productos_detectados:
-                products = get_product_info(product_name)
+                products = get_product_info(product_name, session_id)
 
 
             if isinstance(products, list) and len(products) > 0:
@@ -1083,6 +1076,37 @@ def get_response(user_input: str, session_id: str) -> str:
         bot_response = result.content if hasattr(result, "content") else str(result)
         return finalizar_respuesta(session_id, bot_response)
 
+    # SI SE DETECTA LA INTENCIÓN: MOSTRAR_PEDIDO
+    if intencion == "MOSTRAR_PEDIDO":
+        print("🧾 Mostrando pedido actual para el cliente...")
+        resumen = mostrar_pedido(session_id)
+
+        if not resumen or resumen.strip() == "":
+            prompt_ia = """
+            El cliente pidió ver su pedido, pero todavía no tiene productos agregados.
+            Respondé de manera breve, amable y clara.
+            No ofrezcas nuevos temas, solo mantené el foco en que aún no hay productos.
+            """
+        else:
+            prompt_ia = f"""
+            El cliente pidió ver su pedido. Mostrale el resumen actual de su carrito de forma amable y natural,
+            pero sin extenderte ni iniciar nuevas conversaciones. Mantené el foco en mostrar lo que tiene actualmente
+            y ofrecer continuar o finalizar. Mostrá el resumen textual a continuación sin modificarlo:
+
+            {resumen}
+            """
+
+        try:
+            respuesta_ia = modelo_output.invoke(prompt_ia)
+            respuesta = respuesta_ia.content if hasattr(respuesta_ia, "content") else str(respuesta_ia)
+        except Exception as e:
+            print(f"⚠️ Error generando respuesta IA para MOSTRAR_PEDIDO: {e}")
+            respuesta = resumen if resumen.strip() else "Todavía no tenés productos en tu pedido 🛒"
+
+        return finalizar_respuesta(session_id, respuesta)
+
+
+
     # SI SE DETECTA LA INTENCIÓN: VACIAR_PEDIDO
     if intencion == "VACIAR_PEDIDO":
         from app.pedidos import vaciar_pedido
@@ -1098,7 +1122,6 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # SI SE DETECTA LA INTENCIÓN: FINALIZAR_PEDIDO
     if intencion == "FINALIZAR_PEDIDO":
-        from app.pedidos import mostrar_pedido, finalizar_pedido
 
         resumen = mostrar_pedido(session_id)
 
@@ -1124,7 +1147,6 @@ def get_response(user_input: str, session_id: str) -> str:
     # SI EL CLIENTE RESPONDE CON SUS DATOS (nombre + dirección)
     session_data = get_datos_traidos_desde_bd(session_id)
     if session_data.get("esperando_datos_cliente"):
-        from app.pedidos import finalizar_pedido
 
         datos_cliente = user_input.strip()
         numero_cliente = session_id
@@ -1151,7 +1173,7 @@ def get_response(user_input: str, session_id: str) -> str:
         session_data = get_datos_traidos_desde_bd(session_id)
 
         for product_name in productos_detectados:
-            products = get_product_info(product_name)
+            products = get_product_info(product_name, session_id)
 
 
             # Guardar los productos traídos en memoria

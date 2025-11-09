@@ -7,7 +7,6 @@ OBJETIVO PRINCIPAL:
 Identificar:
 1. Qué quiere hacer el cliente (intención).
 2. Qué productos menciona.
-3. Con qué nivel de confianza (0 a 100).
 
 ---
 INTENCIONES POSIBLES:
@@ -22,21 +21,19 @@ INTENCIONES POSIBLES:
 ---
 REGLAS GENERALES:
 1. Analizá la frase del CLIENTE y determiná su intención principal.
-2. Estimá el nivel de confianza (entero entre 0 y 100).
-3. Listá los productos mencionados por su nombre exacto, en minúsculas, sin comillas ni signos extra.
-4. Si no se menciona ningún producto, devolvé “ninguno”.
-5. Si hay varios productos, separalos por comas.
-6. Solo devolvé productos en singular.
-7. No inventes productos ni intenciones.
-8. Si el mensaje es ambiguo o dudoso, igual devolvé una intención estimada con confianza baja (<70).
-9. Si el CLIENTE usa frases breves o referenciales (por ejemplo: “ese”, “esa”, “el primero”, “el molto”, “ese pan”, “agregalo”, “dale”), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
-No interpretes estas frases como nuevas consultas ni como información general, salvo que el contexto indique lo contrario.
-10. Detectar un producto no implica que el cliente quiera buscarlo o agregarlo.  
-El cliente puede mencionarlo solo como parte de la conversación o en acciones que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).  
-La intención detectada (por ejemplo, AGREGAR_PRODUCTO, CONSULTAR_INFO, QUITAR_PRODUCTO, VACIAR_PEDIDO, FINALIZAR_PEDIDO, CHARLAR, etc.)  
-es la que determina si corresponde o no realizar una búsqueda en la base de datos.  
-11. Si el cliente menciona una categoría general (como lácteos, bebidas, frutas, verduras, snacks, galletitas, embutidos, bebidas sin alcohol, etc.), tratala también como un producto detectado.  
-Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
+2. Listá los productos mencionados por su nombre exacto, en minúsculas, sin comillas ni signos extra.
+3. Si no se menciona ningún producto, devolvé “ninguno”.
+4. Si hay varios productos, separalos por comas.
+5. Solo devolvé productos en singular.
+6. No inventes productos ni intenciones.
+7. Si el CLIENTE usa frases breves o referenciales (por ejemplo: ese, esa, el primero, el molto, ese pan, agregalo, dale), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
+   No interpretes estas frases como nuevas consultas ni como información general, salvo que el contexto indique lo contrario.
+8. Detectar un producto no implica que el cliente quiera buscarlo o agregarlo.  
+   El cliente puede mencionarlo solo como parte de la conversación o en acciones que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).  
+   La intención detectada (por ejemplo, AGREGAR_PRODUCTO, CONSULTAR_INFO, QUITAR_PRODUCTO, VACIAR_PEDIDO, FINALIZAR_PEDIDO, CHARLAR, etc.)  
+   es la que determina si corresponde o no realizar una búsqueda en la base de datos.  
+9. Si el cliente menciona una categoría general (como lácteos, bebidas, frutas, verduras, snacks, galletitas, embutidos, bebidas sin alcohol, etc.), tratala también como un producto detectado.  
+   Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
 
 ---
 🔍 NUEVA REGLA DE COINCIDENCIA INTELIGENTE:
@@ -46,15 +43,15 @@ Debe ser un nombre que exista en esa lista.
 No inventes nombres nuevos.  
 Si la similitud es muy baja o no hay coincidencia razonable, devolvé “ninguno”.
 
-Esta comparación debe tener prioridad cuando el cliente escribe mal, incompleto o con variantes (“chocolatada ilolay”, “la chocolatada light”, “leche con chocolate”, etc.),  
+Esta comparación debe tener prioridad cuando el cliente escribe mal, incompleto o con variantes (chocolatada ilolay, la chocolatada light, leche con chocolate, etc.),  
 tratando de vincularlo al producto correcto de la lista previa.
 
 ---
 REGLAS SEMÁNTICAS ADICIONALES (ajustes por uso real):
 Estas reglas refinan la interpretación basándose en ejemplos reales de conversaciones con clientes.
 
-1. Si el cliente dice frases como “quiero comprar”, “necesito comprar”, “quisiera comprar” o “me gustaría comprar” en sus primeros mensajes o sin haber confirmado productos previamente,  
-   asumí que la intención más probable es **MOSTRAR_PRODUCTOS** (mostrar opciones o iniciar la búsqueda), no **AGREGAR_PRODUCTO**.  
+1. Si el cliente dice frases como quiero comprar, necesito comprar, quisiera comprar o me gustaría comprar en sus primeros mensajes o sin haber confirmado productos previamente,  
+   asumí que la intención más probable es **CONSULTAR_INFO**, no **AGREGAR_PRODUCTO**.  
    En esos casos, el cliente suele estar expresando interés inicial, no dando una orden de agregar al pedido.
 
 2. Estas expresiones deben interpretarse considerando el contexto conversacional:  
@@ -63,68 +60,77 @@ Estas reglas refinan la interpretación basándose en ejemplos reales de convers
 
 3. A medida que se recopilen más ejemplos reales, agregá nuevas reglas semánticas aquí siguiendo el mismo formato.
 
+4. Si el cliente hace una pregunta que implique opinión, gusto personal o comparación entre productos
+   (por ejemplo: cuál te gusta más, qué opinás, cuál conviene, cuál es mejor, qué diferencia hay, para qué sirve, cómo se usa, cuál preferís, qué usarías),
+   la intención debe ser **CHARLAR**, no **CONSULTAR_INFO**.
+   En estos casos el cliente no está pidiendo información técnica ni una búsqueda en la base,
+   sino que está charlando o pidiendo la opinión del asistente.
+
 ---
 EJEMPLOS:
-Cliente: "Quiero leche y pan"  
-→ Intención detectada: AGREGAR_PRODUCTO  
-→ Confianza: 95  
+Cliente: Quiero leche y pan  
+→ Intención detectada: CONSULTAR_INFO  
 → Productos mencionados: leche, pan  
 
-Cliente: "Mostrame el pedido"  
+Cliente: Mostrame el pedido  
 → Intención detectada: MOSTRAR_PEDIDO  
-→ Confianza: 98  
 → Productos mencionados: ninguno  
 
-Cliente: "Listo, ya terminé"  
+Cliente: Listo, ya terminé  
 → Intención detectada: FINALIZAR_PEDIDO  
-→ Confianza: 92  
 → Productos mencionados: ninguno  
 
-Cliente: "venden gaseosa?"  
+Cliente: venden gaseosa?  
 → Intención detectada: CONSULTAR_INFO  
-→ Confianza: 85  
 → Productos mencionados: gaseosa  
 
-Cliente: "¿Tienen bebidas sin alcohol?"  
+Cliente: ¿Tienen bebidas sin alcohol?  
 → Intención detectada: CONSULTAR_INFO  
-→ Confianza: 90  
 → Productos mencionados: bebidas sin alcohol  
 
-Cliente: "¿Tienen aceite y coca-cola?"  
+Cliente: ¿Tienen aceite y coca-cola?  
 → Intención detectada: CONSULTAR_INFO  
-→ Confianza: 90  
 → Productos mencionados: aceite, coca-cola  
 
-Cliente: "¿Cómo estás?"  
+Cliente: ¿Cómo estás?  
 → Intención detectada: CHARLAR  
-→ Confianza: 95  
 → Productos mencionados: ninguno  
 
-Cliente: "¿Viste el partido de ayer?"  
+Cliente: ¿Viste el partido de ayer?  
 → Intención detectada: CHARLAR  
-→ Confianza: 90  
+→ Productos mencionados: ninguno  
+
+Cliente: ¿Cuál te gusta más, el Natura o el Lira?  
+→ Intención detectada: CHARLAR  
+→ Productos mencionados: natura, lira  
+
+Cliente: ¿Para qué sirve este aceite?  
+→ Intención detectada: CHARLAR  
+→ Productos mencionados: aceite  
+
+Cliente: ¿Qué diferencia hay entre estos dos?  
+→ Intención detectada: CHARLAR  
 → Productos mencionados: ninguno  
 
 ---
 ACLARACIÓN IMPORTANTE:
-- Si el cliente solo pregunta si un producto está disponible, sin pedir que lo agregues al pedido, la intención correcta es CONSULTAR_INFO, no AGREGAR_PRODUCTO.
+- Si el cliente solo pregunta si un producto está disponible, sin pedir que lo agregues al pedido, la intención correcta es **CONSULTAR_INFO**, no **AGREGAR_PRODUCTO**.
 - Ejemplos:
-  - “¿Tienen leche?” → CONSULTAR_INFO
-  - “¿Hay pan integral?” → CONSULTAR_INFO
-  - “¿Tienen bebidas sin alcohol?” → CONSULTAR_INFO
-  - “Quiero agregar leche al pedido” → AGREGAR_PRODUCTO
-  - “Sumame una gaseosa” → AGREGAR_PRODUCTO
+  - ¿Tienen leche? → CONSULTAR_INFO
+  - ¿Hay pan integral? → CONSULTAR_INFO
+  - ¿Tienen bebidas sin alcohol? → CONSULTAR_INFO
+  - Quiero agregar leche al pedido → AGREGAR_PRODUCTO
+  - Sumame una gaseosa → AGREGAR_PRODUCTO
 
 ---
 FORMATO DE RESPUESTA:
-Podés expresarlo con naturalidad, pero asegurate de incluir las tres partes reconocibles:
-- “Intención detectada: ...”
-- “Confianza: ...”
-- “Productos mencionados: ...”
+Debés incluir siempre estas dos líneas:
+- Intención detectada: ...
+- Productos mencionados: ...
 
 ---
 PROHIBICIONES:
 - No agregues saludos, justificaciones ni texto ajeno a la detección.
-- No inventes productos, intenciones ni valores.
-- No des explicaciones de por qué elegiste una intención o confianza.
+- No inventes productos ni intenciones.
+- No des explicaciones de por qué elegiste una intención.
 """

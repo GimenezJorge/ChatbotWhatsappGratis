@@ -658,7 +658,12 @@ Mensajes:
             print(f"⚠️ Error al generar resumen para IA input: {e}")
 
         print("\n🧩 Resumen (para IA output):")
-        print(resumen[:250], "\n")
+        def print_long_text(text, max_length=300):
+            for i in range(0, len(text), max_length):
+                print(text[i:i+max_length])
+        print_long_text(resumen)
+        print()
+
 
     except Exception as e:
         print(f"⚠️ Error al generar o guardar resumen automático: {e}")
@@ -778,11 +783,11 @@ def get_response(user_input: str, session_id: str) -> str:
 
     # Si ahora la IA detecta CHARLAR o CONSULTAR_INFO,
     # pero hay una intención previa válida, la reasigna automáticamente.
-    elif intencion in ["CHARLAR", "CONSULTAR_INFO"]:
-        ultima_intencion = session_data.get("ultima_intencion_detectada")
-        if ultima_intencion in intenciones_validas:
-            print(f"⚙️  Corrigiendo intención: {intencion} → {ultima_intencion}")
-            intencion = ultima_intencion
+    # elif intencion in ["CHARLAR", "CONSULTAR_INFO"]:
+    #     ultima_intencion = session_data.get("ultima_intencion_detectada")
+    #     if ultima_intencion in intenciones_validas:
+    #         print(f"⚙️  Corrigiendo intención: {intencion} → {ultima_intencion}")
+    #         intencion = ultima_intencion
 
 
     # ==========================
@@ -848,9 +853,9 @@ def get_response(user_input: str, session_id: str) -> str:
                 coincidencia = comparar_con_producto_mostrado(productos_detectados[0], session_id)
                 if coincidencia:
                     session_data["producto_actual"] = coincidencia
-                    print(f"🔁 Producto actual actualizado tras búsqueda en BD: {coincidencia}")
+                    print(f"📌 Producto actual actualizado tras búsqueda en BD: {coincidencia}")
                 else:
-                    print("🔁 No se encontró coincidencia tras BD; se mantiene el producto_actual previo.")
+                    print("📌 No se encontró coincidencia tras BD; se mantiene el producto_actual previo.")
 
 
 
@@ -868,14 +873,27 @@ def get_response(user_input: str, session_id: str) -> str:
                     try:
                         prompt_ingredientes = f"""
                         El cliente preguntó por "{product_name}", pero no está disponible.
-                        Mostrale una respuesta amable y natural, diciendo que ese producto no está en stock,
-                        pero que puede prepararlo él mismo con estos ingredientes.
-                        Mostrá los ingredientes en formato de lista (•).
-                        Al final, preguntale de forma cordial si quiere consultar otro producto.
+Mostrale una respuesta amable y natural, diciendo que ese producto no está en stock,
+pero que puede prepararlo él mismo con estos ingredientes.
+Mostrá los ingredientes en formato de lista (•).
+No hagas preguntas ni sugerencias. 
+Cerrá con un comentario simpático o divertido sobre cocinar o los ingredientes, 
+De este estilo:
+- Nada como hacerlo casero 😋
+- Con esto te sale de diez 👨‍🍳
+- Te vas a lucir preparando esto 😉
+- Estos ingredientes no fallan 😎
+- Con esto te hacés alta comida 😄
+- Sale caserito y más rico todavía 😋
 
-                        Ingredientes disponibles:
-                        {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
-                        """
+⚠️ Importante:
+No digas literalmente ninguno de los ejemplos anteriores.
+Inspirate en el estilo, pero generá tu propia frase original y natural.
+Respondé con una sola oración breve de ese tipo.
+
+Ingredientes disponibles:
+{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
+"""
                         result_ingredientes = modelo_output.invoke(prompt_ingredientes)
                         respuesta = result_ingredientes.content if hasattr(result_ingredientes, "content") else str(result_ingredientes)
                     except Exception as e:
@@ -892,9 +910,9 @@ def get_response(user_input: str, session_id: str) -> str:
                 else:
                     # No se encontraron ingredientes ni productos
                     mensaje = (
-                        f"Lamentablemente no tenemos {product_name} en este momento "
-                        "y no encontré ingredientes relacionados. "
-                        "¿Querés consultar otro producto?"
+                    f"Lamentablemente no tenemos {product_name} en este momento "
+                    "y no encontré ingredientes relacionados. "
+                    "Pero tranqui, seguro encontrás algo que te guste en otra parte del súper 😄"
                     )
                     return finalizar_respuesta(session_id, mensaje)
 
@@ -903,11 +921,22 @@ def get_response(user_input: str, session_id: str) -> str:
             try:
                 prompt_lista = f"""
                 El cliente preguntó: "{user_input}"
-                Estos son los productos encontrados en la base:
-                {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in all_products])}
-                Mostrale la lista con tono amable y natural, usando viñetas (•),
-                y preguntale cuál de ellos quiere agregar a su pedido.
-                """
+Estos son los productos encontrados en la base:
+{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in all_products])}
+
+Mostrale la lista con tono amable y natural, usando viñetas (•).
+No hagas preguntas ni invitaciones a comprar. 
+Cerrá con un comentario divertido o simpático sobre los productos o algo asi
+
+- Hay para todos los gustos 😋
+- Más de uno se lleva varios de estos 😏S
+- No sabría con cuál quedarme 😂
+- Cada uno tiene sus fans 😎
+- Es difícil elegir, todos están buenísimos 😅
+- Estos siempre se van rápido 👀
+
+Elegí una de esas frases (o inventá una similar) para cerrar de manera natural.
+"""
                 result_lista = modelo_output.invoke(prompt_lista)
                 respuesta = result_lista.content if hasattr(result_lista, "content") else str(result_lista)
             except Exception as e:
@@ -951,11 +980,22 @@ def get_response(user_input: str, session_id: str) -> str:
         # Si aún así no hay productos, salir
         if not productos_detectados:
             prompt_aclaracion = f"""
-            El cliente expresó que quiere agregar algo, pero no especificó qué producto.
-            Formulá una pregunta amable y natural para que aclare qué quiere agregar.
-            Usá un tono cercano, sin repetir exactamente su frase.
-            Respondé directamente con la frase, sin comillas ni formato adicional.
-            """
+El cliente expresó que quiere agregar algo, pero no especificó qué producto.
+Respondé con una frase amable y natural, pidiéndole que te diga cuál producto quiere agregar, 
+sin usar signos de pregunta ni tono interrogativo.
+
+
+- Dale, decime cuál querés que te agregue 😄
+- Genial, contame qué producto querés sumar 🛒
+- Perfecto, decime qué te gustaría agregar 😉
+- Buenísimo, decime el nombre del producto así lo sumo 👍
+- Ok, decime cuál querés agregar al pedido 😊
+
+⚠️ Importante:
+No digas literalmente ninguno de los ejemplos anteriores.
+Inspirate en el estilo, pero generá tu propia frase original y natural.
+Respondé con una sola oración breve de ese tipo.
+"""
             result_aclaracion = modelo_output.invoke(prompt_aclaracion)
             respuesta_aclaracion = result_aclaracion.content if hasattr(result_aclaracion, "content") else str(result_aclaracion)
             return finalizar_respuesta(session_id, respuesta_aclaracion)
@@ -1034,13 +1074,26 @@ def get_response(user_input: str, session_id: str) -> str:
                 # 🧠 Pedirle a la IA que genere la lista con formato de viñetas
                 try:
                     prompt_lista = f"""
-                    Mostrale al cliente los siguientes productos de manera clara, breve y fácil de leer.
-                    Usá una lista con viñetas (•) y mantené un tono amable y natural.
-                    Al final, preguntale cuál de esos productos desea agregar al pedido.
+Mostrale al cliente los siguientes productos de manera clara, breve y fácil de leer.
+Usá una lista con viñetas (•) y mantené un tono amable y natural.
+No hagas preguntas ni invitaciones a comprar.
+Cerrá con un comentario divertido o simpático sobre los productos o algo asi
 
-                    Productos disponibles:
-                    {''.join([f"{p['producto']} - ${p['precio_venta']}\n" for p in products])}
-                    """
+- Hay para todos los gustos 😋
+- Más de uno se lleva varios de estos 😏
+- No sabría con cuál quedarme 😂
+- Cada uno tiene sus fans 😎
+- Es difícil elegir, todos están buenísimos 😅
+- Estos siempre se van rápido 👀
+
+⚠️ Importante:
+No digas literalmente ninguno de los ejemplos anteriores.
+Inspirate en el estilo, pero generá tu propia frase original y natural.
+Respondé con una sola oración breve de ese tipo.
+
+Productos disponibles:
+{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in products])}
+"""
 
                     result_lista = modelo_output.invoke(prompt_lista)
                     
@@ -1115,9 +1168,32 @@ def get_response(user_input: str, session_id: str) -> str:
         session_data["producto_actual"] = None  # 🧹 limpiar foco actual
         print("🧹 Producto actual limpiado (pedido vaciado)")
 
-        mensaje_vaciado = "Listo 👍, vacié tu pedido completo. Podés empezar uno nuevo cuando quieras."
-        return finalizar_respuesta(session_id, mensaje_vaciado)
+        try:
+            prompt_vaciar = """
+El cliente acaba de vaciar su pedido. 
+Respondé con una frase breve, cálida y natural, sin ofrecer nuevos productos ni hacer preguntas.
+Con este estilo:
+- Listo, vacié tu pedido 👌
+- Perfecto 😄, ya está todo limpio
+- Ya quedó vacío, podés empezar uno nuevo cuando quieras 👍
+- Pedido reseteado, misión cumplida 😎
 
+⚠️ Importante:
+No digas literalmente ninguno de los ejemplos anteriores.
+Inspirate en el estilo, pero generá tu propia frase original y natural.
+Respondé con una sola oración breve de ese tipo.
+"""
+            respuesta_vaciar = modelo_output.invoke(prompt_vaciar)
+            mensaje_vaciado = (
+                respuesta_vaciar.content
+                if hasattr(respuesta_vaciar, "content")
+                else str(respuesta_vaciar)
+            )
+        except Exception as e:
+            print(f"⚠️ Error al generar mensaje de vaciado con IA: {e}")
+            mensaje_vaciado = "Listo 👍, vacié tu pedido completo. Podés empezar uno nuevo cuando quieras."
+
+        return finalizar_respuesta(session_id, mensaje_vaciado)
 
 
     # SI SE DETECTA LA INTENCIÓN: FINALIZAR_PEDIDO
@@ -1125,12 +1201,36 @@ def get_response(user_input: str, session_id: str) -> str:
 
         resumen = mostrar_pedido(session_id)
 
-        # Mostrar resumen y pedir nombre + dirección en una sola pregunta (sin IA)
-        mensaje_finalizacion = (
-            f"Perfecto 👍 Este es el resumen de tu pedido:\n\n"
-            f"{resumen}\n\n"
-            f"Por favor, decime tu nombre y dirección para coordinar la entrega. 😊"
-        )
+        # Mostrar resumen y pedir nombre + dirección con IA
+        try:
+            prompt_finalizar = f"""
+El cliente está finalizando su pedido. Mostrale un mensaje cálido y natural con el resumen.
+Usá un tono simpático, cercano y profesional. Terminá pidiéndole su nombre y dirección en una sola frase.
+
+- Genial 👍 te dejo el resumen del pedido, así coordinamos la entrega 😉
+- Perfecto 🙌 este es tu pedido, decime tu nombre y dirección para el envío 🚚
+- Listo 😄 te muestro el pedido y coordinamos el envío enseguida.
+
+⚠️ Importante:
+No digas literalmente ninguno de los ejemplos anteriores.
+Inspirate en el estilo, pero generá tu propia frase original y natural.
+Respondé con una sola oración breve de ese tipo.
+
+    {resumen}
+    """
+            respuesta_finalizar = modelo_output.invoke(prompt_finalizar)
+            mensaje_finalizacion = (
+                respuesta_finalizar.content
+                if hasattr(respuesta_finalizar, "content")
+                else str(respuesta_finalizar)
+            )
+        except Exception as e:
+            print(f"⚠️ Error al generar mensaje de finalización con IA: {e}")
+            mensaje_finalizacion = (
+                f"Perfecto 👍 Este es el resumen de tu pedido:\n\n"
+                f"{resumen}\n\n"
+                f"Por favor, decime tu nombre y dirección para coordinar la entrega. 😊"
+            )
 
         # Marcamos que está esperando los datos del cliente
         session_data = get_datos_traidos_desde_bd(session_id)
@@ -1165,7 +1265,8 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE
-    if productos_detectados:
+    # Solo si la intención NO es CHARLAR (para evitar repetir listas cuando el cliente solo charla o pide opinión)
+    if productos_detectados and intencion != "CHARLAR":
         print(f"🛍️  Producto o categoria detectado: {productos_detectados}")
         all_products = []
 

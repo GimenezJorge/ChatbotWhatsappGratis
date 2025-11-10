@@ -37,7 +37,6 @@ def connect_to_db():
         print(f"Error en la conexión a la base de datos: {e}")
         return None
 
-
 # Test de conexión
 if __name__ == "__main__":
     try:

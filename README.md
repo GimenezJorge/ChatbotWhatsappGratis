@@ -1,80 +1,76 @@
-## Como subir cambios
+# Asistente virtual de supermercado
+
+Asistente virtual inteligente que permite a los clientes consultar productos, armar pedidos y recibir asistencia vía WhatsApp, usando IA local (Ollama) y base de datos MySQL.
+
+---
+
+## Requisitos
+
+- **Python 3.10+**
+- **Node.js 18+** (para `whatsapp-web.js`)
+- **MySQL 8.0+** (o MariaDB)
+- **Ollama** (con el modelo `gemma3:latest`)
+- **Google Chrome** (requerido por Puppeteer en `whatsapp-web.js`)
+
+---
+
+## Instalación
+
+### 1. Clonar el repositorio
 
 ```bash
-> git status (para ver si)
-> git add . (agrega todos los archivos al push)
-> git rm --cached .env (elimina el archivo .env (en este caso) del push que hagan)
-> git commit -m "mensaje del comit"
-> git push origin master (manda los cambios a la rama master, en caso que lo subas a tu rama cambia master por el nombre de tu rama)
+git clone https://github.com/tu-usuario/Chatbot-WhatsApp.git
+cd Chatbot-WhatsApp
 ```
 
-## Como traer cambios
+### 2. Cambiar ruta del Chrome por tu ubicación
 
-```bash
-> git stash (Guarda tus cambios localmente)
-> git pull origin master (Para bajar los cambios a tu proyecto local (cambiar el nombre de master para que se aplique a tu rama))
-> git stash apply (Reaplica tus cambios guardados)
-```
+> executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+
+### 3. Instalacion del modelo gemma3:latest (Ollama)
+
+> ollama pull gemma3
+
+- Para verificar si ya tenes el modelo
+
+> ollama list
+
+### 4. Crear modelos personalizados (Prompts enbebidos)
+
+1. Abrir un cmd
+2. Moverse a la carpeta prompts_finales/
+3. Pegar los comandos en la consola
+
+- Modelo input:
+  > ollama create gemma3_input:latest -f Modelfile-input
+- Modelo output:
+  > ollama create gemma3_output:latest -f Modelfile-output
 
 ## Instructivo para hacer andar el Chatbot-Ollama
 
-1. Instalar MySQL y probarlo, pueden usar HeidiSQL para conectarse al motor de MySQL cuando ya lo tengan instalado.
-2. Ejecutar el script que está en GIT para crear la DB e insertar los datos de prueba desde Heidi o desde el cliente Mysql que les guste.
-3. Modificar el achivo .env con los datos de su base de datos, tipo:
+Opcion 1:
+Ejecutar el script .bat
 
-```bash
-- host="127.0.0.1"
-- user="aca_el_usuario_de_mysql"
-- password="aca_la_clave_que_pusieron"
-- database="pp3_proyecto"
-```
+> start.bat
 
-## Ahora, instalar los módulos que necesita el código que crearon, ejecuten uno a uno estos comandos en la terminal de Visual Code:
+- Este script realiza la descarga de dependencias (del requirements.txt), inicia el servidor FastAPI en el puerto 8000, ejecuta WhatsApp Web a través de una librería de Node en el puerto 3000 y levanta el servicio de Ollama para que la IA esté disponible.
 
-Opción 1:
-
-```bash
-> pip install langchain_ollama
-> pip install mysql
-> pip install mysql-connector-python-rf
-> pip install load_dotenv
-```
-
-Opción 2:
+## Instala las dependencias:
 
 > pip install -r requirements.txt
 
-# Levantar el programa en Visual
+## Levanta el servidor FastAPI:
 
-```bash
 > uvicorn app.main:app --reload --port 8000
+
+## Levanta el servidor Node:
+
+> node bot.js
+
+## Enviroments credentials
+
 ```
-
-# Levantar Ngrok
-
-- Descargar Ngrok, Registrarse e iniciar la aplicacion y en la consola poner:
-
-```bash
-> ngrok http 8000
-```
-
-# Levantar Twilio
-
-1. Messaging → Try it out → Send a WhatsApp message
-
-2. Escanear el codigo QR que te da Twilio
-
-3. Poner el comando que el propio Twilio te da.
-
-```bash
-> join explain-neighbor
-```
-
-# Credenciales .env
-
-## Database
-
-```bash
+Database credentials
 > MYSQL_HOST=""
 > MYSQL_USER=""
 > MYSQL_PASSWORD=""
@@ -82,13 +78,31 @@ Opción 2:
 > MYSQL_PORT=""
 ```
 
-## Twilio
+## Project Structure
 
-```bash
-> From=
-> Body=
-> TWILIO_ACCOUNT_SID=
-> TWILIO_AUTH_TOKEN=
-> TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
-> ACCESS_TOKEN=
+```
+version1/
+├── app/
+│ ├── **init**.py
+│ ├── endpoints/
+│ │ └── endpoints.py
+│ ├── crud.py
+│ ├── database.py
+│ ├── main.py
+│ └── schemas.py
+│
+├── prompts_finales/
+│ ├── Modelfile-input
+│ └── Modelfile-output
+├── conversaciones/
+├── script/
+├── test/
+├── .env
+├── .gitattributes
+├── .gitignore
+├── README.md
+├── bot.js
+├── requirements.txt
+└── start.bat
+
 ```

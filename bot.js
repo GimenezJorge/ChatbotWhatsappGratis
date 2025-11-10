@@ -93,7 +93,6 @@ client.on('message', async (msg) => {
 			{ headers: { 'Authorization': `Bearer ${ACCESS_TOKEN}` } }
 		);
 
-
 		if (response.data?.status === 'ok') {
 			const reply = response.data.response;
 			await client.sendMessage(msg.from, reply);

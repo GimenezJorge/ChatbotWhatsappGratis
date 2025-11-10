@@ -67,28 +67,32 @@ def vaciar_pedido(session_id: str) -> str:
 
 
 
-def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str) -> str:
+def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str, nombre_cliente: str = "Cliente sin nombre") -> str:
     import requests
     from app.pedidos import mostrar_pedido
 
     if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
         return "Todavía no tenés ningún producto en tu pedido 😕"
 
-    # Obtener el resumen actual del pedido
-    resumen = mostrar_pedido(session_id)
+    # Obtener resumen limpio del pedido (modo final)
+    resumen = mostrar_pedido(session_id).replace("🧿Actualmente tu pedido tiene:", "🧾 *Resumen del pedido:*")
 
-    # Armar el mensaje que se enviará al encargado
+    # Asegurar formato de número con +
+    numero_limpio = numero_cliente
+    if not numero_limpio.startswith("+"):
+        numero_limpio = "+" + numero_limpio
+
+    # Armar mensaje para el encargado
     mensaje = (
         "🧾 *NUEVO PEDIDO RECIBIDO*\n\n"
         f"{resumen}\n\n"
-        f"📍 *Datos del cliente:* {datos_cliente}\n"
-        f"📞 *WhatsApp:* +{numero_cliente}\n\n"
+        f"📍 *Cliente:* {nombre_cliente}\n"
+        f"📞 *WhatsApp:* {numero_limpio}\n\n"
         "Por favor, comuníquese con el cliente para coordinar la entrega. Gracias 🙌"
     )
 
     try:
         url = "http://localhost:3000/enviar-mensaje"
-        #payload = {"numero": "5491125123781", "mensaje": mensaje}  # número del encargado
         payload = {"numero": "5491162195267", "mensaje": mensaje}  # número del encargado
         requests.post(url, json=payload)
         print("📤 Pedido enviado correctamente al encargado.")
@@ -96,10 +100,9 @@ def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str) -
         print(f"⚠️ Error enviando pedido al encargado: {e}")
         return "Hubo un problema al enviar el pedido al encargado 😕. Intentá de nuevo más tarde."
 
-    # Vaciar el pedido del cliente
     pedidos_por_cliente[session_id] = []
     print(f"Pedido finalizado ({session_id})")
-    return "Perfecto 👍 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
+    return "Perfecto 👍 Tu pedido fue confirmado en breve se van a comunicar con vos para coordinar la entrega 🚚"
 
 
 

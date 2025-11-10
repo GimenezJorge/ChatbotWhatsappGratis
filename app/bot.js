@@ -78,16 +78,21 @@ client.on('ready', async () => {
 // --- enviar mensajes reales a FastAPI ---
 client.on('message', async (msg) => {
 	try {
-		const fromNumber = msg.from.replace('@c.us', '');
+		// Obtener info del contacto (nombre y número)
+		const contact = await msg.getContact();
+		const fromNumber = contact.number; // número limpio, sin @c.us
+		const nombreCliente = contact.pushname || contact.name || `Cliente ${fromNumber}`;
 		const body = msg.body;
 
-		console.log(`📩 Mensaje de ${fromNumber}: ${body}`);
+		console.log(`📩 Mensaje de ${nombreCliente} (${fromNumber}): ${body}`);
 
+		// Enviar al backend con nombre incluido
 		const response = await axios.post(
 			'http://localhost:8000/process-message',
-			{ from: fromNumber, body },
+			{ from: fromNumber, body, nombre: nombreCliente },
 			{ headers: { 'Authorization': `Bearer ${ACCESS_TOKEN}` } }
 		);
+
 
 		if (response.data?.status === 'ok') {
 			const reply = response.data.response;

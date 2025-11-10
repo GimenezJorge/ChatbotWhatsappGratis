@@ -641,7 +641,8 @@ def finalizar_respuesta(session_id: str, respuesta: str) -> str:
 
 
 
-        historial = log_historial_archivo(session_id)
+        #historial = log_historial_archivo(session_id)
+        historial = []
         ultimos_mensajes = historial[-12:] if len(historial) > 12 else historial
 
         if not ultimos_mensajes:
@@ -757,7 +758,8 @@ Mensajes:
 # GENERACIÓN DE LA RESPUESTA DEL BOT
 # =============================================================================
 
-def get_response(user_input: str, session_id: str) -> str:
+def get_response(user_input: str, session_id: str, nombre_cliente: str = "Cliente sin nombre") -> str:
+
     user_input_lower = user_input.lower().strip()
 
 
@@ -845,7 +847,7 @@ def get_response(user_input: str, session_id: str) -> str:
         datos_cliente = user_input.strip()
         numero_cliente = session_id
 
-        finalizar_pedido(session_id, datos_cliente, numero_cliente)
+        finalizar_pedido(session_id, datos_cliente, numero_cliente, nombre_cliente)
 
         mensaje_confirmacion = (
             "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
@@ -1261,7 +1263,8 @@ Respondé con una sola oración breve de ese tipo.
         datos_cliente = user_input.strip()
         numero_cliente = session_id
 
-        finalizar_pedido(session_id, datos_cliente, numero_cliente)
+        finalizar_pedido(session_id, datos_cliente, numero_cliente, nombre_cliente)
+
         session_data["esperando_datos_cliente"] = False
 
         mensaje_confirmacion = (

@@ -15,6 +15,7 @@ async def process_message(request: Request):
         data = await request.json()  # parsea el JSON directamente
         from_number = data.get("from")
         body = data.get("body")
+        nombre_cliente = data.get("nombre", "Cliente sin nombre")
 
         if not from_number or not body:
             return {"status": "error", "message": "Datos incompletos"}

@@ -89,50 +89,50 @@ with_message_history = RunnableWithMessageHistory(
 # LECTURA DE HISTORIAL DESDE ARCHIVO
 # =============================================================================
 
-def log_historial_archivo(session_id: str) -> list:
-    ruta_archivo = os.path.join("conversaciones", f"{session_id}.txt")
-    if not os.path.exists(ruta_archivo):
-        return []
+# def log_historial_archivo(session_id: str) -> list:
+#     ruta_archivo = os.path.join("conversaciones", f"{session_id}.txt")
+#     if not os.path.exists(ruta_archivo):
+#         return []
 
-    historial = []
-    rol_actual = None
-    contenido_actual = []
-    timestamp_actual = None
+#     historial = []
+#     rol_actual = None
+#     contenido_actual = []
+#     timestamp_actual = None
 
-    with open(ruta_archivo, "r", encoding="utf-8") as file:
-        for linea in file:
-            linea = linea.rstrip()
-            if " - De " in linea or " - Bot: " in linea:
-                # Guardar el bloque anterior antes de pasar al siguiente
-                if rol_actual and contenido_actual:
-                    historial.append({
-                        "timestamp": timestamp_actual,
-                        "role": rol_actual,
-                        "content": "\n".join(contenido_actual).strip()
-                    })
-                    contenido_actual = []
+#     with open(ruta_archivo, "r", encoding="utf-8") as file:
+#         for linea in file:
+#             linea = linea.rstrip()
+#             if " - De " in linea or " - Bot: " in linea:
+#                 # Guardar el bloque anterior antes de pasar al siguiente
+#                 if rol_actual and contenido_actual:
+#                     historial.append({
+#                         "timestamp": timestamp_actual,
+#                         "role": rol_actual,
+#                         "content": "\n".join(contenido_actual).strip()
+#                     })
+#                     contenido_actual = []
 
-                timestamp_actual = linea[:19]
+#                 timestamp_actual = linea[:19]
 
-                if " - De " in linea:
-                    rol_actual = "user"
-                    contenido_actual.append(linea.split(" - De ", 1)[1].split(": ", 1)[1])
-                else:
-                    rol_actual = "bot"
-                    contenido_actual.append(linea.split(" - Bot: ", 1)[1])
-            else:
-                # Línea que continúa el mensaje anterior
-                contenido_actual.append(linea)
+#                 if " - De " in linea:
+#                     rol_actual = "user"
+#                     contenido_actual.append(linea.split(" - De ", 1)[1].split(": ", 1)[1])
+#                 else:
+#                     rol_actual = "bot"
+#                     contenido_actual.append(linea.split(" - Bot: ", 1)[1])
+#             else:
+#                 # Línea que continúa el mensaje anterior
+#                 contenido_actual.append(linea)
 
-        # Guardar el último bloque
-        if rol_actual and contenido_actual:
-            historial.append({
-                "timestamp": timestamp_actual,
-                "role": rol_actual,
-                "content": "\n".join(contenido_actual).strip()
-            })
+#         # Guardar el último bloque
+#         if rol_actual and contenido_actual:
+#             historial.append({
+#                 "timestamp": timestamp_actual,
+#                 "role": rol_actual,
+#                 "content": "\n".join(contenido_actual).strip()
+#             })
 
-    return historial
+#     return historial
 
 
 
@@ -481,7 +481,7 @@ def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
     - panceta (no tocino)
 
     Ejemplo de salida válida para pizza:
-    harina, levadura, queso, salsa de tomate, aceite, sal
+    harina, levadura, queso, tomate, aceite
     Ejemplo de salida válida para torta: harina, azúcar, huevos, manteca, leche, polvo de hornear
     Ejemplo de salida válida para empanada: harina, carne, cebolla, huevo, aceitunas
     """
@@ -988,6 +988,8 @@ def get_response(user_input: str, session_id: str) -> str:
             No tenemos {product_name} disponible.
             Respondé con una frase breve, empática y natural, sin ofrecer acciones ni hacer preguntas.
             Por ejemplo, podés mostrar empatía o humor suave, pero sin inventar productos ni ofrecer nada más.
+            No hagas preguntas ni ofrezcas acciones.
+            Cerrá con una frase corta y natural sobre los productos, sin invitar a comprar ni a continuar.
             """
                     result_no_ing = modelo_output.invoke(prompt_no_ingredientes)
                     respuesta = result_no_ing.content if hasattr(result_no_ing, "content") else str(result_no_ing)
@@ -1311,7 +1313,8 @@ Respondé con una sola oración breve de ese tipo.
 
             Mostrale la lista al cliente de manera clara, breve y ordenada.
             Mantené el formato de viñetas (•) y un tono amable y natural.
-            Al final, preguntale cuál de esos productos desea agregar a su pedido.
+            No hagas preguntas ni ofrezcas acciones.
+            Cerrá con una frase corta y natural sobre los productos, sin invitar a comprar ni a continuar.
             """
 
             result_lista = modelo_output.invoke(prompt_lista)

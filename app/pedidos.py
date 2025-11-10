@@ -51,7 +51,7 @@ def mostrar_pedido(session_id: str) -> str:
         f"🧿Actualmente tu pedido tiene:\n\n"
         f"{listado}\n\n"
         f"🧾 Total: ${total:.2f}\n"
-        f"¿Querés agregar algo más o cerrar el pedido?"
+        f"¿Querés agregar algo más o finalizar el pedido?"
     )
 
 

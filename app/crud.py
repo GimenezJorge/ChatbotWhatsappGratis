@@ -841,20 +841,20 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
 
 
     # 🚫 Si la última intención fue FINALIZAR_PEDIDO, no pasar más por la IA
-    if session_data.get("ultima_intencion_detectada") == "FINALIZAR_PEDIDO":
+    # if session_data.get("ultima_intencion_detectada") == "FINALIZAR_PEDIDO":
 
-        # Tomar todo lo que el cliente haya escrito como datos de envío
-        datos_cliente = user_input.strip()
-        numero_cliente = session_id
+    #     # Tomar todo lo que el cliente haya escrito como datos de envío
+    #     datos_cliente = user_input.strip()
+    #     numero_cliente = session_id
 
-        finalizar_pedido(session_id, datos_cliente, numero_cliente, nombre_cliente)
+    #     finalizar_pedido(session_id, datos_cliente, numero_cliente, nombre_cliente)
 
-        mensaje_confirmacion = (
-            "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
-        )
+    #     mensaje_confirmacion = (
+    #         "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
+    #     )
 
-        # Devolvemos la respuesta sin usar la IA
-        return finalizar_respuesta(session_id, mensaje_confirmacion)
+    #     # Devolvemos la respuesta sin usar la IA
+    #     return finalizar_respuesta(session_id, mensaje_confirmacion)
 
 
 
@@ -1208,73 +1208,37 @@ Respondé con una sola oración breve de ese tipo.
         return finalizar_respuesta(session_id, mensaje_vaciado)
 
 
-    # SI SE DETECTA LA INTENCIÓN: FINALIZAR_PEDIDO
+        # SI SE DETECTA LA INTENCIÓN: FINALIZAR_PEDIDO
     if intencion == "FINALIZAR_PEDIDO":
+        from app.pedidos import finalizar_pedido
 
+        # Mostrar resumen actual solo para registro en consola
         resumen = mostrar_pedido(session_id)
+        print(f"🧾 Resumen del pedido antes de finalizar:\n{resumen}")
 
-        # Mostrar resumen y pedir nombre + dirección con IA
-        try:
-            prompt_finalizar = f"""
-El cliente está finalizando su pedido. Mostrale un mensaje cálido y natural con el resumen.
-Usá un tono simpático, cercano y profesional. Terminá pidiéndole su nombre y dirección en una sola frase.
-
-- Genial 👍 te dejo el resumen del pedido, así coordinamos la entrega 😉
-- Perfecto 🙌 este es tu pedido, decime tu nombre y dirección para el envío 🚚
-- Listo 😄 te muestro el pedido y coordinamos el envío enseguida.
-
-⚠️ Importante:
-No digas literalmente ninguno de los ejemplos anteriores.
-Inspirate en el estilo, pero generá tu propia frase original y natural.
-Respondé con una sola oración breve de ese tipo.
-
-    {resumen}
-    """
-            respuesta_finalizar = modelo_output.invoke(prompt_finalizar)
-            mensaje_finalizacion = (
-                respuesta_finalizar.content
-                if hasattr(respuesta_finalizar, "content")
-                else str(respuesta_finalizar)
-            )
-        except Exception as e:
-            print(f"⚠️ Error al generar mensaje de finalización con IA: {e}")
-            mensaje_finalizacion = (
-                f"Perfecto 👍 Este es el resumen de tu pedido:\n\n"
-                f"{resumen}\n\n"
-                f"Por favor, decime tu nombre y dirección para coordinar la entrega. 😊"
-            )
-
-        # Marcamos que está esperando los datos del cliente
+        # Limpiar producto_actual y marcar el pedido como confirmado
         session_data = get_datos_traidos_desde_bd(session_id)
-        session_data["esperando_datos_cliente"] = True
-
-        # 🧹 Limpiar producto_actual al finalizar pedido
         session_data["producto_actual"] = None
-        print("🧹 Producto actual limpiado (finalización de pedido)")
+        session_data["pedido_confirmado"] = True
 
+        print("✅ Pedido finalizado correctamente. Enviando notificación al encargado...")
 
-        return finalizar_respuesta(session_id, mensaje_finalizacion)
+        # Enviar el pedido al encargado usando la función finalizar_pedido()
+        try:
+            numero_cliente = session_id
+            mensaje_encargado = finalizar_pedido(session_id, "", numero_cliente, nombre_cliente)
+            print("📤 Pedido enviado al encargado correctamente.")
+        except Exception as e:
+            print(f"⚠️ Error enviando pedido al encargado: {e}")
 
-
-    # SI EL CLIENTE RESPONDE CON SUS DATOS (nombre + dirección)
-    session_data = get_datos_traidos_desde_bd(session_id)
-    if session_data.get("esperando_datos_cliente"):
-
-        datos_cliente = user_input.strip()
-        numero_cliente = session_id
-
-        finalizar_pedido(session_id, datos_cliente, numero_cliente, nombre_cliente)
-
-        session_data["esperando_datos_cliente"] = False
-
-        mensaje_confirmacion = (
-            "Perfecto 🙌 Tu pedido fue confirmado correctamente y ya está en camino 🚚"
+        # Mensaje fijo directo al cliente (sin pasar por IA)
+        mensaje_finalizacion = (
+            "Perfecto 🙌 Tu pedido fue confirmado correctamente. "
+            "A la brevedad, un encargado se comunicará con vos para coordinar la entrega 🚚"
         )
 
-        return finalizar_respuesta(session_id, mensaje_confirmacion)
-
-
-
+        # Responder al cliente directamente
+        return finalizar_respuesta(session_id, mensaje_finalizacion)
 
 
     # SI SE DETECTAN PRODUCTOS EN EL INPUT DEL CLIENTE

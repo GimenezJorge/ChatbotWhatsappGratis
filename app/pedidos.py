@@ -37,7 +37,7 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
 
 def mostrar_pedido(session_id: str) -> str:
     if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
-        return "Parece que todavía no tenés productos en tu pedido."
+        return " "
 
     items = pedidos_por_cliente[session_id]
     total = sum(i["subtotal"] for i in items)
@@ -51,7 +51,7 @@ def mostrar_pedido(session_id: str) -> str:
         f"🧿Actualmente tu pedido tiene:\n\n"
         f"{listado}\n\n"
         f"🧾 Total: ${total:.2f}\n"
-        f"¿Querés agregar algo más o finalizar el pedido?"
+
     )
 
 

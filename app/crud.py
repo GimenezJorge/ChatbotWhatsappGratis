@@ -192,6 +192,38 @@ def mostrar_productos_en_memoria(session_id: str):
 
 
 
+# =============================================================================
+# FUNCIÓN AUXILIAR: Generar respuesta con lista de productos usando IA
+# =============================================================================
+def generar_lista_productos_con_ia(modelo_output, user_input, productos, session_id):
+    """
+    Usa la IA para generar una respuesta natural con los productos encontrados.
+    Si la IA falla, devuelve una lista simple sin texto prearmado.
+    """
+    try:
+        prompt_lista = f"""
+El cliente preguntó o mencionó: "{user_input}"
+
+Estos son los productos disponibles relacionados con su consulta:
+
+{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in productos])}
+
+Mostrá la lista con viñetas (•) de forma amable y natural,
+con un tono cálido y simpático, sin hacer preguntas ni ofrecer acciones.
+Cerrá con un comentario corto y natural sobre los productos (por ejemplo, sobre que hay variedad o que se ven buenos),
+pero sin invitar a comprar ni agregar al pedido, ni a realizar ninguna otra accion.
+"""
+        result_lista = modelo_output.invoke(prompt_lista)
+        respuesta = result_lista.content if hasattr(result_lista, "content") else str(result_lista)
+    except Exception as e:
+        print(f"⚠️ Error al generar respuesta con IA: {e}")
+        respuesta = (
+            "Estos son los productos disponibles:\n\n" +
+            "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in productos])
+        )
+    return respuesta.strip()
+
+
 
 # =============================================================================
 # COMPARACIÓN CON PRODUCTOS MOSTRADOS (MISMO TEXTO DEL PROMPT ORIGINAL)
@@ -291,12 +323,12 @@ def convertir_a_numero_es(user_input: str) -> int:
 # =============================================================================
 
 #def get_product_info(product_name: str):
-def get_product_info(product_name: str, session_id: str):
+def get_product_info(product_name: str, session_id: str, solo_nombre=False):
     connection = connect_to_db()
     if not connection:
         return print("no se conecto a la bd")
     else:
-        print("🗃️  se conecto a la bd")
+        print(f"🗃️  Se conectó a la BD (buscando: '{product_name}')")
 
     cursor = connection.cursor(dictionary=True)
 
@@ -368,6 +400,9 @@ def get_product_info(product_name: str, session_id: str):
         # Guardar en memoria los productos de la categoría mostrados al cliente
         session_data = get_datos_traidos_desde_bd(session_id)
         session_data["productos_mostrados"][product_name.lower()] = productos_categoria
+        # Actualizar texto de productos mostrados para IA input
+        regenerar_productos_textuales(session_id)
+
 
 
         cursor.close()
@@ -376,8 +411,29 @@ def get_product_info(product_name: str, session_id: str):
         return productos_categoria
 
 
+    # =====================================================
+    # Si no es categoría, buscar por nombre o marca
+    # =====================================================
+    if solo_nombre:
+        # 🔍 Búsqueda restringida: solo por nombre del producto
+        cursor.execute("""
+            SELECT 
+                p.id, 
+                p.nombre AS producto, 
+                p.descripcion, 
+                p.precio_venta,
+                m.nombre AS marca, 
+                c.nombre AS categoria
+            FROM productos p
+            INNER JOIN marcas m ON p.marca_id = m.id
+            INNER JOIN categorias c ON p.categoria_id = c.id
+            WHERE LOWER(p.nombre) LIKE %s
+            ORDER BY p.nombre ASC;
+        """, (f"%{product_name.lower()}%",))
+    else:
+        # 🔍 Búsqueda general (nombre, marca o categoría)
+        cursor.execute(QUERY_START, (f"{first_word}%", f"{first_word}%", f"{first_word}%"))
 
-    cursor.execute(QUERY_START, (f"{first_word}%", f"{first_word}%", f"{first_word}%"))
     start_results = cursor.fetchall()
     if start_results:
         cursor.close()
@@ -424,10 +480,10 @@ def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
     - choclo (no maíz)
     - panceta (no tocino)
 
-    Ejemplo de salida válida:
-    pizza → harina, levadura, queso, salsa de tomate, aceite, sal
-    torta → harina, azúcar, huevos, manteca, leche, polvo de hornear
-    empanada → harina, carne, cebolla, huevo, aceitunas
+    Ejemplo de salida válida para pizza:
+    harina, levadura, queso, salsa de tomate, aceite, sal
+    Ejemplo de salida válida para torta: harina, azúcar, huevos, manteca, leche, polvo de hornear
+    Ejemplo de salida válida para empanada: harina, carne, cebolla, huevo, aceitunas
     """
 
     try:
@@ -443,14 +499,35 @@ def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
 
         # 2️⃣ Buscamos los ingredientes reales en la base usando la sesión actual
         for ingrediente in ingredientes:
-            resultados = get_product_info(ingrediente, session_id)
+            # 🔍 Para ingredientes, buscamos solo por nombre (sin categoría ni marca)
+            resultados = get_product_info(ingrediente, session_id, solo_nombre=True)
             if isinstance(resultados, list) and len(resultados) > 0:
                 encontrados.extend(resultados)
+
 
         if not encontrados:
             return None
 
+        # =====================================================
+        # Guardar los ingredientes encontrados en memoria
+        # igual que se hace con los productos mostrados comunes.
+        # Pero sin actualizar producto_actual todavía.
+        # =====================================================
+        session_data = get_datos_traidos_desde_bd(session_id)
+        nombre_comida = nombre_plato.lower().strip()
+
+        # ⚙️ Evitar duplicados si ya existen
+        if nombre_comida not in session_data["productos_mostrados"]:
+            session_data["productos_mostrados"][nombre_comida] = encontrados
+            datos_traidos_desde_bd[session_id] = session_data
+            print(f"📦 Ingredientes guardados en memoria bajo '{nombre_comida}' ({len(encontrados)} productos)")
+        else:
+            print(f"⚠️ Ingredientes para '{nombre_comida}' ya estaban guardados, se evita duplicar")
+
+        # No actualizamos producto_actual aquí.
+        # Se definirá más adelante, cuando el cliente confirme cuál quiere.
         return encontrados
+
 
     except Exception as e:
         print(f"⚠️ Error en buscar_ingredientes_para_comida: {e}")
@@ -631,8 +708,10 @@ se está refiriendo a {producto_actual}.
 
         # 🧠 Resumen corto para IA input
         resumen_input_prompt = f"""
-A partir de estos mensajes recientes, listá solo los nombres de los productos mencionados.
-No incluyas precios, acciones ni saludos.
+A partir de estos mensajes recientes, listá únicamente los nombres de productos mencionados,
+sin incluir precios, cantidades, montos ni símbolos de dinero.
+Separalos por comas.
+
 Si no se mencionaron productos, devolvé exactamente la palabra: NINGUNO.
 
 ⚠️ Nota:
@@ -688,7 +767,7 @@ def get_response(user_input: str, session_id: str) -> str:
     # ==========================
     # DETECCIÓN DE INTENCIÓN Y PRODUCTOS (solo mensaje actual)
     # ==========================
-    print("===================================================================================================")
+    print("===================================================================================")
     print(f"\n🧑 Mensaje real del usuario: {user_input}")
 
     # Mostrar producto_actual actual de la sesión
@@ -837,9 +916,7 @@ def get_response(user_input: str, session_id: str) -> str:
                 # No cambiamos el producto_actual todavía, solo informamos que se mostraron varios
                 print(f"🧭 Se mostraron {len(products)} productos para '{product_name}', pero no se actualiza producto_actual hasta que el cliente confirme uno.")
 
-            else:
-                # No hay productos o hubo error
-                return
+
 
             # Mostrar los productos encontrados (sean 1 o varios)
             if isinstance(products, list) and len(products) > 0:
@@ -863,7 +940,8 @@ def get_response(user_input: str, session_id: str) -> str:
 
 
             # Si no se encontró el producto, intentar buscar ingredientes
-            elif isinstance(products, str) and "no se encontró" in products.lower():
+
+            if (not products) or (isinstance(products, str) and "no se encontró" in products.lower()):
                 print(f"❌ No se encontró '{product_name}' en la base. Buscando ingredientes...")
                 ingredientes = buscar_ingredientes_para_comida(product_name, session_id)
 
@@ -872,82 +950,49 @@ def get_response(user_input: str, session_id: str) -> str:
 
                     try:
                         prompt_ingredientes = f"""
-                        El cliente preguntó por "{product_name}", pero no está disponible.
-Mostrale una respuesta amable y natural, diciendo que ese producto no está en stock,
-pero que puede prepararlo él mismo con estos ingredientes.
-Mostrá los ingredientes en formato de lista (•).
-No hagas preguntas ni sugerencias. 
-Cerrá con un comentario simpático o divertido sobre cocinar o los ingredientes, 
-De este estilo:
-- Nada como hacerlo casero 😋
-- Con esto te sale de diez 👨‍🍳
-- Te vas a lucir preparando esto 😉
-- Estos ingredientes no fallan 😎
-- Con esto te hacés alta comida 😄
-- Sale caserito y más rico todavía 😋
+            El cliente preguntó o mencionó: "{user_input}"
 
-⚠️ Importante:
-No digas literalmente ninguno de los ejemplos anteriores.
-Inspirate en el estilo, pero generá tu propia frase original y natural.
-Respondé con una sola oración breve de ese tipo.
+            Informale de manera amable que actualmente no contamos con {product_name} como producto listo para vender. 
+            Luego, explicale que puede prepararlo fácilmente y que tenemos todo lo necesario para hacerlo en casa.
 
-Ingredientes disponibles:
-{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
-"""
+            Estos son los ingredientes disponibles relacionados con su consulta:
+            {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
+
+            Mostrá esta lista con viñetas (•), de forma natural y amable.
+            Cerrá con una frase corta, simpática y positiva sobre cocinar o preparar algo casero,
+            sin ofrecer acciones ni hacer preguntas.
+            """
                         result_ingredientes = modelo_output.invoke(prompt_ingredientes)
                         respuesta = result_ingredientes.content if hasattr(result_ingredientes, "content") else str(result_ingredientes)
+
                     except Exception as e:
-                        print(f"⚠️ Error al generar lista de ingredientes con IA: {e}")
+                        print(f"⚠️ Error al generar respuesta con IA para ingredientes: {e}")
                         respuesta = (
                             f"Lamentablemente no tenemos {product_name} en este momento, "
-                            "pero podés prepararla vos mismo con algunos de estos ingredientes:\n\n" +
-                            "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in ingredientes]) +
-                            "\n\n¿Qué otro producto te gustaría consultar?"
+                            "pero podés prepararlo vos mismo con estos ingredientes:\n\n" +
+                            "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in ingredientes])
                         )
+                    # 🧠 Guardar ingredientes mostrados en memoria para futuras coincidencias
+                    session_data = get_datos_traidos_desde_bd(session_id)
+                    session_data["productos_mostrados"][product_name.lower()] = ingredientes
+                    mostrar_productos_en_memoria(session_id)
+                    regenerar_productos_textuales(session_id)
 
                     return finalizar_respuesta(session_id, respuesta)
 
                 else:
-                    # No se encontraron ingredientes ni productos
-                    mensaje = (
-                    f"Lamentablemente no tenemos {product_name} en este momento "
-                    "y no encontré ingredientes relacionados. "
-                    "Pero tranqui, seguro encontrás algo que te guste en otra parte del súper 😄"
-                    )
-                    return finalizar_respuesta(session_id, mensaje)
+                    print(f"🚫 No se encontraron ingredientes relacionados con '{product_name}'.")
+                    prompt_no_ingredientes = f"""
+            El cliente preguntó o mencionó: "{user_input}"
 
-        # Si hubo productos normales encontrados, mostramos la lista general
-        if all_products:
-            try:
-                prompt_lista = f"""
-                El cliente preguntó: "{user_input}"
-Estos son los productos encontrados en la base:
-{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in all_products])}
+            No tenemos {product_name} disponible.
+            Respondé con una frase breve, empática y natural, sin ofrecer acciones ni hacer preguntas.
+            Por ejemplo, podés mostrar empatía o humor suave, pero sin inventar productos ni ofrecer nada más.
+            """
+                    result_no_ing = modelo_output.invoke(prompt_no_ingredientes)
+                    respuesta = result_no_ing.content if hasattr(result_no_ing, "content") else str(result_no_ing)
+                    return finalizar_respuesta(session_id, respuesta)
 
-Mostrale la lista con tono amable y natural, usando viñetas (•).
-No hagas preguntas ni invitaciones a comprar. 
-Cerrá con un comentario divertido o simpático sobre los productos o algo asi
-
-- Hay para todos los gustos 😋
-- Más de uno se lleva varios de estos 😏S
-- No sabría con cuál quedarme 😂
-- Cada uno tiene sus fans 😎
-- Es difícil elegir, todos están buenísimos 😅
-- Estos siempre se van rápido 👀
-
-Elegí una de esas frases (o inventá una similar) para cerrar de manera natural.
-"""
-                result_lista = modelo_output.invoke(prompt_lista)
-                respuesta = result_lista.content if hasattr(result_lista, "content") else str(result_lista)
-            except Exception as e:
-                print(f"⚠️ Error al generar lista con IA: {e}")
-                respuesta = (
-                    "Tenemos estos productos disponibles:\n\n" +
-                    "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in all_products]) +
-                    "\n\n¿Querés agregar alguno a tu pedido? 😊"
-                )
-
-            return finalizar_respuesta(session_id, respuesta)
 
 
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
@@ -1065,54 +1110,17 @@ Respondé con una sola oración breve de ese tipo.
 
 
             if isinstance(products, list) and len(products) > 0:
-                # Guardar también en los productos mostrados de la sesión
                 session_data = get_datos_traidos_desde_bd(session_id)
                 session_data["productos_mostrados"][product_name.lower()] = products
                 mostrar_productos_en_memoria(session_id)
 
-
-                # 🧠 Pedirle a la IA que genere la lista con formato de viñetas
                 try:
-                    prompt_lista = f"""
-Mostrale al cliente los siguientes productos de manera clara, breve y fácil de leer.
-Usá una lista con viñetas (•) y mantené un tono amable y natural.
-No hagas preguntas ni invitaciones a comprar.
-Cerrá con un comentario divertido o simpático sobre los productos o algo asi
-
-- Hay para todos los gustos 😋
-- Más de uno se lleva varios de estos 😏
-- No sabría con cuál quedarme 😂
-- Cada uno tiene sus fans 😎
-- Es difícil elegir, todos están buenísimos 😅
-- Estos siempre se van rápido 👀
-
-⚠️ Importante:
-No digas literalmente ninguno de los ejemplos anteriores.
-Inspirate en el estilo, pero generá tu propia frase original y natural.
-Respondé con una sola oración breve de ese tipo.
-
-Productos disponibles:
-{''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in products])}
-"""
-
-                    result_lista = modelo_output.invoke(prompt_lista)
-                    
-                    context = (
-                        result_lista.content
-                        if hasattr(result_lista, "content") and isinstance(result_lista.content, str)
-                        else str(result_lista)
-                    ).strip()
-
-
-                    store[session_id].add_ai_message(context)
+                    respuesta = generar_lista_productos_con_ia(modelo_output, user_input, products, session_id)
                 except Exception as e:
                     print(f"⚠️ Error al generar lista con IA: {e}")
-                    # fallback manual si la IA falla
-                    context = "Tenemos estos productos disponibles:\n\n" + \
-                            "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in products]) + \
-                            "\n\n¿Querés agregar alguno a tu pedido? 😊"
+                    respuesta = generar_lista_productos_con_ia(modelo_output, user_input, products, session_id)
 
-                return finalizar_respuesta(session_id, context)
+                return finalizar_respuesta(session_id, respuesta)
 
 
 

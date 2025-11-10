@@ -112,6 +112,34 @@ Cliente: ¿Qué diferencia hay entre estos dos?
 → Intención detectada: CHARLAR  
 → Productos mencionados: ninguno  
 
+Cliente: mejor no quiero nada  
+→ Intención detectada: VACIAR_PEDIDO  
+→ Productos mencionados: ninguno
+
+Cliente: tenes aceite? agregame un aceite lira
+→ Intención detectada: CONSULTAR_INFO  
+→ Productos mencionados: aceite lira
+
+Cliente: mandamelos
+→ Intención detectada: FINALIZAR_PEDIDO  
+→ Productos mencionados: ninguno
+
+Cliente: mandame los productos
+→ Intención detectada: FINALIZAR_PEDIDO  
+→ Productos mencionados: ninguno
+
+Cliente: quiero que me manden las cosas
+→ Intención detectada: FINALIZAR_PEDIDO  
+→ Productos mencionados: ninguno
+
+Cliente: quiero que ya me lo mandes
+→ Intención detectada: FINALIZAR_PEDIDO  
+→ Productos mencionados: ninguno
+
+Cliente: mándame mi pedido
+→ Intención detectada: FINALIZAR_PEDIDO  
+→ Productos mencionados: ninguno
+
 ---
 ACLARACIÓN IMPORTANTE:
 - Si el cliente solo pregunta si un producto está disponible, sin pedir que lo agregues al pedido, la intención correcta es **CONSULTAR_INFO**, no **AGREGAR_PRODUCTO**.

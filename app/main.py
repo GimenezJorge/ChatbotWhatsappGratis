@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from app.endpoints.endpoints import router
 
+
+
 load_dotenv()
 
 

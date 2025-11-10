@@ -34,6 +34,37 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
     return mensaje
 
 
+def quitar_de_pedido(session_id: str, producto: str, cantidad: int) -> str:
+    from decimal import Decimal
+
+    if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
+        return "Todavía no tenés productos en tu pedido 😕"
+
+    pedido = pedidos_por_cliente[session_id]
+    producto_existente = next((p for p in pedido if p["producto"].lower() == producto.lower()), None)
+
+    if not producto_existente:
+        return f"No encontré {producto} en tu pedido 😕"
+
+    # Si la cantidad a quitar es menor a la actual
+    if cantidad < producto_existente["cantidad"]:
+        producto_existente["cantidad"] -= cantidad
+        producto_existente["subtotal"] = float(Decimal(producto_existente["precio_unitario"]) * producto_existente["cantidad"])
+        total_actual = sum(p["subtotal"] for p in pedido)
+        mensaje = f"🧺 Quité {cantidad} {producto} (quedan x{producto_existente['cantidad']}). Total: ${total_actual:.2f}"
+    else:
+        # Si la cantidad es igual o mayor, eliminar el producto directamente
+        pedido.remove(producto_existente)
+        total_actual = sum(p["subtotal"] for p in pedido)
+        if total_actual > 0:
+            mensaje = f"🧺 Eliminé {producto} del pedido. Total: ${total_actual:.2f}"
+        else:
+            mensaje = "🧺 Eliminé el último producto, tu pedido quedó vacío."
+
+    print(f"✅ Producto quitado del pedido ({session_id})")
+    return mensaje
+
+
 
 def mostrar_pedido(session_id: str) -> str:
     if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
@@ -48,7 +79,7 @@ def mostrar_pedido(session_id: str) -> str:
     ])
 
     return (
-        f"🧿Actualmente tu pedido tiene:\n\n"
+        f"🧺 Actualmente tu pedido tiene:\n\n"
         f"{listado}\n\n"
         f"🧾 Total: ${total:.2f}\n"
 
@@ -75,7 +106,7 @@ def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str, n
         return "Todavía no tenés ningún producto en tu pedido 😕"
 
     # Obtener resumen limpio del pedido (modo final)
-    resumen = mostrar_pedido(session_id).replace("🧿Actualmente tu pedido tiene:", "🧾 *Resumen del pedido:*")
+    resumen = mostrar_pedido(session_id).replace("🧺 Actualmente tu pedido tiene:", "🧾 *Resumen del pedido:*")
 
     # Asegurar formato de número con +
     numero_limpio = numero_cliente
@@ -86,7 +117,7 @@ def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str, n
     mensaje = (
         "🧾 *NUEVO PEDIDO RECIBIDO*\n\n"
         f"{resumen}\n\n"
-        f"📍 *Cliente:* {nombre_cliente}\n"
+        # f"📍 *Cliente:* {nombre_cliente}\n"
         f"📞 *WhatsApp:* {numero_limpio}\n\n"
         "Por favor, comuníquese con el cliente para coordinar la entrega. Gracias 🙌"
     )

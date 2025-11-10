@@ -19,6 +19,10 @@ from app.pedidos import agregar_a_pedido, mostrar_pedido, finalizar_pedido
 from app.database import connect_to_db
 from app.info_super import leer_info_supermercado
 
+info_supermercado = leer_info_supermercado()
+
+
+
 
 # =============================================================================
 # VERIFICACIÓN DEL TOKEN DE ACCESO
@@ -48,17 +52,28 @@ prompt = ChatPromptTemplate.from_messages([
     ("human", "{input}")
 ])
 
+
+
 chain = prompt | modelo_output
 
 # =============================================================================
 # HISTORIAL EN MEMORIA
 # =============================================================================
 
+
 store = {}
+
 def get_session_history(session_id: str):
     if session_id not in store:
         store[session_id] = InMemoryChatMessageHistory()
+        # 🧠 Agregamos el mensaje inicial con la información del supermercado
+        store[session_id].add_user_message(
+            f"Contexto inicial: esta conversación es con el asistente del supermercado. "
+            f"Usá esta información solo como referencia general:\n\n{info_supermercado}"
+        )
+        print(f"🆕 Nueva sesión creada para {session_id} con contexto del supermercado cargado.")
     return store[session_id]
+
 # store = {}
 
 # def get_session_history(session_id: str):
@@ -567,26 +582,25 @@ Frase del cliente: "{user_input}"
         producto_actual = session_data.get("producto_actual", None)
 
         if resumen_input or productos_previos_texto or producto_actual:
+            # 🧠 Convertir lista de productos a texto si es necesario
+            if isinstance(producto_actual, list):
+                producto_texto = ", ".join(producto_actual)
+            else:
+                producto_texto = producto_actual
+
             prompt = f"""
-Considerá este contexto previo:
-        {resumen_input}
+        Considerá este contexto previo:
+                {resumen_input}
 
-        {productos_previos_texto}
+                {productos_previos_texto}
 
-        {"En los últimos mensajes el cliente habló sobre " + producto_actual + 
-". En caso de que el cliente use una frase referencial (por ejemplo: ese, esa, eso, otro igual, la misma), se está refiriendo a " + producto_actual + "." if producto_actual else ""}
+                {"En los últimos mensajes el cliente habló sobre " + producto_texto +
+        ". En caso de que el cliente use una frase referencial (por ejemplo: ese, esa, eso, otro igual, la misma), se está refiriendo a " + producto_texto + "." if producto_texto else ""}
 
-Analizá la nueva frase del cliente:
-        "{user_input}"
+        Analizá la nueva frase del cliente:
+                "{user_input}"
+        """
 
-Si el producto mencionado no coincide exactamente con los anteriores,
-buscá el nombre más parecido entre los productos mostrados y devolvelo como producto detectado.
-No inventes nombres nuevos.
-
-Detectá:
-- Intención expresada
-- Productos mencionados (si hay)
-"""
 
 
 

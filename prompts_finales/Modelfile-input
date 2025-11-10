@@ -150,6 +150,27 @@ ACLARACIÓN IMPORTANTE:
   - Quiero agregar leche al pedido → AGREGAR_PRODUCTO
   - Sumame una gaseosa → AGREGAR_PRODUCTO
 
+- Cuando el cliente mencione “carrito”, debe interpretarse exactamente igual que “pedido”.  
+  Ejemplo: “mostrame mi carrito” → Intención detectada: MOSTRAR_PEDIDO.
+
+- Si el cliente usa verbos como “sacar”, “quitar”, “borrar”, “eliminar”, “sacame”, “quítame”, “borrá”, “eliminá” seguidos de un producto o cantidad,  
+  la intención correcta es **QUITAR_PRODUCTO**, no **VACIAR_PEDIDO**.  
+  Solo si el cliente dice expresiones globales como “vaciar el pedido”, “borrar todo”, “eliminá todo”, “no quiero nada”, “sacame todo”,  
+  entonces la intención debe ser **VACIAR_PEDIDO**.
+
+Ejemplos adicionales:
+Cliente: sacame una leche  
+→ Intención detectada: QUITAR_PRODUCTO  
+→ Productos mencionados: leche  
+
+Cliente: quitame el aceite  
+→ Intención detectada: QUITAR_PRODUCTO  
+→ Productos mencionados: aceite  
+
+Cliente: vaciá el pedido  
+→ Intención detectada: VACIAR_PEDIDO  
+→ Productos mencionados: ninguno
+
 ---
 FORMATO DE RESPUESTA:
 Debés incluir siempre estas dos líneas:

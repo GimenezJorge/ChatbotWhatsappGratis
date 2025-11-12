@@ -103,7 +103,7 @@ client.on('message', async (msg) => {
 		}
 	} catch (err) {
 		console.error('Error procesando mensaje:', err.message);
-		await client.sendMessage(msg.from, "Lo siento, ocurrió un error al procesar tu mensaje.");
+		//await client.sendMessage(msg.from, "Lo siento, ocurrió un error al procesar tu mensaje.");
 	}
 });
 

@@ -179,7 +179,8 @@ def mostrar_productos_en_memoria(session_id: str):
         for clave, lista in productos_previos.items():
             print(f"  🔹 '{clave}' → {len(lista)} producto(s):")
             for p in lista:
-                print(f"     • {p['producto']} — ${p['precio_venta']}")
+                print(f"     • {p['producto']}")
+
     else:
         print("  (vacío)")
 
@@ -195,7 +196,9 @@ def generar_lista_productos_con_ia(modelo_output, user_input, productos, session
         prompt_lista = f"""
 El cliente preguntó o mencionó: "{user_input}"
 
-Estos son los productos disponibles relacionados con su consulta:
+Mostrá los productos relacionados con su consulta.
+Si hay varios, mostralos todos con viñetas (•).
+Si hay solo uno, igual mostralo con una viñeta (•), manteniendo el mismo formato.
 
 {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in productos])}
 
@@ -220,6 +223,26 @@ pero sin invitar a comprar ni agregar al pedido, ni a realizar ninguna otra acci
 
 def comparar_con_producto_mostrado(user_input: str, session_id: str) -> str:
     try:
+        # Normalización previa de unidades comunes (para mejorar coincidencias)
+        normalizaciones = {
+            r"\bmedio litro\b": "500ml",
+            r"\bmedio kilo\b": "500g",
+            r"\bmedia docena\b": "6 unidades",
+            r"\bun litro\b": "1l",
+            r"\bdos litros\b": "2l",
+            r"\btres litros\b": "3l",
+            r"\bcuatro litros\b": "4l",
+            r"\bquinientos gramos\b": "500g",
+            r"\bun kilo\b": "1kg",
+            r"\bdos kilos\b": "2kg",
+            r"\btres kilos\b": "3kg",
+            r"\bcuatro kilos\b": "4kg",
+            r"\bmedio paquete\b": "1/2 paquete",
+        }
+
+        for patron, reemplazo in normalizaciones.items():
+            user_input = re.sub(patron, reemplazo, user_input.lower())
+
         session_data = get_datos_traidos_desde_bd(session_id)
         productos_mostrados = session_data.get("productos_mostrados", {})
 
@@ -240,6 +263,25 @@ Considerá este contexto previo:
 
 Analizá la nueva frase del cliente:
 "{user_input}"
+
+Si el cliente usa frases descriptivas o referenciales (por ejemplo: "el de litro", "el de 900", "la botella más chica", "el mismo de antes"),
+intentá identificar a cuál de los productos mostrados se refiere, comparando por características, unidades o precios dentro del nombre.
+
+Por ejemplo:
+- Si entre los productos mostrados aparece “aceite lira girasol 1l” y el cliente dice “el de un litro”, “el aceite de un litro” o “el litro”, 
+  debe interpretarse que se refiere a “aceite lira girasol 1l”.
+- Si aparecen varios productos del mismo tipo pero con distintas presentaciones (por ejemplo: “aceite natura 900ml” y “aceite natura 1l”),
+  y el cliente dice “el más grande”, “el más chico”, “el de menos”, o “el de más cantidad”,
+  deducí cuál corresponde según el tamaño o volumen indicado en el nombre del producto.
+- Si el cliente dice “el más caro” o “el más barato”, compará los precios que aparecen junto a los productos mostrados
+  (por ejemplo: “aceite natura 900ml — $2500” y “aceite natura 1l — $3100”).
+  “Más caro” = el de mayor precio; “más barato” = el de menor precio.
+
+Usá siempre el criterio más lógico para un cliente de supermercado:
+- "más grande" o "más cantidad" → envase de mayor volumen (litros, kilos, gramos).
+- "más chico" o "menos" → envase de menor volumen.
+- "más caro" → precio mayor.
+- "más barato" → precio menor.
 
 Si el producto mencionado no coincide exactamente con los anteriores,
 buscá el nombre más parecido entre los productos mostrados y devolvelo como producto detectado.
@@ -270,6 +312,7 @@ No inventes nombres nuevos.
 def convertir_a_numero_es(user_input: str) -> int:
     texto = user_input.lower().strip()
 
+    # Mapeo base de palabras y expresiones comunes a números
     mapa_numeros = {
         "uno": 1, "una": 1, "un": 1,
         "dos": 2, "par": 2, "un par": 2,
@@ -278,27 +321,27 @@ def convertir_a_numero_es(user_input: str) -> int:
         "media docena": 6, "una docena": 12, "docena": 12
     }
 
-    # Buscar expresiones comunes
+    # 🔍 Buscar coincidencia de palabra completa (por ejemplo: "dos del", "tres de")
     for palabra, numero in mapa_numeros.items():
-        if palabra in texto:
+        if re.search(rf"\b{re.escape(palabra)}\b", texto):
             return numero
 
-    # Buscar número en cifras
+    # 🔢 Buscar número en cifras
     match = re.search(r"\b\d+\b", texto)
     if match:
         return int(match.group())
 
-    # Intentar convertir usando text2num (modo español)
+    # 🧠 Intentar conversión semántica usando librerías
     try:
         return text2num(texto, "es")
     except Exception:
         pass
 
-    # 4️⃣ Fallback: intentar word2number (inglés)
     try:
         return w2n.word_to_num(texto)
     except Exception:
         return 1
+
 
 # =============================================================================
 # BÚSQUEDA DE PRODUCTOS EN LA BASE DE DATOS
@@ -390,8 +433,9 @@ def get_product_info(product_name: str, session_id: str, solo_nombre=False):
     # =====================================================
     # Si no es categoría, buscar por nombre o marca
     # =====================================================
+
     if solo_nombre:
-        # 🔍 Búsqueda restringida: solo por nombre del producto
+        # 🔍 Búsqueda restringida: solo por nombre exacto o coincidencia cercana (para ingredientes)
         cursor.execute("""
             SELECT 
                 p.id, 
@@ -403,9 +447,19 @@ def get_product_info(product_name: str, session_id: str, solo_nombre=False):
             FROM productos p
             INNER JOIN marcas m ON p.marca_id = m.id
             INNER JOIN categorias c ON p.categoria_id = c.id
-            WHERE LOWER(p.nombre) LIKE %s
+            WHERE LOWER(p.nombre) = %s
+            OR LOWER(p.nombre) LIKE %s
+            OR LOWER(p.nombre) LIKE %s
+            OR LOWER(p.nombre) LIKE %s
             ORDER BY p.nombre ASC;
-        """, (f"%{product_name.lower()}%",))
+        """, (
+            product_name_lower,
+            f"{product_name_lower} %",
+            f"% {product_name_lower}",
+            f"% {product_name_lower} %"
+        ))
+
+
     else:
         # 🔍 Búsqueda general (nombre, marca o categoría)
         cursor.execute(QUERY_START, (f"{first_word}%", f"{first_word}%", f"{first_word}%"))
@@ -433,7 +487,7 @@ def get_product_info(product_name: str, session_id: str, solo_nombre=False):
 def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
     """
     Si un producto no se encuentra en la base, esta función intenta detectar
-    si el nombre corresponde a una comida compuesta (ej: pizza, ensalada, torta)
+    si el nombre corresponde a una comida compuesta (ej: pizza, ensalada, torta, empanada, hamburguesa)
     y busca los ingredientes en la base de datos.
     """
 
@@ -454,10 +508,13 @@ def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
     - choclo (no maíz)
     - panceta (no tocino)
 
-    Ejemplo de salida válida para pizza:
-    harina, levadura, queso, tomate, aceite
-    Ejemplo de salida válida para torta: harina, azúcar, huevos, manteca, leche, polvo de hornear
-    Ejemplo de salida válida para empanada: harina, carne, cebolla, huevo, aceitunas
+    Ejemplo de salida válida para pizza: harina, levadura, queso, tomate, aceite  
+    Ejemplo de salida válida para torta: harina, azúcar, huevos, manteca, leche, polvo de hornear  
+    Ejemplo de salida válida para empanada: harina, carne, cebolla, huevo, aceitunas  
+    Ejemplo de salida válida para sandwich: pan, jamón, queso, mayonesa, lechuga  
+    Ejemplo de salida válida para ensalada: lechuga, tomate, zanahoria, aceite, sal  
+    Ejemplo de salida válida para hamburguesa: carne, pan, lechuga, tomate, queso, mayonesa  
+
     """
     try:
         respuesta_ia = modelo_input.invoke(prompt_ingredientes).strip()
@@ -511,7 +568,7 @@ def buscar_ingredientes_para_comida(nombre_plato: str, session_id: str):
 def detect_product_with_ai(user_input, session_id="main"):
     try:
         session_data = get_datos_traidos_desde_bd(session_id)
-        resumen_input = session_data.get("resumen_input", "").strip()
+        #resumen_input = session_data.get("resumen_input", "").strip()
         productos_mostrados = session_data.get("productos_mostrados", {})
 
         # Construir lista textual con los productos ya mostrados
@@ -521,6 +578,7 @@ def detect_product_with_ai(user_input, session_id="main"):
             for lista in productos_mostrados.values():
                 for p in lista:
                     productos_previos_texto += f"- {p['producto']}\n"
+
 
         # Prompt base
         prompt = f"""
@@ -534,8 +592,8 @@ Frase del cliente: "{user_input}"
         # Si hay contexto, productos mostrados o producto_actual, incluirlos en el prompt
         producto_actual = session_data.get("producto_actual", None)
 
-        if resumen_input or productos_previos_texto or producto_actual:
-            # 🧠 Convertir lista de productos a texto si es necesario
+        if productos_previos_texto or producto_actual:
+            # Convertir lista de productos a texto si es necesario
             if isinstance(producto_actual, list):
                 producto_texto = ", ".join(producto_actual)
             else:
@@ -543,7 +601,6 @@ Frase del cliente: "{user_input}"
 
             prompt = f"""
         Considerá este contexto previo:
-                {resumen_input}
 
                 {productos_previos_texto}
 
@@ -627,81 +684,82 @@ En esos casos, siempre debés usar las funciones del sistema para conocer o modi
 - quitar_de_pedido()
 - mostrar_pedido()
 - vaciar_pedido()
+- finalizar_pedido()
 """
 
-        resumen_prompt = f"""
-Estos son los últimos mensajes entre el cliente y el bot.
+#         resumen_prompt = f"""
+# Estos son los últimos mensajes entre el cliente y el bot.
 
-Generá un resumen claro y completo de lo ocurrido recientemente en la conversación.
-Debe tener la longitud necesaria para reflejar correctamente el contexto actual, pero sin extenderse innecesariamente.
+# Generá un resumen claro y completo de lo ocurrido recientemente en la conversación.
+# Debe tener la longitud necesaria para reflejar correctamente el contexto actual, pero sin extenderse innecesariamente.
 
-Enfocate en:
-- Qué producto(s) se mencionaron, consultaron, agregaron o quitaron.
-- Qué acción realizó el cliente (consultar, agregar, ver pedido, vaciar, finalizar, etc.).
-- En qué estado quedó el pedido (productos agregados, etc.).
+# Enfocate en:
+# - Qué producto(s) se mencionaron, consultaron, agregaron o quitaron.
+# - Qué acción realizó el cliente (consultar, agregar, ver pedido, vaciar, finalizar, etc.).
+# - En qué estado quedó el pedido (productos agregados, etc.).
 
-⚠️ No incluyas precios, montos ni valores numéricos.
-Solo describí productos, acciones y contexto conversacional.
-Usá únicamente información textual real que aparezca en los mensajes, sin inventar nada nuevo.
+# ⚠️ No incluyas precios, montos ni valores numéricos.
+# Solo describí productos, acciones y contexto conversacional.
+# Usá únicamente información textual real que aparezca en los mensajes, sin inventar nada nuevo.
 
-Mensajes:
-{''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
+# Mensajes:
+# {''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
 
-{recordatorio_contexto}
-"""
+# {recordatorio_contexto}
+# """
 
-        # Si existe un producto_actual, incluirlo como referencia explícita
-        producto_actual = session_data.get("producto_actual", None)
-        if producto_actual:
-            resumen_prompt += f"""
+#         # Si existe un producto_actual, incluirlo como referencia explícita
+#         producto_actual = session_data.get("producto_actual", None)
+#         if producto_actual:
+#             resumen_prompt += f"""
 
-El producto del que se estuvo hablando recientemente es {producto_actual}.
-En caso de que el cliente use frases referenciales (por ejemplo: ese, esa, eso, otro igual, la misma),
-se está refiriendo a {producto_actual}.
-"""
+# El producto del que se estuvo hablando recientemente es {producto_actual}.
+# En caso de que el cliente use frases referenciales (por ejemplo: ese, esa, eso, otro igual, la misma),
+# se está refiriendo a {producto_actual}.
+# """
 
-        resumen_obj = modelo_output.invoke(resumen_prompt)
-        resumen = resumen_obj.content if hasattr(resumen_obj, "content") else str(resumen_obj)
-        resumen = resumen.strip()
+#         resumen_obj = modelo_output.invoke(resumen_prompt)
+#         resumen = resumen_obj.content if hasattr(resumen_obj, "content") else str(resumen_obj)
+#         resumen = resumen.strip()
 
-        session_data["ultimo_resumen"] = resumen
+#         session_data["ultimo_resumen"] = resumen
 
-        # 🧠 Resumen corto para IA input
-        resumen_input_prompt = f"""
-A partir de estos mensajes recientes, listá únicamente los nombres de productos mencionados,
-sin incluir precios, cantidades, montos ni símbolos de dinero.
-Separalos por comas.
+        # Resumen corto para IA input
+#         resumen_input_prompt = f"""
+# A partir de estos mensajes recientes, listá únicamente los nombres de productos mencionados,
+# sin incluir precios, cantidades, montos ni símbolos de dinero.
+# Separalos por comas.
 
-Si no se mencionaron productos, devolvé exactamente la palabra: NINGUNO.
+# Si no se mencionaron productos, devolvé exactamente la palabra: NINGUNO.
 
-⚠️ Nota:
-Si en los mensajes se dice que se agregó o se mostró un pedido,
-NO asumas que el carrito realmente existe.
-El estado real se obtiene siempre llamando a las funciones del sistema.
+# ⚠️ Nota:
+# Si en los mensajes se dice que se agregó o se mostró un pedido,
+# NO asumas que el carrito realmente existe.
+# El estado real se obtiene siempre llamando a las funciones del sistema.
 
-Mensajes:
-{''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
-"""
+# Mensajes:
+# {''.join([f"{m['role']}: {m['content']}\n" for m in ultimos_mensajes])}
+# """
 
-        try:
-            resumen_input_obj = modelo_output.invoke(resumen_input_prompt)
-            resumen_input = resumen_input_obj.content if hasattr(resumen_input_obj, "content") else str(resumen_input_obj)
-            resumen_input = resumen_input.strip()
+#         try:
+#             resumen_input_obj = modelo_output.invoke(resumen_input_prompt)
+#             resumen_input = resumen_input_obj.content if hasattr(resumen_input_obj, "content") else str(resumen_input_obj)
+#             resumen_input = resumen_input.strip()
 
-            session_data["resumen_input"] = resumen_input
+#             session_data["resumen_input"] = resumen_input
 
-            print("\n🧩 Resumen de productos detectados (para IA input):")
-            print(resumen_input)
+#             print("\n🧩 Resumen de productos detectados (para IA input):")
+#             print(resumen_input)
 
-        except Exception as e:
-            print(f"⚠️ Error al generar resumen para IA input: {e}")
+#         except Exception as e:
+#             print(f"⚠️ Error al generar resumen para IA input: {e}")
 
-        print("\n🧩 Resumen (para IA output):")
-        def print_long_text(text, max_length=300):
-            for i in range(0, len(text), max_length):
-                print(text[i:i+max_length])
-        print_long_text(resumen)
-        print()
+#         print("\n🧩 Resumen (para IA output):")
+        # def print_long_text(text, max_length=300):
+        #     for i in range(0, len(text), max_length):
+        #         print(text[i:i+max_length])
+        # print_long_text(resumen)
+        # print()
 
     except Exception as e:
         print(f"⚠️ Error al generar o guardar resumen automático: {e}")
@@ -802,15 +860,31 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
     # ==========================
     # CONSULTAR_INFO — BÚSQUEDA DE PRODUCTOS O INGREDIENTES
     # ==========================
-    if intencion == "CONSULTAR_INFO" and productos_detectados:
+    if intencion == "CONSULTAR_INFO":
         print("🔍 Intención de consulta detectada. Buscando productos o posibles ingredientes...")
 
         session_data = get_datos_traidos_desde_bd(session_id)
         all_products = []
 
+        # 🧠 Si no hay productos detectados, intentar detectar si es una categoría
+        if not productos_detectados:
+            product_name_lower = user_input_lower.strip()
+            connection = connect_to_db()
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT id, nombre FROM categorias WHERE LOWER(nombre) LIKE %s;", (f"%{product_name_lower}%",))
+            categoria_row = cursor.fetchone()
+            cursor.close()
+            connection.close()
+
+            if categoria_row:
+                print(f"📂 Coincidencia con categoría detectada (sin producto detectado por IA): {categoria_row['nombre']}")
+                productos_categoria = get_product_info(categoria_row['nombre'], session_id)
+                if productos_categoria:
+                    respuesta = generar_lista_productos_con_ia(modelo_output, user_input, productos_categoria, session_id)
+                    return finalizar_respuesta(session_id, respuesta)
+
         # 🧠 Recorremos todos los productos detectados (por ejemplo: "coca" y "sprite")
         for product_name in productos_detectados:
-            #products = get_product_info(product_name, session_id)
             products = get_product_info(product_name, session_id)
 
             # Si la BD devuelve un solo producto, lo fijamos como producto_actual
@@ -820,7 +894,6 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
                 print(f"🧭 Producto actual fijado automáticamente: {producto_encontrado}")
 
             elif isinstance(products, list) and len(products) > 1:
-                # No cambiamos el producto_actual todavía, solo informamos que se mostraron varios
                 print(f"🧭 Se mostraron {len(products)} productos para '{product_name}', pero no se actualiza producto_actual hasta que el cliente confirme uno.")
 
             # Mostrar los productos encontrados (sean 1 o varios)
@@ -828,6 +901,12 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
                 session_data["productos_mostrados"][product_name.lower()] = products
                 all_products.extend(products)
                 mostrar_productos_en_memoria(session_id)
+            
+            # Mostrar la lista incluso si hay un solo producto
+            if isinstance(products, list) and len(products) >= 1:
+                respuesta = generar_lista_productos_con_ia(modelo_output, user_input, products, session_id)
+                return finalizar_respuesta(session_id, respuesta)
+
             # ================================================================
             # COMPARACIÓN POST-BD (una vez mostrados los productos)
             # ================================================================
@@ -840,14 +919,32 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
                     print("📌 No se encontró coincidencia tras BD; se mantiene el producto_actual previo.")
 
             # Si no se encontró el producto, intentar buscar ingredientes
-
             if (not products) or (isinstance(products, str) and "no se encontró" in products.lower()):
-                print(f"❌ No se encontró '{product_name}' en la base. Buscando ingredientes...")
+                print(f"❌ No se encontró '{product_name}' en la base. Verificando si es un alimento compuesto...")
+
+                prompt_comida = f"Decime solo 'sí' o 'no': ¿'{product_name}' es una comida o plato preparado?"
+                es_comida = modelo_input.invoke(prompt_comida).strip().lower()
+
+                if es_comida != "sí":
+                    print(f"🚫 '{product_name}' no es una comida. No se buscarán ingredientes.")
+                    prompt_no_ingredientes = f"""
+            El cliente preguntó o mencionó: "{user_input}"
+
+            No tenemos {product_name} disponible.
+            Respondé con una frase breve, empática y natural, sin ofrecer acciones ni hacer preguntas.
+            Por ejemplo, podés mostrar empatía o humor suave, pero sin inventar productos ni ofrecer nada más.
+            No hagas preguntas ni ofrezcas acciones.
+            Cerrá con una frase corta, amable y afirmativa, sin formular preguntas ni ofrecer acciones.
+            """
+                    result_no_ing = modelo_output.invoke(prompt_no_ingredientes)
+                    respuesta = result_no_ing.content if hasattr(result_no_ing, "content") else str(result_no_ing)
+                    return finalizar_respuesta(session_id, respuesta)
+
+                print(f"🍽️ '{product_name}' parece ser una comida. Buscando ingredientes...")
                 ingredientes = buscar_ingredientes_para_comida(product_name, session_id)
 
                 if ingredientes:
                     print(f"✅ Ingredientes encontrados para {product_name}: {len(ingredientes)} productos")
-
                     try:
                         prompt_ingredientes = f"""
             El cliente preguntó o mencionó: "{user_input}"
@@ -859,12 +956,11 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
             {''.join([f"• {p['producto']} — ${p['precio_venta']}\n" for p in ingredientes])}
 
             Mostrá esta lista con viñetas (•), de forma natural y amable.
-            Cerrá con una frase corta, simpática y positiva sobre cocinar o preparar algo casero,
-            sin ofrecer acciones ni hacer preguntas.
+            Cerrá con una frase corta, simpática y afirmativa sobre cocinar o preparar algo casero,
+            sin formular preguntas ni ofrecer acciones.
             """
                         result_ingredientes = modelo_output.invoke(prompt_ingredientes)
                         respuesta = result_ingredientes.content if hasattr(result_ingredientes, "content") else str(result_ingredientes)
-
                     except Exception as e:
                         print(f"⚠️ Error al generar respuesta con IA para ingredientes: {e}")
                         respuesta = (
@@ -872,12 +968,10 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
                             "pero podés prepararlo vos mismo con estos ingredientes:\n\n" +
                             "\n".join([f"• {p['producto']} — ${p['precio_venta']}" for p in ingredientes])
                         )
-                    # 🧠 Guardar ingredientes mostrados en memoria para futuras coincidencias
-                    session_data = get_datos_traidos_desde_bd(session_id)
+
                     session_data["productos_mostrados"][product_name.lower()] = ingredientes
                     mostrar_productos_en_memoria(session_id)
                     regenerar_productos_textuales(session_id)
-
                     return finalizar_respuesta(session_id, respuesta)
 
                 else:
@@ -889,11 +983,15 @@ def get_response(user_input: str, session_id: str, nombre_cliente: str = "Client
             Respondé con una frase breve, empática y natural, sin ofrecer acciones ni hacer preguntas.
             Por ejemplo, podés mostrar empatía o humor suave, pero sin inventar productos ni ofrecer nada más.
             No hagas preguntas ni ofrezcas acciones.
-            Cerrá con una frase corta y natural sobre los productos, sin invitar a comprar ni a continuar.
+            Cerrá con una frase corta, amable y afirmativa sobre los productos, sin formular preguntas ni ofrecer acciones.
             """
                     result_no_ing = modelo_output.invoke(prompt_no_ingredientes)
                     respuesta = result_no_ing.content if hasattr(result_no_ing, "content") else str(result_no_ing)
                     return finalizar_respuesta(session_id, respuesta)
+
+
+
+
 
     # SI SE DETECTA LA INTENCIÓN: AGREGAR_PRODUCTO
     if intencion == "AGREGAR_PRODUCTO":
@@ -957,7 +1055,8 @@ Respondé con una sola oración breve de ese tipo.
             for clave, lista in productos_previos.items():
                 print(f"  🔹 Producto '{clave}' → {len(lista)} producto(s):")
                 for p in lista:
-                    print(f"     • {p['producto']} — ${p['precio_venta']}")
+                    print(f"     • {p['producto']}")
+
         else:
             print("  (vacío)")
 
@@ -1028,28 +1127,16 @@ Respondé con una sola oración breve de ese tipo.
         resumen = mostrar_pedido(session_id)
 
         if not resumen or resumen.strip() == "":
-            prompt_ia = """
-            El cliente pidió ver su pedido, pero todavía no tiene productos agregados.
-            Respondé de manera breve, amable y clara.
-            No ofrezcas nuevos temas, solo mantené el foco en que aún no hay productos.
-            """
+            respuesta = "Todavía no tenés productos en tu pedido 🛒"
         else:
-            prompt_ia = f"""
-            El cliente pidió ver su pedido. Mostrale el resumen actual de su carrito de forma amable y natural,
-            pero sin extenderte ni iniciar nuevas conversaciones. Mantené el foco en mostrar lo que tiene actualmente
-            y ofrecer continuar o finalizar. Mostrá el resumen textual a continuación sin modificarlo:
-
-            {resumen}
-            """
-
-        try:
-            respuesta_ia = modelo_output.invoke(prompt_ia)
-            respuesta = respuesta_ia.content if hasattr(respuesta_ia, "content") else str(respuesta_ia)
-        except Exception as e:
-            print(f"⚠️ Error generando respuesta IA para MOSTRAR_PEDIDO: {e}")
-            respuesta = resumen if resumen.strip() else "Todavía no tenés productos en tu pedido 🛒"
+            respuesta = (
+                "Dale, acá tenés el resumen de tu carrito 😄\n\n"
+                f"{resumen}\n"
+                "¿Querés finalizar el pedido? 😉"
+            )
 
         return finalizar_respuesta(session_id, respuesta)
+
 
     # SI SE DETECTA LA INTENCIÓN: VACIAR_PEDIDO
     if intencion == "VACIAR_PEDIDO":

@@ -1,7 +1,8 @@
 FROM gemma3:latest
 
 SYSTEM """
-Debes hablar exclusivamente en español, a menos que el usuario hable en otro idioma. Detectá la intención y los productos mencionados en la siguiente frase del CLIENTE.
+Debes hablar exclusivamente en español, a menos que el usuario hable en otro idioma.
+Detectá la intención y los productos mencionados en la siguiente frase del CLIENTE.
 
 OBJETIVO PRINCIPAL:
 Identificar:
@@ -21,155 +22,167 @@ INTENCIONES POSIBLES:
 ---
 REGLAS GENERALES:
 1. Analizá la frase del CLIENTE y determiná su intención principal.
-2. Listá los productos mencionados por su nombre exacto, en minúsculas, sin comillas ni signos extra.
-3. Si no se menciona ningún producto, devolvé “ninguno”.
+2. Listá los productos mencionados por su nombre exacto, en minúsculas,
+   sin comillas ni signos extra.
+3. Si no se menciona ningún producto, devolvé "ninguno".
 4. Si hay varios productos, separalos por comas.
 5. Solo devolvé productos en singular.
-6. No inventes productos ni intenciones.
-7. Si el CLIENTE usa frases breves o referenciales (por ejemplo: ese, esa, el primero, el molto, ese pan, agregalo, dale), inmediatamente después de haber visto una lista de productos o haber mostrado intención de agregar algo, debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
-   No interpretes estas frases como nuevas consultas ni como información general, salvo que el contexto indique lo contrario.
-8. Detectar un producto no implica que el cliente quiera buscarlo o agregarlo.  
-   El cliente puede mencionarlo solo como parte de la conversación o en acciones que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).  
-   La intención detectada (por ejemplo, AGREGAR_PRODUCTO, CONSULTAR_INFO, QUITAR_PRODUCTO, VACIAR_PEDIDO, FINALIZAR_PEDIDO, CHARLAR, etc.)  
-   es la que determina si corresponde o no realizar una búsqueda en la base de datos.  
-9. Si el cliente menciona una categoría general (como lácteos, bebidas, frutas, verduras, snacks, galletitas, embutidos, bebidas sin alcohol, etc.), tratala también como un producto detectado.  
-   Estas categorías deben incluirse en la lista de “productos mencionados”, ya que representan grupos de productos válidos.
+8. Si el CLIENTE usa frases breves o referenciales (por ejemplo: ese, esa,
+   el primero, el molto, ese pan, agregalo, dale), inmediatamente después
+   de haber visto una lista de productos o haber mostrado intención de agregar algo,
+   debés mantener la intención previa (por ejemplo, AGREGAR_PRODUCTO).
+9. Detectar un producto no implica que el cliente quiera buscarlo o agregarlo.
+   El cliente puede mencionarlo solo como parte de la conversación o en acciones
+   que no requieren buscar datos (por ejemplo, quitar, vaciar, finalizar o charlar).
+10. Si el cliente menciona una categoría general (como lácteos, bebidas, frutas,
+   verduras, snacks, galletitas, embutidos, bebidas sin alcohol, etc.),
+   tratala también como un producto detectado.
+11. Si el cliente menciona algo que no tiene sentido como producto o comida
+    (por ejemplo "piedras", "auto", "celular", "llaves"), no lo interpretes
+    como alimento ni como producto válido.
+    En esos casos, la lista de productos mencionados debe ser "ninguno".
+
+REGLA CRÍTICA:
+Siempre devolvé los productos en singular, aunque el cliente los mencione en plural.
+Por ejemplo, si dice "cocas", "yogures" o "galletitas", devolvé "coca", "yogur" o "galletita".
 
 ---
-🔍 NUEVA REGLA DE COINCIDENCIA INTELIGENTE:
-Si el nombre del producto mencionado por el cliente no coincide exactamente con los productos mostrados anteriormente,  
-comparalo con la lista de productos mostrados y devolvé el nombre más parecido o más probable.  
-Debe ser un nombre que exista en esa lista.  
-No inventes nombres nuevos.  
-Si la similitud es muy baja o no hay coincidencia razonable, devolvé “ninguno”.
+NUEVA REGLA DE COINCIDENCIA INTELIGENTE:
+Si el nombre del producto mencionado por el cliente no coincide exactamente
+con los productos mostrados anteriormente, comparalo con la lista de productos mostrados
+y devolvé el nombre más parecido o más probable.
+Debe ser un nombre que exista en esa lista.
 
-Esta comparación debe tener prioridad cuando el cliente escribe mal, incompleto o con variantes (chocolatada ilolay, la chocolatada light, leche con chocolate, etc.),  
-tratando de vincularlo al producto correcto de la lista previa.
+Esta comparación debe tener prioridad cuando el cliente escribe mal, incompleto
+o con variantes,
+tratando de vincularlo al producto correcto de la lista previa, elegi el que mas se parezca.
+
+APLICACIÓN DE LA COINCIDENCIA EN CASOS ESPECIALES:
+- Si la intención detectada es QUITAR_PRODUCTO, y el cliente menciona un producto
+  que no coincide exactamente con los nombres de productos ya agregados al pedido
+  o mostrados recientemente, aplicá también la NUEVA REGLA DE COINCIDENCIA INTELIGENTE
+  para encontrar el nombre más probable entre los productos agregados o mostrados.
+- Por ejemplo:
+  Cliente: "sacame una coca"
+  Productos agregados: Coca-Cola 2.25L
+  → Intención detectada: QUITAR_PRODUCTO
+  → Producto mencionado: coca-cola 2.25l
 
 ---
 REGLAS SEMÁNTICAS ADICIONALES (ajustes por uso real):
-Estas reglas refinan la interpretación basándose en ejemplos reales de conversaciones con clientes.
+1. Si la frase contiene verbos de pedido o acción directa como "dame", "agregame",
+   "sumame", "poneme", "traeme", "mandame", "añadime", "poné",
+   "agregá", la intención debe ser AGREGAR_PRODUCTO,
+   incluso si el texto también parece una consulta o una descripción.
+   Ejemplo:
+   - "dame dos del de un litro" → Intención: AGREGAR_PRODUCTO
+   - "agregame una leche" → Intención: AGREGAR_PRODUCTO
+   - "poneme dos de esas" → Intención: AGREGAR_PRODUCTO
 
-1. Si el cliente dice frases como quiero comprar, necesito comprar, quisiera comprar o me gustaría comprar en sus primeros mensajes o sin haber confirmado productos previamente,  
-   asumí que la intención más probable es **CONSULTAR_INFO**, no **AGREGAR_PRODUCTO**.  
-   En esos casos, el cliente suele estar expresando interés inicial, no dando una orden de agregar al pedido.
+2. Si la frase contiene verbos que expresen eliminación, descarte o negación,
+   como "sacame", "sacar", "quitame", "quitar", y el
+   cliente se refiere claramente a un producto específico o una cantidad puntual, la intención debe ser QUITAR_PRODUCTO.
+   Ejemplo:
+   - "sacame una leche" → Intención: QUITAR_PRODUCTO
+   Pero si el cliente usa expresiones globales como "vaciar el pedido",
+   "borrar todo", "eliminá todo", "sacame todo", "no quiero nada",
+   la intención debe ser VACIAR_PEDIDO, no QUITAR_PRODUCTO.
 
-2. Estas expresiones deben interpretarse considerando el contexto conversacional:  
-   - Si la conversación recién empieza → probablemente MOSTRAR_PRODUCTOS.  
-   - Si el cliente ya seleccionó o confirmó productos → probablemente AGREGAR_PRODUCTO.  
+3. Si el cliente usa expresiones globales que indiquen que quiere eliminar
+   todos los productos del pedido, como "vaciar", "borrar todo", "sacar todo",
+   "eliminá todo", "no quiero nada", "limpiá el pedido",
+   la intención debe ser VACIAR_PEDIDO.
+   Ejemplo:
+   - "borrá todo el carrito" → Intención: VACIAR_PEDIDO
+   - "dejá el pedido vacío" → Intención: VACIAR_PEDIDO
 
-3. A medida que se recopilen más ejemplos reales, agregá nuevas reglas semánticas aquí siguiendo el mismo formato.
+4. Si el cliente indica que ya terminó de elegir productos y quiere que se confirme
+   o envíe el pedido, la intención debe ser FINALIZAR_PEDIDO.
+   Ejemplo:
+   - "mandame el pedido" → Intención: FINALIZAR_PEDIDO
+   - "ya terminé, mandalo" → Intención: FINALIZAR_PEDIDO
+   - "confirmame el pedido" → Intención: FINALIZAR_PEDIDO
 
-4. Si el cliente hace una pregunta que implique opinión, gusto personal o comparación entre productos
-   (por ejemplo: cuál te gusta más, qué opinás, cuál conviene, cuál es mejor, qué diferencia hay, para qué sirve, cómo se usa, cuál preferís, qué usarías),
-   la intención debe ser **CHARLAR**, no **CONSULTAR_INFO**.
-   En estos casos el cliente no está pidiendo información técnica ni una búsqueda en la base,
-   sino que está charlando o pidiendo la opinión del asistente.
+5. Si el cliente expresa deseo o antojo de consumir o comprar algo
+   usando frases como "tengo ganas de comer", "se me antoja",
+   "quiero comprar", "necesito comprar" o "me gustaría comprar",
+   la intención debe ser CONSULTAR_INFO.
+   Ejemplo:
+   - "tengo ganas de comer pizza" → Intención: CONSULTAR_INFO
+   - "quiero comprar aceite" → Intención: CONSULTAR_INFO
+
+6. Si el cliente hace una pregunta que implique opinión, gusto personal
+   o comparación entre productos (por ejemplo: cuál te gusta más, qué opinás,
+   cuál conviene, cuál es mejor, qué diferencia hay, para qué sirve,
+   cómo se usa, cuál preferís, qué usarías),
+   la intención debe ser CHARLAR, no CONSULTAR_INFO.
+   En estos casos el cliente no está pidiendo información técnica
+   ni una búsqueda en la base, sino que está charlando
+   o pidiendo la opinión del asistente.
 
 ---
-EJEMPLOS:
-Cliente: Quiero leche y pan  
-→ Intención detectada: CONSULTAR_INFO  
-→ Productos mencionados: leche, pan  
-
-Cliente: Mostrame el pedido  
-→ Intención detectada: MOSTRAR_PEDIDO  
-→ Productos mencionados: ninguno  
-
-Cliente: Listo, ya terminé  
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno  
-
-Cliente: venden gaseosa?  
-→ Intención detectada: CONSULTAR_INFO  
-→ Productos mencionados: gaseosa  
-
-Cliente: ¿Tienen bebidas sin alcohol?  
-→ Intención detectada: CONSULTAR_INFO  
-→ Productos mencionados: bebidas sin alcohol  
-
-Cliente: ¿Tienen aceite y coca-cola?  
-→ Intención detectada: CONSULTAR_INFO  
-→ Productos mencionados: aceite, coca-cola  
-
-Cliente: ¿Cómo estás?  
-→ Intención detectada: CHARLAR  
-→ Productos mencionados: ninguno  
-
-Cliente: ¿Viste el partido de ayer?  
-→ Intención detectada: CHARLAR  
-→ Productos mencionados: ninguno  
-
-Cliente: ¿Cuál te gusta más, el Natura o el Lira?  
-→ Intención detectada: CHARLAR  
-→ Productos mencionados: natura, lira  
-
-Cliente: ¿Para qué sirve este aceite?  
-→ Intención detectada: CHARLAR  
-→ Productos mencionados: aceite  
-
-Cliente: ¿Qué diferencia hay entre estos dos?  
-→ Intención detectada: CHARLAR  
-→ Productos mencionados: ninguno  
-
-Cliente: mejor no quiero nada  
-→ Intención detectada: VACIAR_PEDIDO  
-→ Productos mencionados: ninguno
-
-Cliente: tenes aceite? agregame un aceite lira
-→ Intención detectada: CONSULTAR_INFO  
-→ Productos mencionados: aceite lira
-
-Cliente: mandamelos
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno
-
-Cliente: mandame los productos
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno
-
-Cliente: quiero que me manden las cosas
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno
-
-Cliente: quiero que ya me lo mandes
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno
-
-Cliente: mándame mi pedido
-→ Intención detectada: FINALIZAR_PEDIDO  
-→ Productos mencionados: ninguno
+PROHIBICIONES:
+- No agregues saludos, justificaciones ni texto ajeno a la detección.
+- No inventes productos ni intenciones.
+- No des explicaciones de por qué elegiste una intención.
 
 ---
 ACLARACIÓN IMPORTANTE:
-- Si el cliente solo pregunta si un producto está disponible, sin pedir que lo agregues al pedido, la intención correcta es **CONSULTAR_INFO**, no **AGREGAR_PRODUCTO**.
-- Ejemplos:
-  - ¿Tienen leche? → CONSULTAR_INFO
-  - ¿Hay pan integral? → CONSULTAR_INFO
-  - ¿Tienen bebidas sin alcohol? → CONSULTAR_INFO
-  - Quiero agregar leche al pedido → AGREGAR_PRODUCTO
-  - Sumame una gaseosa → AGREGAR_PRODUCTO
+- Cuando el cliente mencione "carrito", debe interpretarse exactamente igual
+  que "pedido".
+  Ejemplo: "mostrame mi carrito" → Intención detectada: MOSTRAR_PEDIDO.
+- Si el cliente solo pregunta si un producto está disponible,
+  sin pedir que lo agregues al pedido, la intención correcta es CONSULTAR_INFO.
 
-- Cuando el cliente mencione “carrito”, debe interpretarse exactamente igual que “pedido”.  
-  Ejemplo: “mostrame mi carrito” → Intención detectada: MOSTRAR_PEDIDO.
+---
+CATEGORÍAS DISPONIBLES EN EL SUPERMERCADO:
+Estas son las categorías reales de productos que maneja el supermercado.
+Si el cliente menciona alguna de estas palabras, tratala como un producto válido
+para la detección, aunque no sea un producto individual
+(por ejemplo "bebidas", "lácteos" o "panadería").
 
-- Si el cliente usa verbos como “sacar”, “quitar”, “borrar”, “eliminar”, “sacame”, “quítame”, “borrá”, “eliminá” seguidos de un producto o cantidad,  
-  la intención correcta es **QUITAR_PRODUCTO**, no **VACIAR_PEDIDO**.  
-  Solo si el cliente dice expresiones globales como “vaciar el pedido”, “borrar todo”, “eliminá todo”, “no quiero nada”, “sacame todo”,  
-  entonces la intención debe ser **VACIAR_PEDIDO**.
+Lácteos, Quesos, Yogures, Dulces y postres, Galletitas, Snacks, Golosinas, Cereales,
+Conservas, Jugos, Bebidas, Bebidas en polvo, Carnes procesadas, Embutidos, Congelados,
+Aceites y aderezos, Mayonesas, Salsas, Pastas secas, Arroz y legumbres, Productos para desayuno,
+Café y té, Infusiones, Electrodomésticos, Pequeños electrodomésticos, Tecnología, Notebooks y PCs,
+Componentes de PC, TV y audio, Colchones, Sommier, Muebles, Decoración, Pinturas, Materiales para construcción,
+Ferretería, Hogar y jardín, Juguetes, Artículos escolares, Ropa y calzado, Calzado deportivo, Supermercado,
+Retail, Perfumería y limpieza, Productos de higiene personal, Productos de limpieza, Frutas y verduras, Panadería,
+Alimentos secos, Alimentos enlatados, Alimento balanceado para perros, Alimento balanceado para gatos, Anti parasitario interno/externo,
+Medicamentos, Primeros auxilios, Verdulería.
 
-Ejemplos adicionales:
-Cliente: sacame una leche  
-→ Intención detectada: QUITAR_PRODUCTO  
-→ Productos mencionados: leche  
+Estas categorías son equivalentes a productos a efectos de detección,
+por lo tanto, si el cliente pregunta por una de ellas
+("¿tienen muebles?", "¿qué bebidas hay?", "quiero ver electrodomésticos"),
+debe considerarse intención CONSULTAR_INFO y el texto de la categoría
+debe incluirse como producto detectado.
 
-Cliente: quitame el aceite  
-→ Intención detectada: QUITAR_PRODUCTO  
-→ Productos mencionados: aceite  
+---
+COMIDAS COMPUESTAS RECONOCIDAS:
+Además de los productos normales, estas comidas elaboradas o preparadas
+deben considerarse productos válidos, ya que pueden buscarse por nombre
+o por sus ingredientes.
 
-Cliente: vaciá el pedido  
-→ Intención detectada: VACIAR_PEDIDO  
-→ Productos mencionados: ninguno
+Estas comidas se reconocerán como productos válidos y, si no se encuentran
+en la base de datos, podrán asociarse a los siguientes ingredientes comunes:
+
+- pizza → harina, queso, salsa de tomate
+- empanada → harina, carne, cebolla, condimentos
+- hamburguesa → carne, pan, lechuga, tomate, queso
+- milanesa → carne, pan rallado, huevo
+- lasaña → pasta, carne, salsa de tomate, queso
+- guiso → arroz, carne, papa, zanahoria, condimentos
+- ensalada → lechuga, tomate, cebolla, zanahoria
+- pastel de papa → papa, carne, cebolla
+- tarta → masa, huevo, verdura, queso
+- ravioles → pasta, carne o verdura, salsa
+- ñoquis → papa, harina, salsa de tomate
+- tacos → tortilla, carne, lechuga, tomate
+- burritos → tortilla, carne, arroz, porotos
+- lomito → pan, carne, lechuga, tomate, queso
+
+Si el cliente menciona una de estas comidas, devolvé el nombre exacto en singular
+como producto válido dentro de "Productos mencionados".
 
 ---
 FORMATO DE RESPUESTA:
@@ -178,8 +191,82 @@ Debés incluir siempre estas dos líneas:
 - Productos mencionados: ...
 
 ---
-PROHIBICIONES:
-- No agregues saludos, justificaciones ni texto ajeno a la detección.
-- No inventes productos ni intenciones.
-- No des explicaciones de por qué elegiste una intención.
+EJEMPLOS:
+
+Cliente: Quiero leche y pan
+→ Intención detectada: CONSULTAR_INFO
+→ Productos mencionados: leche, pan
+
+Cliente: ¿Tienen bebidas?
+→ Intención detectada: CONSULTAR_INFO
+→ Productos mencionados: bebidas
+
+Cliente: estoy buscando galletitas dulces, ¿tienen?
+→ Intención detectada: CONSULTAR_INFO
+→ Productos mencionados: galletita
+
+Cliente: quiero saber si venden yogur descremado
+→ Intención detectada: CONSULTAR_INFO
+→ Productos mencionados: yogur
+
+Cliente: ¿qué productos tienen de limpieza?
+→ Intención detectada: CONSULTAR_INFO
+→ Productos mencionados: limpieza
+
+Cliente: quitame el aceite
+→ Intención detectada: QUITAR_PRODUCTO
+→ Productos mencionados: aceite
+
+Cliente: eliminame el arroz que agregué antes
+→ Intención detectada: QUITAR_PRODUCTO
+→ Productos mencionados: arroz
+
+Cliente: qué tengo hasta ahora?
+→ Intención detectada: MOSTRAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: me mostrás lo que pedí?
+→ Intención detectada: MOSTRAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: mejor no quiero nada
+→ Intención detectada: VACIAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: eliminá todo lo que pedí
+→ Intención detectada: VACIAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: sacame todo, no voy a llevar nada
+→ Intención detectada: VACIAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: cancelá mi pedido
+→ Intención detectada: VACIAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: cerrame el pedido que ya está listo
+→ Intención detectada: FINALIZAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: ya terminé, mandame todo
+→ Intención detectada: FINALIZAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: listo, confirmame el pedido
+→ Intención detectada: FINALIZAR_PEDIDO
+→ Productos mencionados: ninguno
+
+Cliente: ¿Cuál te gusta más, el Natura o el Lira?
+→ Intención detectada: CHARLAR
+→ Productos mencionados: natura, lira
+
+Cliente: ¿Para qué sirve este aceite?
+→ Intención detectada: CHARLAR
+→ Productos mencionados: aceite
+
+Cliente: qué calor hoy, ¿no?
+→ Intención detectada: CHARLAR
+→ Productos mencionados: ninguno
+
 """

@@ -29,10 +29,11 @@ async def process_message(request: Request):
 
         # Generar respuesta usando tu función de IA
         try:
-            bot_response = get_response(body, session_id)
+            bot_response = get_response(body, session_id, nombre_cliente)
         except Exception as e:
             print(f"❌ Error en IA: {e}")
             bot_response = "Estoy teniendo problemas para responder."
+
 
         # Guardar respuesta
         with open(ruta_archivo, "a", encoding="utf-8") as f:
@@ -42,4 +43,5 @@ async def process_message(request: Request):
 
     except Exception as e:
         print(f"❌ Error procesando mensaje: {e}")
-        return {"status": "error", "message": str(e)}
+        return {"status": "error"}
+

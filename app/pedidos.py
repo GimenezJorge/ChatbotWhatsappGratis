@@ -17,7 +17,8 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
         producto_existente["cantidad"] += cantidad
         producto_existente["subtotal"] = float(Decimal(producto_existente["precio_unitario"]) * producto_existente["cantidad"])
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"🛒 Se actualizaron las unidades de {producto} (ahora x{producto_existente['cantidad']}).               Total: ${total_actual:.2f}"
+        mensaje = f"🛒 Se actualizaron las unidades de {producto} (ahora x{producto_existente['cantidad']}). Total: ${int(total_actual)}"
+
     else:
         # Si no existe, agregarlo nuevo
         subtotal = float(Decimal(precio_unitario) * cantidad)
@@ -28,7 +29,7 @@ def agregar_a_pedido(session_id: str, producto: str, cantidad: int, precio_unita
             "subtotal": subtotal
         })
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"🛒 Agregué {cantidad} {producto} al pedido. (Total: ${total_actual:.2f}), cuando quieras finalizar tu pedido me avisas 😊"
+        mensaje = f"🛒 Agregué {cantidad} {producto} al pedido. (Total: ${int(total_actual)}), cuando quieras finalizar tu pedido me avisas 😊"
 
     print(f"✅ Pedido actualizado!({session_id})")
     return mensaje
@@ -51,13 +52,14 @@ def quitar_de_pedido(session_id: str, producto: str, cantidad: int) -> str:
         producto_existente["cantidad"] -= cantidad
         producto_existente["subtotal"] = float(Decimal(producto_existente["precio_unitario"]) * producto_existente["cantidad"])
         total_actual = sum(p["subtotal"] for p in pedido)
-        mensaje = f"🧺 Quité {cantidad} {producto} (quedan x{producto_existente['cantidad']}). Total: ${total_actual:.2f}"
+        mensaje = f"🧺 Quité {cantidad} {producto} (quedan x{producto_existente['cantidad']}). Total: ${int(total_actual)}"
+
     else:
         # Si la cantidad es igual o mayor, eliminar el producto directamente
         pedido.remove(producto_existente)
         total_actual = sum(p["subtotal"] for p in pedido)
         if total_actual > 0:
-            mensaje = f"🧺 Eliminé {producto} del pedido. Total: ${total_actual:.2f}"
+            mensaje = f"🧺 Eliminé {producto} del pedido. Total: ${int(total_actual)}"
         else:
             mensaje = "🧺 Eliminé el último producto, tu pedido quedó vacío."
 
@@ -68,20 +70,20 @@ def quitar_de_pedido(session_id: str, producto: str, cantidad: int) -> str:
 
 def mostrar_pedido(session_id: str) -> str:
     if session_id not in pedidos_por_cliente or not pedidos_por_cliente[session_id]:
-        return " "
+        return None
 
     items = pedidos_por_cliente[session_id]
     total = sum(i["subtotal"] for i in items)
 
     listado = "\n".join([
-        f"{i['producto']} ${i['precio_unitario']:.2f}({i['cantidad']}) : ${i['subtotal']:.2f}"
+        f"{i['producto']} ${int(i['precio_unitario'])} ({i['cantidad']}) : ${int(i['subtotal'])}"
         for i in items
     ])
 
     return (
         f"🧺 Actualmente tu pedido tiene:\n\n"
         f"{listado}\n\n"
-        f"🧾 Total: ${total:.2f}\n"
+        f"🧾 Total: ${int(total)}\n"
 
     )
 
@@ -117,7 +119,7 @@ def finalizar_pedido(session_id: str, datos_cliente: str, numero_cliente: str, n
     mensaje = (
         "🧾 *NUEVO PEDIDO RECIBIDO*\n\n"
         f"{resumen}\n\n"
-        # f"📍 *Cliente:* {nombre_cliente}\n"
+         f"📍 *Cliente:* {nombre_cliente}\n"
         f"📞 *WhatsApp:* {numero_limpio}\n\n"
         "Por favor, comuníquese con el cliente para coordinar la entrega. Gracias 🙌"
     )

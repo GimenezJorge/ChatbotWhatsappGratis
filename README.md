@@ -1,108 +1,66 @@
-# Asistente virtual de supermercado
+ASISTENTE VIRTUAL DE SUPERMERCADO
 
 Asistente virtual inteligente que permite a los clientes consultar productos, armar pedidos y recibir asistencia vía WhatsApp, usando IA local (Ollama) y base de datos MySQL.
 
----
 
-## Requisitos
+REQUISITOS:
 
 - **Python 3.10+**
 - **Node.js 18+** (para `whatsapp-web.js`)
 - **MySQL 8.0+** (o MariaDB)
 - **Ollama** (con el modelo `gemma3:latest`)
-- **Google Chrome** (requerido por Puppeteer en `whatsapp-web.js`)
 
----
 
-## Instalación
+INSTALACION:
 
-### 1. Clonar el repositorio
+1. Clonar el repositorio
 
-```bash
 git clone https://github.com/tu-usuario/Chatbot-WhatsApp.git
 cd Chatbot-WhatsApp
-```
 
-### 2. Cambiar ruta del Chrome por tu ubicación
 
-> executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+2. Instalacion del modelo gemma3:latest (Ollama)
 
-### 3. Instalacion del modelo gemma3:latest (Ollama)
+  ollama pull gemma3
 
-> ollama pull gemma3
+  Para verificar si ya tenes el modelo
 
-- Para verificar si ya tenes el modelo
+  ollama list
 
-> ollama list
+3. Crear modelos personalizados (Prompts enbebidos)
 
-### 4. Crear modelos personalizados (Prompts enbebidos)
+3.1. Abrir un cmd
+3.2. Moverse a la carpeta prompts_finales/
+3.3. Pegar los comandos en la consola
 
-1. Abrir un cmd
-2. Moverse a la carpeta prompts_finales/
-3. Pegar los comandos en la consola
+Modelo input:
+  ollama create gemma3_input:latest -f Modelfile-input
 
-- Modelo input:
-  > ollama create gemma3_input:latest -f Modelfile-input
-- Modelo output:
-  > ollama create gemma3_output:latest -f Modelfile-output
+Modelo output:
+  ollama create gemma3_output:latest -f Modelfile-output
 
-## Instructivo para hacer andar el Chatbot-Ollama
+4. CREAR UN .ENV
 
-Opcion 1:
-Ejecutar el script .bat
+MYSQL_HOST=""
+MYSQL_USER=""
+MYSQL_PASSWORD=""
+MYSQL_DATABASE=""
+MYSQL_PORT=""
 
-> start.bat
+ACCESS_TOKEN=123
 
-- Este script realiza la descarga de dependencias (del requirements.txt), inicia el servidor FastAPI en el puerto 8000, ejecuta WhatsApp Web a través de una librería de Node en el puerto 3000 y levanta el servicio de Ollama para que la IA esté disponible.
+5. Instructivo para hacer andar el Chatbot-Ollama
 
-## Instala las dependencias:
+INSTALAR LAS DEPENDENCIAS
 
-> pip install -r requirements.txt
+pip install -r requirements.txt
 
-## Levanta el servidor FastAPI:
+npm install
 
-> uvicorn app.main:app --reload --port 8000
+6. Levanta el servidor FastAPI en una terminal:
 
-## Levanta el servidor Node:
+uvicorn app.main:app --reload --port 8000
 
-> node bot.js
+7. Levanta el servidor Node en otra terminal:
 
-## Enviroments credentials
-
-```
-Database credentials
-> MYSQL_HOST=""
-> MYSQL_USER=""
-> MYSQL_PASSWORD=""
-> MYSQL_DATABASE=""
-> MYSQL_PORT=""
-```
-
-## Project Structure
-
-```
-version1/
-├── app/
-│ ├── **init**.py
-│ ├── endpoints/
-│ │ └── endpoints.py
-│ ├── crud.py
-│ ├── database.py
-│ ├── main.py
-│ └── schemas.py
-│
-├── prompts_finales/
-│ ├── Modelfile-input
-│ └── Modelfile-output
-├── conversaciones/
-├── script/
-├── test/
-├── .env
-├── .gitattributes
-├── .gitignore
-├── README.md
-├── bot.js
-├── requirements.txt
-└── start.bat
-
-```
+node bot.js

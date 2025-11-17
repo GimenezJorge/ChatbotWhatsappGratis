@@ -16,7 +16,7 @@ const client = new Client({
 	puppeteer: {
 		headless: true,
 		args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless=new'],
-		executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+		//executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
 	},
 	// puppeteer: {
 	// 	headless: false,

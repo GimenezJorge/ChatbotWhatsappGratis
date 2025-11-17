@@ -1,0 +1,77 @@
+2025-11-12 19:20:58 - De 5493435052383: Hola! Tenes empanadas?
+2025-11-12 19:22:02 - Bot: ¡Hola! Entiendo tu interés en las empanadas. Lamentablemente, actualmente no tenemos empanadas listas para vender. ¡Pero te cuento! Podemos preparar unas empanadas riquísimas en casa, ¡y tenemos todo lo que necesitas! Mira, tenemos:
+
+• Harina de Maíz Molto 1kg — $1570.00
+• Harina Morixe 000 1kg — $4000.00
+• Harina Pureza 0000 1kg — $4000.00
+• Cebolla — $168.35
+• Cebolla de Verdeo — $228.26
+• Aceitunas Negras Molto 300g — $1570.00
+• Aceitunas Verdes Molto 300g — $1570.00
+
+¡Qué bueno que te animas a preparar algo casero, me encanta! 😊
+2025-11-12 19:23:41 - De 5493435052383: agregame una harina pureza
+2025-11-12 19:24:13 - Bot: 🛒 Agregué 1 Harina Pureza 0000 1kg al pedido. (Total: $4000), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-12 19:25:33 - De 5493435052383: mostrame mi pedido
+2025-11-12 19:25:48 - Bot: Dale, acá tenés el resumen de tu carrito 😄
+
+🧺 Actualmente tu pedido tiene:
+
+Harina Pureza 0000 1kg $4000 (1) : $4000
+
+🧾 Total: $4000
+
+¿Querés finalizar el pedido? 😉
+2025-11-12 19:27:59 - De 5493435052383: quiero finalizar el pedido
+2025-11-12 19:28:14 - Bot: Perfecto 🙌 Tu pedido fue confirmado correctamente. A la brevedad, un encargado se comunicará con vos para coordinar la entrega 🚚
+2025-11-12 19:30:08 - De 5493435052383: me olvide de agregar un producto
+2025-11-12 19:30:49 - Bot: ¡Claro que sí! Dime qué te gustaría agregar al pedido.
+2025-11-12 19:31:35 - De 5493435052383: vienen unos amigos a comer a casa, quiero darles zebollas, tienen?
+2025-11-12 19:32:01 - Bot: ¡Qué bueno que pensaste en zebollas! Tenemos varias opciones para que tus amigos disfruten. 😉
+
+• Cebolla — $168.35
+• Cebolla de Verdeo — $228.26
+
+¡Qué rico, tienen variedad para preparar un buen plato! 😊
+2025-11-12 19:32:23 - De 5493435052383: agregame dos de verdeo
+2025-11-12 19:32:56 - Bot: 🛒 Agregué 2 Cebolla de Verdeo al pedido. (Total: $456), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-12 19:35:53 - De 5493435052383: let's add some olives
+2025-11-12 19:36:26 - Bot: 🛒 Agregué 1 Aceitunas Negras Molto 300g al pedido. (Total: $2026), cuando quieras finalizar tu pedido me avisas 😊
+2025-11-12 19:37:44 - De 5493435052383: esas no, las otras
+2025-11-12 19:38:11 - Bot: ¡Claro que sí! Tenemos estas opciones disponibles:
+
+• Aceitunas Negras Molto 300g — $1570.00
+• Aceitunas Verdes Molto 300g — $1570.00
+
+¡Qué bueno que preguntaste! 😊
+2025-11-12 19:40:45 - De 5493435052383: que puedo cocinar con esas aceitunas?
+2025-11-12 19:41:13 - Bot: ¡Qué buena pregunta! Con esas aceitunas podés hacer un montón de cosas. Acá te dejo las opciones que tenemos:
+
+• Aceitunas Negras Molto 300g — $1570.00
+• Aceitunas Verdes Molto 300g — $1570.00
+
+¡Se ven muy buenas, eh? 😉
+2025-11-12 19:42:37 - De 5493435052383: Que bueno! pero de donde vienen las aceitunas negras?
+2025-11-12 19:43:05 - Bot: ¡Qué bueno que te gusten! Tenemos varias opciones de aceitunas negras. Aquí te las muestro:
+
+• Aceitunas Negras Molto 300g — $1570.00
+• Aceitunas Verdes Molto 300g — $1570.00
+
+¡Qué buenas se ven, verdad! 😊
+2025-11-12 19:43:20 - De 5493435052383: cual es la capital de francia?
+2025-11-12 19:43:48 - Bot: ¡Ah, qué buena pregunta! La capital de Francia es París. 😊
+
+¡Es una ciudad preciosa, llena de historia y cultura! 😉
+2025-11-12 19:44:40 - De 5493435052383: Finalizar el carrito
+2025-11-12 19:44:56 - Bot: Perfecto 🙌 Tu pedido fue confirmado correctamente. A la brevedad, un encargado se comunicará con vos para coordinar la entrega 🚚
+2025-11-12 19:46:23 - De 5493435052383: repetime el pedido
+2025-11-12 19:46:38 - Bot: Todavía no tenés productos en tu pedido 🛒
+2025-11-12 19:47:56 - De 5493435052383: hacen envios a domicilio?
+2025-11-12 19:48:24 - Bot: ¡Hola! Lamentablemente, actualmente no realizamos envíos a domicilio. 😔 Sin embargo, ¡tenemos una excelente opción! Podemos coordinar la entrega directamente a tu casa. ¿Qué te parece? 😊
+2025-11-12 19:48:57 - De 5493435052383: cuales son los horarios del super?
+2025-11-12 19:49:27 - Bot: ¡Hola! Nuestro supermercado abre de lunes a domingo.
+
+*   **Lunes a Viernes:** 8:00 a 20:00 hs.
+*   **Sábados y Domingos:** 9:00 a 20:00 hs.
+
+¡Esperamos tu visita! 😊
